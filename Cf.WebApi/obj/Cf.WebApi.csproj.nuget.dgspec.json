@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\CarFans\\Cf.WebApi.csproj": {}
+    "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\Cf.WebApi\\Cf.WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\CarFans\\Cf.WebApi.csproj": {
+    "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\Cf.WebApi\\Cf.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\CarFans\\Cf.WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\Cf.WebApi\\Cf.WebApi.csproj",
         "projectName": "Cf.WebApi",
-        "projectPath": "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\CarFans\\Cf.WebApi.csproj",
+        "projectPath": "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\Cf.WebApi\\Cf.WebApi.csproj",
         "packagesPath": "C:\\Users\\matas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\CarFans\\obj\\",
+        "outputPath": "C:\\Users\\matas\\OneDrive\\Dokumentai\\GitHub\\CarFans\\Cf.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matas\\AppData\\Roaming\\NuGet\\NuGet.Config",
