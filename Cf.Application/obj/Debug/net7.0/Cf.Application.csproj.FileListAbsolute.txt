@@ -1,0 +1,5 @@
+C:\Users\matas\OneDrive\Dokumentai\GitHub\CarFans\Cf.Application\obj\Debug\net7.0\Cf.Application.csproj.AssemblyReference.cache
+C:\Users\matas\OneDrive\Dokumentai\GitHub\CarFans\Cf.Application\obj\Debug\net7.0\Cf.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matas\OneDrive\Dokumentai\GitHub\CarFans\Cf.Application\obj\Debug\net7.0\Cf.Application.AssemblyInfoInputs.cache
+C:\Users\matas\OneDrive\Dokumentai\GitHub\CarFans\Cf.Application\obj\Debug\net7.0\Cf.Application.AssemblyInfo.cs
+C:\Users\matas\OneDrive\Dokumentai\GitHub\CarFans\Cf.Application\obj\Debug\net7.0\Cf.Application.csproj.CoreCompileInputs.cache
