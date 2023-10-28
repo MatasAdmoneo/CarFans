@@ -1,7 +1,10 @@
-﻿namespace Cf.Application.Interfaces;
+﻿using Cf.Contracts.Responses;
+using Cf.Domain.Models;
+
+namespace Cf.Application.Interfaces;
 
 public interface IAdvertService
 {
-    Task CreateAsync();
+    Task<Response.AdvertModel> CreateAsync(AdvertModel model);
 }
 

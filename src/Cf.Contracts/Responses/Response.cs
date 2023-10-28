@@ -2,5 +2,6 @@
 
 public static class Response
 {
+    public record AdvertModel(Guid Id);
 }
 
