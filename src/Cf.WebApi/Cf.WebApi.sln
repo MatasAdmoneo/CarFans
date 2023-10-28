@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cf.WebApi", "Cf.WebApi.csproj", "{6A585B8D-F57B-4197-864F-9758D84C6393}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA5F1ACF-A1B6-4C20-9D1D-69EF8B56B67E} = {AA5F1ACF-A1B6-4C20-9D1D-69EF8B56B67E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cf.Domain", "..\Cf.Domain\Cf.Domain.csproj", "{E948FF9A-1AC4-4562-B234-AB641F17D72C}"
 EndProject
