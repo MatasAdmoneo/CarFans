@@ -32,11 +32,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
 var api = app
     .NewVersionedApi("Cf")
     .MapGroup("v{version:apiVersion}");
 
-app.UseHttpsRedirection();
 
 api.MapAdvertRoutes();
 
