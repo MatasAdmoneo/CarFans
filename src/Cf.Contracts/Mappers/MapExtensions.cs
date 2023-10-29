@@ -5,7 +5,7 @@ namespace Cf.Contracts.Mappers;
 
 public static class MapExtensions
 {
-    public static Response.AdvertModel ToModel(this Advert model) =>
+    public static Response.Advert ToModel(this Advert model) =>
         new(model.Id);
 }
 

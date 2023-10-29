@@ -1,7 +1,7 @@
 ﻿namespace Cf.Contracts.Responses;
 
-public static class Response
+public static partial class Response
 {
-    public record AdvertModel(Guid Id);
+    public record Advert(Guid Id);
 }
 

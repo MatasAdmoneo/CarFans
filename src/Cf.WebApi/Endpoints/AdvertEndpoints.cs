@@ -17,10 +17,12 @@ public static class AdvertEndpoints
         .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapPost(Add).Produces<Response.AdvertModel>();
+        group.MapPost(AddAsync).Produces<Response.Advert>();
     }
 
-    private static async Task<Response.AdvertModel> Add(IAdvertService service, AdvertModel model)
+    private static async Task<Response.Advert> Add() => new Response.Advert(Guid.NewGuid());
+
+    private static async Task<Response.Advert> AddAsync(IAdvertService service, AdvertModel model)
     {
         var advert = await service.CreateAsync(model);
 

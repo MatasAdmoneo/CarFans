@@ -16,7 +16,7 @@ public class AdvertService : IAdvertService
         _context = context;
     }
 
-    public async Task<Response.AdvertModel> CreateAsync(AdvertModel model)
+    public async Task<Response.Advert> CreateAsync(AdvertModel model)
     {
         if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description))
             throw new ApplicationException();
