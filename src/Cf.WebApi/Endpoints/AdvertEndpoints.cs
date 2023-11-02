@@ -1,5 +1,7 @@
-﻿using Cf.Application.Interfaces;
+﻿using Asp.Versioning.ApiExplorer;
+using Cf.Application.Interfaces;
 using Cf.Contracts.Responses;
+using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Models;
 using Cf.WebApi.Routing;
 
@@ -17,16 +19,22 @@ public static class AdvertEndpoints
         .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapPost(AddAsync).Produces<Response.Advert>();
+        group.MapPost(AddAsync).Produces<Response.AdvertId>();
+        group.MapGet("Advert", GetListAsync);
     }
 
-    private static async Task<Response.Advert> Add() => new Response.Advert(Guid.NewGuid());
-
-    private static async Task<Response.Advert> AddAsync(IAdvertService service, AdvertModel model)
+    private static async Task<Response.AdvertId> AddAsync(IAdvertService service, AdvertModel model)
     {
         var advert = await service.CreateAsync(model);
 
         return advert;
+    }
+
+    private static async Task<List<Advert>> GetListAsync(IAdvertService service)
+    {
+        var adverts = await service.GetListAsync();
+
+        return adverts;
     }
 }
 

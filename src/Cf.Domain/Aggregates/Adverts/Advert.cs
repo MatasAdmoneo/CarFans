@@ -1,16 +1,17 @@
-﻿namespace Cf.Domain.Aggregates.Adverts;
+﻿using Cf.Domain.Aggregates.Jobs;
 
-public class Advert
+namespace Cf.Domain.Aggregates.Adverts;
+
+public class Advert : Entity
 {
-    public Guid Id { get; set; }
-
     public string Title { get; set; }
 
     public string Description { get; set; }
 
-    public Advert(string title, string description)
+    public List<Job> Jobs { get; set; } = new List<Job>();
+
+    public Advert(string title, string description) : base()
     {
-        Id = Guid.NewGuid();
         Title = title;
         Description = description;
     }

@@ -1,5 +1,6 @@
 ﻿using Cf.Application.AdvertServices;
 using Cf.Application.Interfaces;
+using Cf.Application.JobServices;
 using Microsoft.AspNetCore.Http.Json;
 using System.Text.Json.Serialization;
 
@@ -18,6 +19,7 @@ public static class ServiceCollectionExtensions
     public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IAdvertService, AdvertService>();
+        services.AddScoped<IJobService, JobService>();
     }
 }
 

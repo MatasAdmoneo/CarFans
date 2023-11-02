@@ -4,6 +4,7 @@ using Cf.Contracts.Responses;
 using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cf.Application.AdvertServices;
 
@@ -16,7 +17,7 @@ public class AdvertService : IAdvertService
         _context = context;
     }
 
-    public async Task<Response.Advert> CreateAsync(AdvertModel model)
+    public async Task<Response.AdvertId> CreateAsync(AdvertModel model)
     {
         if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description))
             throw new ApplicationException();
@@ -27,6 +28,13 @@ public class AdvertService : IAdvertService
         await _context.SaveChangesAsync();
 
         return advert.ToModel();
+    }
+
+    public async Task<List<Advert>> GetListAsync()
+    {
+        var adverts = await _context.Adverts.ToListAsync();
+
+        return adverts;
     }
 }
 

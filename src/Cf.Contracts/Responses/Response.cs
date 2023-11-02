@@ -2,6 +2,8 @@
 
 public static partial class Response
 {
-    public record Advert(Guid Id);
+    public record AdvertId(Guid Id);
+
+    public record JobId(Guid Id);
 }
 
