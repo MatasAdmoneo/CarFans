@@ -1,3 +1,4 @@
+using Auth0.AspNetCore.Authentication;
 using Cf.Infrastructure;
 using Cf.WebApi.Endpoints;
 using Cf.WebApi.Utilities.ServicesConfiguration;
@@ -31,6 +32,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Cookie configuration for HTTPS
+//  builder.Services.Configure<CookiePolicyOptions>(options =>
+//  {
+//     options.MinimumSameSitePolicy = SameSiteMode.None;
+//  });
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"];
+    options.ClientId = builder.Configuration["Auth0:ClientId"];
+});
+builder.Services.AddControllersWithViews();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
