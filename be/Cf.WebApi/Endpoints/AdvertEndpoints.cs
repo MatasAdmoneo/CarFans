@@ -4,6 +4,7 @@ using Cf.Contracts.Responses;
 using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Models;
 using Cf.WebApi.Routing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cf.WebApi.Endpoints;
 
@@ -23,6 +24,7 @@ public static class AdvertEndpoints
         group.MapGet("Advert", GetListAsync);
     }
 
+    [Authorize]
     private static async Task<Response.AdvertId> AddAsync(IAdvertService service, AdvertModel model)
     {
         var advert = await service.CreateAsync(model);
@@ -30,6 +32,7 @@ public static class AdvertEndpoints
         return advert;
     }
 
+    [Authorize]
     private static async Task<List<Advert>> GetListAsync(IAdvertService service)
     {
         var adverts = await service.GetListAsync();
