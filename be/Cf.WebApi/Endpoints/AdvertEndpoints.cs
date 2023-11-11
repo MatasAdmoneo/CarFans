@@ -32,7 +32,7 @@ public static class AdvertEndpoints
         return advert;
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     private static async Task<List<Advert>> GetListAsync(IAdvertService service)
     {
         var adverts = await service.GetListAsync();
