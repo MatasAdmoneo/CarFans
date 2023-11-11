@@ -32,6 +32,10 @@ public static class ServiceCollectionExtensions
         {
             options.Authority = configuration["Authentication:Domain"];
             options.Audience = configuration["Authentication:Audience"];
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                RoleClaimType = "https://CarFans.com/roles"
+            };
         });
 
         services.AddAuthorization(options => { });
