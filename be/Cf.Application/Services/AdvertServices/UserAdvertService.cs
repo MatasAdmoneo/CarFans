@@ -1,4 +1,5 @@
 ﻿using Cf.Application.Interfaces;
+using Cf.Application.Services.Interfaces;
 using Cf.Contracts.Mappers;
 using Cf.Contracts.Responses;
 using Cf.Domain.Aggregates.Adverts;
@@ -7,27 +8,29 @@ using Cf.Domain.Exceptions.Messages;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Cf.Application.Services.AdvertServices;
 
-public class AdvertService : IAdvertService
+public class UserAdvertService : IUserAdvertService
 {
     private readonly Context _context;
-    private readonly IJobService _jobService;
+    private readonly IUserJobService _jobService;
 
-    public AdvertService(Context context, IJobService service)
+    public UserAdvertService(Context context, IUserJobService jobService)
     {
         _context = context;
-        _jobService = service;
+        _jobService = jobService;
     }
 
-    public async Task<Response.AdvertIdResponse> CreateAsync(AdvertModel model)
+    public async Task<Response.AdvertIdResponse> CreateAsync(AdvertModel model, string? userId)
     {
-        if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description))
+        if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) ||string.IsNullOrWhiteSpace(userId))
             throw new ApplicationException();
 
-        var advert = new Advert(model.Title, model.Description);
+        if(model.Photos == null || !model.Photos.Any())
+            throw new ApplicationException();
+
+        var advert = new Advert(userId, model.Title, model.Description, model.Photos);
 
         await _context.AddAsync(advert);
         await _context.SaveChangesAsync();
@@ -35,41 +38,53 @@ public class AdvertService : IAdvertService
         return advert.ToAdvertIdModel();
     }
 
-    public async Task<List<Advert>> GetListAsync()
+    public async Task<List<Advert>> GetListAsync(string? id)
     {
-        var adverts = await _context.Adverts.ToListAsync();
+        if(string.IsNullOrWhiteSpace(id))
+            throw new ApplicationException();
+
+        var adverts = await _context.Adverts.Where(x => x.UserId == id).ToListAsync();
 
         return adverts;
     }
 
-    public async Task UpdateAsync(Guid id, AdvertUpdateModel model)
+    public async Task UpdateAsync(Guid id, string? userId, AdvertUpdateModel model)
     {
         var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id);
 
         if (advert == null)
             throw new NotFoundException(DomainErrors.Advert.NotFound);
+
+        if (advert.UserId != userId)
+            throw new ApplicationException();
 
         advert.ToUpdatedAdvert(model);
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Response.AdvertResponse> GetByIdAsync(Guid id)
+    public async Task<Response.AdvertResponse> GetByIdAsync(Guid id, string? userId)
     {
         var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id);
 
         if (advert == null)
             throw new NotFoundException(DomainErrors.Advert.NotFound);
+
+        if (advert.UserId != userId)
+            throw new ApplicationException();
 
         return advert.ToAdvertModel();
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, string? userId)
     {
         var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id);
 
         if (advert == null)
             throw new NotFoundException(DomainErrors.Advert.NotFound);
+
+        if(advert.UserId != userId)
+            throw new ApplicationException();
 
         var jobs = await _jobService.GetListAsync(id);
 
@@ -81,7 +96,6 @@ public class AdvertService : IAdvertService
 
         _context.Remove(advert);
         await _context.SaveChangesAsync();
-        
     }
 }
 
