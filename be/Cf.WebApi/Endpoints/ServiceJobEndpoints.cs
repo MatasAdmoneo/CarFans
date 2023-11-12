@@ -21,7 +21,7 @@ public static class ServiceJobEndpoints
         group.MapPut(UpdateAsync);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Service")]
     private static async Task<Contracts.Responses.Response.JobIdResponse> AddAsync(IServiceJobService service, IHttpContextAccessor httpContextAccessor, Guid advertId, JobModel model)
     {
         var job = await service.CreateAsync(advertId, GetServiceId(httpContextAccessor),model);
@@ -29,7 +29,7 @@ public static class ServiceJobEndpoints
         return job;
     }
 
-    [Authorize]
+    [Authorize(Roles = "Service")]
     private static async Task UpdateAsync(IServiceJobService service, Guid jobId, JobUpdateModel model)
     {
         await service.UpdateStatusAsync(jobId, model);
