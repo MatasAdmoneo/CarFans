@@ -1,7 +1,8 @@
-﻿using Cf.Application.AdvertServices;
-using Cf.Application.Interfaces;
+﻿using Cf.Application.Interfaces;
 using Cf.Application.JobServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Cf.Application.Services.AdvertServices;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Json;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;

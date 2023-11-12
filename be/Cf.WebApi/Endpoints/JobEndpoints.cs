@@ -24,15 +24,15 @@ public static class JobEndpoints
     }
 
     [Authorize]
-    private static async Task<Contracts.Responses.Response.JobId> AddAsync(IJobService service, Guid advertId, JobModel model)
+    private static async Task<Contracts.Responses.Response.JobIdResponse> AddAsync(IJobService service, Guid advertId, JobModel model)
     {
         var job = await service.CreateAsync(advertId, model);
 
         return job;
     }
 
-
-    private static async Task<List<Contracts.Responses.Response.JobId>> GetListAsync(IJobService service, Guid advertId)
+    [Authorize]
+    private static async Task<List<Contracts.Responses.Response.JobIdResponse>> GetListAsync(IJobService service, Guid advertId)
     {
         var jobs = await service.GetListAsync(advertId);
 
