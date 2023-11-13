@@ -1,11 +1,12 @@
-﻿using Cf.Application.AdvertServices;
-using Cf.Application.Interfaces;
-using Cf.Application.JobServices;
+﻿using Cf.Application.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Cf.Application.Services.AdvertServices;
 using Microsoft.AspNetCore.Http.Json;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using Cf.WebApi.Utilities.Filters;
+using Cf.Application.Services.Interfaces;
+using Cf.Application.Services.JobServices;
 
 namespace Cf.WebApi.Utilities.ServicesConfiguration;
 
@@ -21,8 +22,14 @@ public static class ServiceCollectionExtensions
 
     public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IAdvertService, AdvertService>();
-        services.AddScoped<IJobService, JobService>();
+        services.AddScoped<IUserAdvertService, UserAdvertService>();
+        services.AddScoped<IServiceAdvertService, ServiceAdvertService>();
+        services.AddScoped<IAdminAdvertService, AdminAdvertService>();
+        services.AddScoped<IAdminJobService, AdminJobService>();
+        services.AddScoped<IUserJobService, UserJobService>();
+        services.AddScoped<IServiceJobService, ServiceJobService>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
         services.AddAuthentication(options =>
         {
