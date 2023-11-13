@@ -9,9 +9,12 @@ import {
   IconButton,
   Card,
 } from "@/lib/materialTailwindExports";
+import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const Navbar = () => {
   const [openNav, setOpenNav] = useState(false);
+  const { user, error, isLoading } = useUser();
 
   useEffect(() => {
     window.addEventListener(
@@ -78,16 +81,34 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <div className="flex items-center gap-x-1">
-            <Button variant="text" size="sm" className="hidden lg:inline-block">
-              <span>Log In</span>
-            </Button>
-            <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block"
-            >
-              <span>Sign in</span>
-            </Button>
+            {user ? (
+              <Button
+                variant="gradient"
+                size="sm"
+                className="hidden lg:inline-block"
+              >
+                <Link href="https://dev-15qik1bab8zkzspb.us.auth0.com/v2/logout">
+                  Log out
+                </Link>
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="text"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                >
+                  <Link href="/api/auth/login">Log In</Link>
+                </Button>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                >
+                  <span>Sign in</span>
+                </Button>
+              </>
+            )}
           </div>
           <IconButton
             variant="text"
