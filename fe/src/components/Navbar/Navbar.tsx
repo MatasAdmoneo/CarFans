@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Navbar as Nav,
   MobileNav,
@@ -15,6 +16,15 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 const Navbar = () => {
   const [openNav, setOpenNav] = useState(false);
   const { user, error, isLoading } = useUser();
+  const router = useRouter();
+
+  const navigateToLogin = () => {
+    router.push("/api/auth/login");
+  };
+
+  const navigateToLogout = () => {
+    router.push("/api/auth/logout");
+  };
 
   useEffect(() => {
     window.addEventListener(
@@ -86,10 +96,9 @@ const Navbar = () => {
                 variant="gradient"
                 size="sm"
                 className="hidden lg:inline-block"
+                onClick={() => navigateToLogout()}
               >
-                <Link href="https://dev-15qik1bab8zkzspb.us.auth0.com/v2/logout">
-                  Log out
-                </Link>
+                Log out
               </Button>
             ) : (
               <>
@@ -97,8 +106,9 @@ const Navbar = () => {
                   variant="text"
                   size="sm"
                   className="hidden lg:inline-block"
+                  onClick={() => navigateToLogin()}
                 >
-                  <Link href="/api/auth/login">Log In</Link>
+                  Log In
                 </Button>
                 <Button
                   variant="gradient"
@@ -151,14 +161,34 @@ const Navbar = () => {
       </div>
       <MobileNav open={openNav}>
         {navList}
-        <div className="flex items-center gap-x-1">
-          <Button fullWidth variant="text" size="sm" className="">
-            <span>Log In</span>
-          </Button>
-          <Button fullWidth variant="gradient" size="sm" className="">
-            <span>Sign in</span>
-          </Button>
-        </div>
+        {user ? (
+          <div className="flex items-center gap-x-1">
+            <Button
+              fullWidth
+              variant="gradient"
+              size="sm"
+              className=""
+              onClick={() => navigateToLogout()}
+            >
+              Log out
+            </Button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-x-1">
+            <Button
+              fullWidth
+              variant="text"
+              size="sm"
+              className=""
+              onClick={() => navigateToLogin()}
+            >
+              Log In
+            </Button>
+            <Button fullWidth variant="gradient" size="sm" className="">
+              <span>Sign in</span>
+            </Button>
+          </div>
+        )}
       </MobileNav>
     </Nav>
   );
