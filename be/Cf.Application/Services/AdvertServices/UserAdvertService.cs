@@ -8,6 +8,7 @@ using Cf.Domain.Exceptions.Messages;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using static Cf.Domain.Exceptions.Messages.DomainErrors;
 
 namespace Cf.Application.Services.AdvertServices;
 
@@ -30,7 +31,7 @@ public class UserAdvertService : IUserAdvertService
         if(model.Photos == null || !model.Photos.Any())
             throw new ApplicationException();
 
-        var advert = new Advert(userId, model.Title, model.Description, model.Photos);
+        var advert = new Domain.Aggregates.Adverts.Advert(userId, model.Title, model.Description, model.Photos);
 
         await _context.AddAsync(advert);
         await _context.SaveChangesAsync();
@@ -38,7 +39,7 @@ public class UserAdvertService : IUserAdvertService
         return advert.ToAdvertIdModel();
     }
 
-    public async Task<List<Advert>> GetListAsync(string? id)
+    public async Task<List<Domain.Aggregates.Adverts.Advert>> GetListAsync(string? id)
     {
         if(string.IsNullOrWhiteSpace(id))
             throw new ApplicationException();
@@ -86,7 +87,7 @@ public class UserAdvertService : IUserAdvertService
         if(advert.UserId != userId)
             throw new ApplicationException();
 
-        var jobs = await _jobService.GetListAsync(id);
+        var jobs = await _context.Jobs.Where(x => x.AdvertId == id).ToListAsync();
 
         foreach (var job in jobs)
         {

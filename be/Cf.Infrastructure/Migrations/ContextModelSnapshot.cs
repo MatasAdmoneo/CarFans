@@ -68,6 +68,9 @@ namespace Cf.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("numeric");
 

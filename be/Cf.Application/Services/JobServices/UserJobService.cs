@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Cf.Domain.Enums;
 using Cf.Contracts.Mappers;
 using Cf.Application.Services.Interfaces;
+using Cf.Domain.Aggregates.Jobs;
 
 namespace Cf.Application.Services.JobServices;
 
@@ -25,7 +26,7 @@ public class UserJobService : IUserJobService
         if (job == null)
             throw new NotFoundException(DomainErrors.Job.NotFound);
 
-        if (model.Status != JobStatus.Accepted || model.Status != JobStatus.Declined)
+        if (model.Status != JobStatus.Accepted && model.Status != JobStatus.Declined)
             throw new ApplicationException();
 
         ValidateUpdate(model.Status, job.Status);
@@ -34,34 +35,42 @@ public class UserJobService : IUserJobService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Contracts.Responses.Response.JobIdResponse>> GetListAsync(Guid advertId)
+    public async Task<List<Job>> GetListAsync(Guid advertId, string? userId)
     {
+        var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == advertId);
+
+        if (advert is null)
+            throw new BadRequestException(DomainErrors.Advert.NotFound);
+
+        if (advert.UserId != userId)
+            throw new ApplicationException();
+
         var jobs = await _context.Jobs.Where(x => x.AdvertId == advertId).ToListAsync();
 
-        return jobs.Select(x => x.ToModel()).ToList();
+        return jobs;
     }
 
     private void ValidateUpdate(JobStatus newStatus, JobStatus oldStatus)
     {
         // Pending can only bet set on creation
-        if (newStatus == JobStatus.Pending)
-            throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
+        //if (newStatus == JobStatus.Pending)
+        //    throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
 
-        // Job can only be accepted or declined when it is pending
-        if (newStatus == JobStatus.Declined || newStatus == JobStatus.Accepted && oldStatus != JobStatus.Pending)
-            throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
+        //// Job can only be accepted or declined when it is pending
+        //if ((newStatus == JobStatus.Declined || newStatus == JobStatus.Accepted) && oldStatus == JobStatus.Pending)
+        //    throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
 
-        // Job can only be started after it was accepted
-        if (newStatus == JobStatus.InProgress && oldStatus != JobStatus.Accepted)
-            throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
+        //// Job can only be started after it was accepted
+        //if (newStatus == JobStatus.InProgress && oldStatus != JobStatus.Accepted)
+        //    throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
 
-        // Job can only be done after it was in progess
-        if (newStatus == JobStatus.Done && oldStatus != JobStatus.InProgress)
-            throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
+        //// Job can only be done after it was in progess
+        //if (newStatus == JobStatus.Done && oldStatus != JobStatus.InProgress)
+        //    throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
 
-        // Job can be cancelled by service after it was created or accepted by the client or in progress of it
-        if (newStatus == JobStatus.Cancelled && oldStatus != JobStatus.Accepted || oldStatus != JobStatus.InProgress || oldStatus != JobStatus.Pending)
-            throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
+        //// Job can be cancelled by service after it was created or accepted by the client or in progress of it
+        //if (newStatus == JobStatus.Cancelled && oldStatus != JobStatus.Accepted || oldStatus != JobStatus.InProgress || oldStatus != JobStatus.Pending)
+        //    throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
     }
 }
 

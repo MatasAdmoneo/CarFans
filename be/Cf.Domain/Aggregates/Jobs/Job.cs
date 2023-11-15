@@ -13,15 +13,19 @@ public class Job : Entity
 
     public DateTime? StartDate { get; private set; }
 
+    public string? Description { get; set; }
+
     public Guid AdvertId { get; set; }
 
     public Advert Advert { get; set; }
 
-    public Job(string serviceId, DateTime? startDate, decimal? price) : base()
+    public Job(string serviceId, DateTime? startDate, decimal? price, string? description) : base()
     {
+        ServiceId = serviceId;
         Status = JobStatus.Pending;
         StartDate = startDate;
         Price = price;
+        Description = description;
     }
 
     public void UpdateStatus(JobStatus jobStatus)
