@@ -30,7 +30,7 @@ public class ServiceJobService : IServiceJobService
         if (serviceId == null)
             throw new ApplicationException();
 
-        var job = new Job(serviceId, model.StartDate, model.Price);
+        var job = new Job(serviceId, model.StartDate, model.Price, model.Description);
         job.Advert = advert;
         job.AdvertId = advertId;
 
@@ -54,6 +54,16 @@ public class ServiceJobService : IServiceJobService
 
         job.UpdateStatus(model.Status);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<Job>> GetListAsync(string? serviceId)
+    {
+        if (serviceId is null)
+            throw new ApplicationException();
+
+        var jobs = await _context.Jobs.Where(x => x.ServiceId == serviceId).ToListAsync();
+
+        return jobs;
     }
 
     private void ValidateUpdate(JobStatus newStatus, JobStatus oldStatus)
