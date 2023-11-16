@@ -1,6 +1,7 @@
 import React from "react";
 import { getSession, getAccessToken } from "@auth0/nextjs-auth0";
-import { BASE_API_URL, SERVICE_JOBS_ROUTE } from "@/utils/urls";
+import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
+import { removeLettersAfterNewline } from "@/utils/removeLettersAfterNewLine";
 
 const getServiceJobsData = async () => {
   const { accessToken } = await getAccessToken();
@@ -9,13 +10,15 @@ const getServiceJobsData = async () => {
   }
   // Fix 500 error, accessToken is available and obtained
   const res = await fetch(
-    `${process.env.API_SERVER_URL}${SERVICE_JOBS_ROUTE}`,
+    `${process.env.API_SERVER_URL}${SERVICE_ADVERTRS_ROUTE}`,
     {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     }
   );
+  // console.log(res);
   if (!res.ok) {
     const json = await res.json();
 
@@ -23,14 +26,13 @@ const getServiceJobsData = async () => {
       text: json.message || res.statusText || "Unable to fetch message.",
     };
   }
-
-  return res.json();
+  return JSON.stringify(res.json());
 };
 
 export default async function DashboardPage() {
   const { user }: any = await getSession();
-  //   const serviceJobs = await getServiceJobsData();
-  //   console.log(serviceJobs);
+  const serviceJobs = await getServiceJobsData();
+  console.log(serviceJobs);
   return (
     <>
       <div>Hello {user.name}</div>
