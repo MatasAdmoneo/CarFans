@@ -1,9 +1,8 @@
 import React from "react";
 import { getSession, getAccessToken } from "@auth0/nextjs-auth0";
-import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
-import { removeLettersAfterNewline } from "@/utils/removeLettersAfterNewLine";
+import { SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
 
-const getServiceJobsData = async () => {
+const getServiceAdvertsData = async () => {
   const { accessToken } = await getAccessToken();
   if (!accessToken) {
     throw new Error(`Requires authorization`);
@@ -26,13 +25,13 @@ const getServiceJobsData = async () => {
       text: json.message || res.statusText || "Unable to fetch message.",
     };
   }
-  return JSON.stringify(res.json());
+  return res.json();
 };
 
 export default async function DashboardPage() {
   const { user }: any = await getSession();
-  const serviceJobs = await getServiceJobsData();
-  console.log(serviceJobs);
+  const serviceAdverts = await getServiceAdvertsData();
+  console.log(serviceAdverts);
   return (
     <>
       <div>Hello {user.name}</div>
