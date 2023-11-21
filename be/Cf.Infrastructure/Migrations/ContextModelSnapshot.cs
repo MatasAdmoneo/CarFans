@@ -94,6 +94,34 @@ namespace Cf.Infrastructure.Migrations
                     b.ToTable("Jobs");
                 });
 
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<List<byte[]>>("Data")
+                        .IsRequired()
+                        .HasColumnType("bytea[]");
+
+                    b.Property<string>("ServiceId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Jobs.Job", b =>
                 {
                     b.HasOne("Cf.Domain.Aggregates.Adverts.Advert", "Advert")

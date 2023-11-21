@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Aggregates\Adverts\AdvertRepository\" />
     <Folder Include="Aggregates\Jobs\JobRepository\" />
+    <Folder Include="Aggregates\Services\Repository\" />
   </ItemGroup>
 
 </Project>

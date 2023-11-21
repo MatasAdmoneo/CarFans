@@ -9,5 +9,7 @@ public static partial class Response
     public record JobIdResponse(Guid Id, JobStatus Status);
 
     public record AdvertResponse(string Title, string Desciption, DateTime startDate, DateTime updateDate);
+
+    public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
 }
 

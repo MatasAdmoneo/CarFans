@@ -1,5 +1,6 @@
 ﻿using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Aggregates.Jobs;
+using Cf.Domain.Aggregates.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -19,6 +20,8 @@ public class Context : DbContext
     public DbSet<Advert> Adverts { get; set; }
 
     public DbSet<Job> Jobs { get; set; }
+
+    public DbSet<Service> Services { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

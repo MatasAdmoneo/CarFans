@@ -47,9 +47,11 @@ var api = app
 
 api.MapAdminAdvertRoutes();
 api.MapAdminJobRoutes();
+api.MapAdminDocumentRoutes();
 
 api.MapServiceAdvertRoutes();
 api.MapServiceJobRoutes();
+api.MapServiceDocumentRoutes();
 
 api.MapUserAdvertRoutes();
 api.MapUserJobRoutes();

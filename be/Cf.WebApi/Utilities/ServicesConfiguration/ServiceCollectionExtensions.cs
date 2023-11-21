@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Cf.WebApi.Utilities.Filters;
 using Cf.Application.Services.Interfaces;
 using Cf.Application.Services.JobServices;
+using Cf.Application.Services.DocumentServices;
 
 namespace Cf.WebApi.Utilities.ServicesConfiguration;
 
@@ -28,6 +29,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAdminJobService, AdminJobService>();
         services.AddScoped<IUserJobService, UserJobService>();
         services.AddScoped<IServiceJobService, ServiceJobService>();
+        services.AddScoped<IServiceDocumentService, ServiceDocumentService>();
+        services.AddScoped<IAdminDocumentService, AdminDocumentService>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

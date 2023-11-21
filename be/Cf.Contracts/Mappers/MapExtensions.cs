@@ -1,6 +1,7 @@
 ﻿using Cf.Contracts.Responses;
 using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Aggregates.Jobs;
+using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Models;
 using System.Runtime.CompilerServices;
 
@@ -25,5 +26,8 @@ public static class MapExtensions
 
         return advert;
     }
+
+    public static Response.ServiceInfo ToModel(this Service service) =>
+        new(service.ServiceId, service.Status, service.CreatedDate);
 }
 
