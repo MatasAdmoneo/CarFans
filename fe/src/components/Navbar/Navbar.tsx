@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Navbar as Nav,
   MobileNav,
@@ -9,9 +10,21 @@ import {
   IconButton,
   Card,
 } from "@/lib/materialTailwindExports";
+import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const Navbar = () => {
   const [openNav, setOpenNav] = useState(false);
+  const { user, error, isLoading } = useUser();
+  const router = useRouter();
+
+  const navigateToLogin = () => {
+    router.push("/api/auth/login");
+  };
+
+  const navigateToLogout = () => {
+    router.push("/api/auth/logout");
+  };
 
   useEffect(() => {
     window.addEventListener(
@@ -78,16 +91,34 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <div className="flex items-center gap-x-1">
-            <Button variant="text" size="sm" className="hidden lg:inline-block">
-              <span>Log In</span>
-            </Button>
-            <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block"
-            >
-              <span>Sign in</span>
-            </Button>
+            {user ? (
+              <Button
+                variant="gradient"
+                size="sm"
+                className="hidden lg:inline-block"
+                onClick={() => navigateToLogout()}
+              >
+                Log out
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="text"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                  onClick={() => navigateToLogin()}
+                >
+                  Log In
+                </Button>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                >
+                  <span>Sign in</span>
+                </Button>
+              </>
+            )}
           </div>
           <IconButton
             variant="text"
@@ -130,14 +161,34 @@ const Navbar = () => {
       </div>
       <MobileNav open={openNav}>
         {navList}
-        <div className="flex items-center gap-x-1">
-          <Button fullWidth variant="text" size="sm" className="">
-            <span>Log In</span>
-          </Button>
-          <Button fullWidth variant="gradient" size="sm" className="">
-            <span>Sign in</span>
-          </Button>
-        </div>
+        {user ? (
+          <div className="flex items-center gap-x-1">
+            <Button
+              fullWidth
+              variant="gradient"
+              size="sm"
+              className=""
+              onClick={() => navigateToLogout()}
+            >
+              Log out
+            </Button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-x-1">
+            <Button
+              fullWidth
+              variant="text"
+              size="sm"
+              className=""
+              onClick={() => navigateToLogin()}
+            >
+              Log In
+            </Button>
+            <Button fullWidth variant="gradient" size="sm" className="">
+              <span>Sign in</span>
+            </Button>
+          </div>
+        )}
       </MobileNav>
     </Nav>
   );
