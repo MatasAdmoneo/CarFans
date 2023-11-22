@@ -41,9 +41,9 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Pages
-        </a>
+        <Link href="#" className="flex items-center">
+          Car Services
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -51,9 +51,9 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Account
-        </a>
+        <Link href="#" className="flex items-center">
+          About Us
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -61,9 +61,9 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Blocks
-        </a>
+        <Link href="#" className="flex items-center">
+          Privacy Policy
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -71,9 +71,9 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Docs
-        </a>
+        <Link href="#" className="flex items-center">
+          Contact
+        </Link>
       </Typography>
     </ul>
   );
