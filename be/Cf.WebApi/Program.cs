@@ -41,6 +41,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
+
+app.UseCors(MyAllowSpecificOrigins);
+
 var api = app
     .NewVersionedApi("Cf")
     .MapGroup("v{version:apiVersion}");

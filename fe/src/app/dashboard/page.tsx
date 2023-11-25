@@ -4,17 +4,18 @@ import { SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
 import { getAccessToken } from "@auth0/nextjs-auth0";
 
 const getServiceAdvertsData = async () => {
-  // const { accessToken } = await getAccessToken();
-  // if (!accessToken) {
-  //   throw new Error(`Requires authorization`);
-  // }
+  const { accessToken } = await getAccessToken();
+  if (!accessToken) {
+    throw new Error(`Requires authorization`);
+  }
   const res = await fetch(
     `${process.env.API_SERVER_URL}${SERVICE_ADVERTRS_ROUTE}`,
     {
       method: "GET",
-      // headers: {
-      //   Authorization: `Bearer ${accessToken}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Access-Control-Allow-Origin": "*",
+      },
     }
   );
   if (!res.ok) {

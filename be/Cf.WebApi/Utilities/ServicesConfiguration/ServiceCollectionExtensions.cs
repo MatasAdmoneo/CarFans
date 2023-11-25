@@ -81,6 +81,18 @@ public static class ServiceCollectionExtensions
 
             c.OperationFilter<SecurityRequirementsOperationFilter>();
         });
+
+        var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: MyAllowSpecificOrigins,
+                              builder =>
+                              {
+                                  builder.WithOrigins("https://localhost:3000")
+                                  .WithMethods("GET", "POST","PUT","DELETE")
+                                  .AllowAnyHeader();
+                              });
+        });
     }
 }
 

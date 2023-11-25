@@ -38,15 +38,24 @@ public static class ServiceDocumentEndpoints
     }
 
     [Authorize(Roles = "Service")]
-    private static async Task UploadPdfBytesAsync([FromServices] IServiceDocumentService pdfService, IHttpContextAccessor httpContextAccessor, [FromBody] byte[] pdfBytes)
+    private static async Task UploadPdfBytesAsync([FromServices] IServiceDocumentService pdfService, IHttpContextAccessor httpContextAccessor, [FromBody] string base64Content)
     {
-        if (pdfBytes == null || pdfBytes.Length == 0)
+        if (string.IsNullOrEmpty(base64Content))
         {
-            throw new ApplicationException();
+            throw new ApplicationException("Base64 content is null or empty.");
         }
 
-        // Your PDF service method to save the PDF
-        await pdfService.SavePdfAsync(pdfBytes, GetServiceId(httpContextAccessor));
+        try
+        {
+            byte[] pdfBytes = Convert.FromBase64String(base64Content);
+
+            // Your PDF service method to save the PDF
+            await pdfService.SavePdfAsync(pdfBytes, GetServiceId(httpContextAccessor));
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Failed to process the PDF content.", ex);
+        }
     }
 
     private static async Task<byte[]> ReadFileBytesAsync(IFormFile file)
