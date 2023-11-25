@@ -36,6 +36,27 @@ namespace Cf.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsLeakedLiquids")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPanelInvalid")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsQuestionsFormType")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsScentBad")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsSoundBad")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUnstableCar")
+                        .HasColumnType("boolean");
+
                     b.Property<List<string>>("Photos")
                         .IsRequired()
                         .HasColumnType("text[]");

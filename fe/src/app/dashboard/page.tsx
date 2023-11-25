@@ -9,7 +9,7 @@ const getServiceAdvertsData = async () => {
   }
   // Fix 500 error, accessToken is available and obtained
   const res = await fetch(
-    `${process.env.API_SERVER_URL}${SERVICE_ADVERTRS_ROUTE}`,
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}${SERVICE_ADVERTRS_ROUTE}`,
     {
       method: "GET",
       headers: {

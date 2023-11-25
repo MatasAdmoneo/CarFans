@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,9 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body className={inter.className}>
+        <Toaster
+          containerStyle={{
+            top: 70,
+          }}
+        />
+        <body className={`min-h-screen ${inter.className}`}>
           <Navbar />
-          {children}
+          <div style={{ minHeight: 'calc(100vh - 72px - 96px)', overflowY: 'auto' }}>
+            {children}
+          </div>
           <Footer />
         </body>
       </UserProvider>

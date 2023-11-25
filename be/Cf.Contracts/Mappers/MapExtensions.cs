@@ -3,14 +3,13 @@ using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Aggregates.Jobs;
 using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Models;
-using System.Runtime.CompilerServices;
 
 namespace Cf.Contracts.Mappers;
 
 public static class MapExtensions
 {
     public static Response.AdvertIdResponse ToAdvertIdModel(this Advert model) =>
-        new(model.Id, model.Title, model.Description);
+        new(model.Id, model.Title, model.Description, model.EndDate);
 
     public static Response.AdvertResponse ToAdvertModel(this Advert model) =>
         new(model.Title, model.Description, model.CreatedDate, model.UpdatedDate);

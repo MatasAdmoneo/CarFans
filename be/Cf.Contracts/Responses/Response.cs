@@ -4,7 +4,7 @@ namespace Cf.Contracts.Responses;
 
 public static partial class Response
 {
-    public record AdvertIdResponse(Guid Id, string Title, string Description);
+    public record AdvertIdResponse(Guid Id, string Title, string Description, DateTime EndDate);
 
     public record JobIdResponse(Guid Id, JobStatus Status);
 

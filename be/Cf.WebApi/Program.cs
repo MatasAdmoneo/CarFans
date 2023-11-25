@@ -2,8 +2,6 @@ using Cf.Infrastructure;
 using Cf.WebApi.Endpoints;
 using Cf.WebApi.Utilities.ServicesConfiguration;
 using Cf.WebApi.Utilities.Versioning;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

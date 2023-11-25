@@ -1,7 +1,6 @@
 ﻿
 using Cf.Application.Services.Interfaces;
 using Cf.Domain.Aggregates.Services;
-using Cf.Domain.Exceptions;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
