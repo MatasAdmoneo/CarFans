@@ -1,15 +1,18 @@
 "use client";
 
 import { Button } from "@/lib/materialTailwindExports";
-import { getToken } from "@/utils/getToken";
-import { BASE_API_URL, SERVICE_DOCUMENT_UPLOAD_ROUTE } from "@/utils/urls";
-import { type } from "os";
 import { FormEvent, useState } from "react";
 import { useDropzone, FileWithPath } from "react-dropzone";
+import { uploadPdfToApi } from "./uploadPdfToApi";
+import toast from "react-hot-toast/headless";
+import { useRouter } from "next/navigation";
 
+// TODO: not allow this page access if submission status is pending
 function PdfDropzone() {
   const maxFileSize = 10485760;
   const [uploading, setUploading] = useState(false);
+  const [successUpload, setSuccessUpload] = useState(false);
+
   const {
     acceptedFiles,
     getRootProps,
@@ -24,6 +27,8 @@ function PdfDropzone() {
     maxFiles: 1,
     maxSize: maxFileSize,
   });
+  const router = useRouter();
+
   const acceptedFileItems = acceptedFiles.map((file: FileWithPath) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
@@ -40,55 +45,16 @@ function PdfDropzone() {
 
   const handlePdfUpload = async (e: FormEvent) => {
     e.preventDefault();
-    if (acceptedFiles.length === 0) return;
+    if (acceptedFiles.length === 0) {
+      toast.error("Please select the file to upload.");
+      return;
+    }
     setUploading(true);
-    await uploadPdfToApi(acceptedFiles[0]);
+    await uploadPdfToApi(acceptedFiles[0], setSuccessUpload);
     setUploading(false);
-    console.log("uploaded");
+    router.push(`verify/success`);
   };
 
-  const uploadPdfToApi = async (file: File) => {
-    const accessToken = await getToken();
-    console.log("Token: ", accessToken);
-
-    const reader = new FileReader();
-
-    reader.onload = async () => {
-      const base64Content = reader.result?.toString().split(",")[1]; // Extract base64 content from data URL
-      if (base64Content) {
-        try {
-          const res = await fetch(
-            `${BASE_API_URL}${SERVICE_DOCUMENT_UPLOAD_ROUTE}`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-              },
-              method: "POST",
-              body: JSON.stringify(base64Content), // Send base64 content in the request body
-            }
-          );
-
-          if (!res.ok) {
-            const json = await res.json();
-            throw new Error(
-              json.message || res.statusText || "Unknown error occurred."
-            );
-          }
-
-          console.log("File uploaded successfully");
-        } catch (error) {
-          console.error("Failed to upload file", error);
-        }
-      }
-    };
-
-    reader.onerror = () => {
-      console.error("Error reading file");
-    };
-
-    reader.readAsDataURL(file);
-  };
   return (
     <section className="">
       <div
@@ -123,7 +89,7 @@ function PdfDropzone() {
         disabled={fileRejections.length > 0 || acceptedFiles.length == 0}
         onClick={(e) => handlePdfUpload(e)}
       >
-        Submit
+        {uploading ? "Submitting" : "Submit"}
       </Button>
     </section>
   );

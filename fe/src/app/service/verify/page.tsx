@@ -1,8 +1,8 @@
+"use client";
+
 import PdfDropzone from "@/components/PdfDropzone/PdfDropzone";
 
-import React from "react";
-
-async function ServiceVerifyPage() {
+function ServiceVerifyPage() {
   return (
     <main className="text-center">
       <h2 className="text-3xl font-bold py-10 px-4">
