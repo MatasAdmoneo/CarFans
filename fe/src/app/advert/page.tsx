@@ -9,6 +9,7 @@ import { QUESTIONS_FORM_TYPE, SIMPLE_FORM_TYPE, questionsFormDefaultValues, ques
 import { BASE_API_URL, USER_ADVERTS_ROUTE } from "@/utils/urls";
 import ImageDropzone from "@/components/ImageDropzone/ImageDropzone";
 import { toast } from "@/lib/reactHotToastExports";
+import { getToken } from "@/utils/getToken";
 
 const AdvertPage = () => {
   const [formType, setFormType] = useState<string>(SIMPLE_FORM_TYPE);
@@ -78,24 +79,27 @@ const AdvertPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("ASDF ->", simpleFormData)
     const isValid = await validateData();
 
     if (isValid) {
       const data = formType === SIMPLE_FORM_TYPE ? simpleFormData : questionsFormData;
       const body = {
         ...data,
-        isQuestionsFormType: formType,
+        endDate: new Date(data.endDate!),
+        isQuestionsFormType: formType === QUESTIONS_FORM_TYPE,
       }
+      const token = await getToken();
       const response = await fetch(`${BASE_API_URL}${USER_ADVERTS_ROUTE}`, {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFKYk9MT1REODRPdHNfNlR4QVBINyJ9.eyJodHRwczovL0NhckZhbnMuY29tL3JvbGVzIjpbIlNlcnZpY2UiLCJVc2VyIl0sImh0dHBzOi8vQ2FyRmFucy5jb20vaWQiOiJhdXRoMHw2NTViYzk0ZTMxMTA4ZmQxYmExNTNiNTEiLCJpc3MiOiJodHRwczovL2Rldi0xNXFpazFiYWI4emt6c3BiLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NTViYzk0ZTMxMTA4ZmQxYmExNTNiNTEiLCJhdWQiOiJodHRwczovL0NhckZhbnMuY29tIiwiaWF0IjoxNzAwODUwNDI1LCJleHAiOjE3MDA4NTc2MjUsImF6cCI6Inl4b2FHNzQxUjM2Ujc2UHJ1a0tSaVlXb0p4cXJxY2UzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJmdWxsX2FjY2VzcyJdfQ.rdbYpTbt1MkgA1f5JiIWxydb-YeFGs7SZ7n5zH_EM6nG1Xf2jFl3Tmkc0L4Ts2bJfZsqho7XjGsC5y0UrNhVqZq9Jz8YlD7zHafAMtkqjvFfQbJe2TWKJPoHg4VeXVAfZB_m0JNiCP2Z7ZkBXtg2uw3vAOckUv0RT8ESCliTfjbjMZsme0hKaIZ633LsGQW86r0ACxlHS5_hvF5Af89dmtBqcbMeHu25PlCAzroWyegTrfYq1fJKGfWakhcv--7-xaJxxgf8S7nvjpihQVpX9X7vDRmDKJqvkN7NL61V1SX7uTMx5WBUGClwij-AOoGGuxzk2IQ5MgNOeQ1kcmRbPA`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
       });
-      console.log(response);
+      setQuestionsFormData(questionsFormDefaultValues);
+      setSimpleFormData(simpleFormDefaultValues);
       if (!response.ok) {
         const json = await response.json();
         toast.error(json.message || response.statusText || "Unknown error occoured.");
@@ -143,9 +147,9 @@ const AdvertPage = () => {
                 value={{ startDate: simpleFormData.endDate, endDate: simpleFormData.endDate }}
                 onChange={handleEndDateChange} 
               />
-              <Input crossOrigin="" name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
-              <Textarea name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Description of the problem" />
-              <ImageDropzone onUpload={handleImagesUpload} />
+              <Input crossOrigin="" value={simpleFormData.title} name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
+              <Textarea value={simpleFormData.description} name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Description of the problem" />
+              <ImageDropzone uploadedPhotos={simpleFormData.photos} onUpload={handleImagesUpload} />
               <Button type="submit" size="lg" className="rounded-md">
                 Create
               </Button>
@@ -161,14 +165,14 @@ const AdvertPage = () => {
                 value={{ startDate: questionsFormData.endDate, endDate: questionsFormData.endDate }}
                 onChange={handleEndDateChange} 
               />
-              <Input crossOrigin="" name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
-              <YesOrNoChoice name="isSoundBad" onChange={handleYesOrNoValue} question="Have you noticed strange sounds coming from your car?" />
-              <YesOrNoChoice name="isScentBad" onChange={handleYesOrNoValue} question="Have you noticed a strange scent coming from your car?" />
-              <YesOrNoChoice name="isPanelInvalid" onChange={handleYesOrNoValue} question="Does your car shows warning or error marks in a panel?" />
-              <YesOrNoChoice name="isLeakedLiquids" onChange={handleYesOrNoValue} question="Have you noticed leaked liquids under a car?" />
-              <YesOrNoChoice name="isUnstableCar" onChange={handleYesOrNoValue} question="Have you noticed that your car is unstable when driving?" />
-              <ImageDropzone onUpload={handleImagesUpload} />
-              <Textarea name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Additional information" />
+              <Input value={questionsFormData.title} crossOrigin="" name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
+              <YesOrNoChoice name="isSoundBad" value={questionsFormData.isSoundBad} onChange={handleYesOrNoValue} question="Have you noticed strange sounds coming from your car?" />
+              <YesOrNoChoice name="isScentBad" value={questionsFormData.isScentBad} onChange={handleYesOrNoValue} question="Have you noticed a strange scent coming from your car?" />
+              <YesOrNoChoice name="isPanelInvalid" value={questionsFormData.isPanelInvalid} onChange={handleYesOrNoValue} question="Does your car shows warning or error marks in a panel?" />
+              <YesOrNoChoice name="isLeakedLiquids" value={questionsFormData.isLeakedLiquids} onChange={handleYesOrNoValue} question="Have you noticed leaked liquids under a car?" />
+              <YesOrNoChoice name="isUnstableCar" value={questionsFormData.isUnstableCar} onChange={handleYesOrNoValue} question="Have you noticed that your car is unstable when driving?" />
+              <ImageDropzone uploadedPhotos={questionsFormData.photos} onUpload={handleImagesUpload} />
+              <Textarea value={questionsFormData.description} name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Additional information" />
               <Button type="submit" size="lg" className="rounded-md">
                 Create
               </Button>

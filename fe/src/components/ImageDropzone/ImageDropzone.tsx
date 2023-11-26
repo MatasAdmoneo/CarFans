@@ -7,9 +7,10 @@ import { readUploadedFile } from "./utils";
 
 type ImageDropzoneType = {
   onUpload: (data: string[]) => void;
+  uploadedPhotos: string[];
 };
 
-function ImageDropzone({ onUpload }: ImageDropzoneType) {
+function ImageDropzone({ onUpload, uploadedPhotos }: ImageDropzoneType) {
   const maxFileSize = 10485760;
   const {
     acceptedFiles,
@@ -32,6 +33,7 @@ function ImageDropzone({ onUpload }: ImageDropzoneType) {
     const readerResult = await readUploadedFile(acceptedFiles);
     onUpload(readerResult);
   }
+  console.log(uploadedPhotos);
 
   const acceptedFileItems = !fileRejections.length && acceptedFiles.map((file: FileWithPath) => (
     <li key={file.path}>
@@ -68,10 +70,12 @@ function ImageDropzone({ onUpload }: ImageDropzoneType) {
         )}
       </div>
       <aside>
-        {acceptedFiles.length > 0 && (
-          <h3 className="text-xl">Uploaded Files</h3>
+        {acceptedFiles.length > 0 && uploadedPhotos.length > 0 && (
+          <>
+            <h3 className="text-xl">Uploaded Files</h3>
+            <ul>{acceptedFileItems}</ul>
+          </>
         )}
-        <ul>{acceptedFileItems}</ul>
       </aside>
     </section>
   );

@@ -7,7 +7,7 @@ export type QuestionsFormType = {
   isScentBad?: boolean;
   isPanelInvalid?: boolean;
   photos: Array<string>;
-  isLeakedLiquidsNoticed?: boolean;
+  isLeakedLiquids?: boolean;
   isUnstableCar?: boolean;
   description: string;
 };

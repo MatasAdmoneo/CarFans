@@ -5,7 +5,7 @@ export const readUploadedFile = async (acceptedFiles: File[]) => {
   
     const readerResult = new Promise<string>((resolve) => {
       reader.onloadend = () => {
-        const readerResult = reader.result as string;
+        const readerResult = reader.result?.toString().split(",")[1] as string;
         resolve(readerResult);
       };
     });

@@ -17,4 +17,10 @@ public static class DomainErrors
         public static MessageInfo NotFound => new MessageInfo("Darbas nerastas");
         public static MessageInfo IncorrectStatus => new MessageInfo("Negalimas statuso keitimas");
     }
+
+    public static class Service
+    {
+        public static MessageInfo NotFound => new MessageInfo("Could not find any content attached to a request body.");
+        public static MessageInfo FailedUpload => new MessageInfo("Failed to process the PDF content. Try again.");
+    }
 }

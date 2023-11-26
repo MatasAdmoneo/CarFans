@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Navbar as Nav,
@@ -10,6 +9,7 @@ import {
 } from "@/lib/materialTailwindExports";
 import Link from 'next/link'
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useState } from "react";
 
 const Navbar = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -42,8 +42,48 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
+        <Link href="#" className="flex items-center">
+          Car Services
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <Link href="#" className="flex items-center">
+          About Us
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
         <Link href="/advert" className="flex items-center">
           Advert
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <Link href="#" className="flex items-center">
+          Privacy Policy
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <Link href="#" className="flex items-center">
+          Contact
         </Link>
       </Typography>
     </ul>

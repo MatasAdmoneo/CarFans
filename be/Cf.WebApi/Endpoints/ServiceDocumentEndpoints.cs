@@ -1,4 +1,6 @@
 ﻿using Cf.Application.Services.Interfaces;
+using Cf.Domain.Exceptions.Messages;
+using Cf.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,44 +19,25 @@ public static class ServiceDocumentEndpoints
             .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapPost("UploadPdf", UploadPdfAsync);
         group.MapPost("UploadpdfBytes", UploadPdfBytesAsync);
     }
 
     [Authorize(Roles = "Service")]
-    private static async Task UploadPdfAsync([FromServices] IServiceDocumentService pdfService, IHttpContextAccessor httpContextAccessor, [FromForm] IFormFile file)
+    private static async Task UploadPdfBytesAsync([FromServices] IServiceDocumentService pdfService, IHttpContextAccessor httpContextAccessor, [FromBody] string base64Content)
     {
-        if (file == null || file.Length == 0)
+        if (string.IsNullOrEmpty(base64Content))
         {
-            throw new ApplicationException();
+            throw new BadRequestException(DomainErrors.Service.NotFound);
         }
 
-        // Add your logic to save the PDF file using the pdfService
-        // For example, you can save it to a specific folder or a database
-        var pdfBytes = await ReadFileBytesAsync(file);
-
-        // Your PDF service method to save the PDF
-        await pdfService.SavePdfAsync(pdfBytes, GetServiceId(httpContextAccessor));
-    }
-
-    [Authorize(Roles = "Service")]
-    private static async Task UploadPdfBytesAsync([FromServices] IServiceDocumentService pdfService, IHttpContextAccessor httpContextAccessor, [FromBody] byte[] pdfBytes)
-    {
-        if (pdfBytes == null || pdfBytes.Length == 0)
+        try
         {
-            throw new ApplicationException();
+            byte[] pdfBytes = Convert.FromBase64String(base64Content);
+            await pdfService.SavePdfAsync(pdfBytes, GetServiceId(httpContextAccessor));
         }
-
-        // Your PDF service method to save the PDF
-        await pdfService.SavePdfAsync(pdfBytes, GetServiceId(httpContextAccessor));
-    }
-
-    private static async Task<byte[]> ReadFileBytesAsync(IFormFile file)
-    {
-        using (var memoryStream = new MemoryStream())
+        catch (Exception)
         {
-            await file.CopyToAsync(memoryStream);
-            return memoryStream.ToArray();
+            throw new InternalException(DomainErrors.Service.FailedUpload);
         }
     }
 
