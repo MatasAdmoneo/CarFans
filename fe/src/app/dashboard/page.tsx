@@ -1,6 +1,6 @@
 import React from "react";
 import { getSession, getAccessToken } from "@auth0/nextjs-auth0";
-import { SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
+import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
 
 const getServiceAdvertsData = async () => {
   const { accessToken } = await getAccessToken();
@@ -9,7 +9,7 @@ const getServiceAdvertsData = async () => {
   }
   // Fix 500 error, accessToken is available and obtained
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}${SERVICE_ADVERTRS_ROUTE}`,
+    `${BASE_API_URL}${SERVICE_ADVERTRS_ROUTE}`,
     {
       method: "GET",
       headers: {

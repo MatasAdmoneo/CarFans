@@ -1,15 +1,14 @@
 "use client"
-
 import { useState } from "react";
-import toast from "react-hot-toast";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker"; 
 import YesOrNoChoice from "@/components/YesOrNoChoice/YesOrNoChoice";
 import { Button, Input, Tab, TabPanel, Tabs, TabsBody, TabsHeader, Textarea } from "@/lib/materialTailwindExports";
 import { QuestionsFormType, SimpleFormType } from "@/types/CreateAdvertForm";
 import { FORM_BOX_SHADOW } from "@/utils/constants";
 import { QUESTIONS_FORM_TYPE, SIMPLE_FORM_TYPE, questionsFormDefaultValues, questionsFormSchema, simpleFormDefaultValues, simpleFormSchema } from "./utils";
-import { USER_ADVERTS_ROUTE } from "@/utils/urls";
+import { BASE_API_URL, USER_ADVERTS_ROUTE } from "@/utils/urls";
 import ImageDropzone from "@/components/ImageDropzone/ImageDropzone";
+import { toast } from "@/lib/reactHotToastExports";
 
 const AdvertPage = () => {
   const [formType, setFormType] = useState<string>(SIMPLE_FORM_TYPE);
@@ -87,7 +86,7 @@ const AdvertPage = () => {
         ...data,
         isQuestionsFormType: formType,
       }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL}${USER_ADVERTS_ROUTE}`, {
+      const response = await fetch(`${BASE_API_URL}${USER_ADVERTS_ROUTE}`, {
         method: "POST",
         mode: "no-cors",
         headers: {
@@ -109,7 +108,7 @@ const AdvertPage = () => {
   }
 
   return (
-    <div style={{ boxShadow: FORM_BOX_SHADOW }} className="max-w-2xl mx-auto my-5 py-10 px-5 shadow-md hover:shadow-lg transition duration-300">
+    <div style={{ boxShadow: FORM_BOX_SHADOW }} className="max-w-3xl mx-auto my-5 py-10 px-5 shadow-md hover:shadow-lg transition duration-300">
       <h1 className="text-center text-2xl pb-5 leading-6 font-medium text-gray-900">Create an advert</h1>
       <Tabs value={formType}>
         <TabsHeader className="relative z-0">

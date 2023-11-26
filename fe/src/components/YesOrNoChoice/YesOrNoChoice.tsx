@@ -1,4 +1,4 @@
-import { Radio } from "@material-tailwind/react";
+import { Radio } from "@/lib/materialTailwindExports";
 
 type YesOrNoFormType = {
   question: string;

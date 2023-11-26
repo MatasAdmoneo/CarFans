@@ -25,7 +25,7 @@ public class ImageUploadService : IImageUploadService
     {
         try
         {
-            byte[] imageBytes = Convert.FromBase64String(imageBase64);
+            var imageBytes = Convert.FromBase64String(imageBase64);
 
             using MemoryStream stream = new(imageBytes);
             ImageUploadParams uploadParams = new()
@@ -33,12 +33,12 @@ public class ImageUploadService : IImageUploadService
                 File = new FileDescription(Guid.NewGuid().ToString(), stream)
             };
 
-            ImageUploadResult uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
             return uploadResult.SecureUrl.AbsoluteUri;
         }
         catch
         {
-            throw new BadRequestException(DomainErrors.Advert.ImageUploadFailed); ;
+            throw new BadRequestException(DomainErrors.Advert.ImageUploadFailed);
         }
     }
 }

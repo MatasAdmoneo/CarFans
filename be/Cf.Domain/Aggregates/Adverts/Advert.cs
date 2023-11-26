@@ -19,9 +19,13 @@ public class Advert : Entity
     public bool IsQuestionsFormType { get; set; } = false;
 
     public bool IsSoundBad { get; set; } = false;
+
     public bool IsScentBad { get; set; } = false;
+
     public bool IsPanelInvalid { get; set; } = false;
+
     public bool IsLeakedLiquids { get; set; } = false;
+
     public bool IsUnstableCar { get; set; } = false;
 
     public Advert(
