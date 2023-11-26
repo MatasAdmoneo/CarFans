@@ -10,8 +10,7 @@ import { useRouter } from "next/navigation";
 // TODO: not allow this page access if submission status is pending
 function PdfDropzone() {
   const maxFileSize = 10485760;
-  const [uploading, setUploading] = useState(false);
-  const [successUpload, setSuccessUpload] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const {
     acceptedFiles,
@@ -49,10 +48,8 @@ function PdfDropzone() {
       toast.error("Please select the file to upload.");
       return;
     }
-    setUploading(true);
-    await uploadPdfToApi(acceptedFiles[0], setSuccessUpload);
-    setUploading(false);
-    router.push(`verify/success`);
+    setIsUploading(true);
+    await uploadPdfToApi(acceptedFiles[0], router, setIsUploading);
   };
 
   return (
@@ -86,10 +83,12 @@ function PdfDropzone() {
         type="submit"
         color="blue"
         className="mt-5"
-        disabled={fileRejections.length > 0 || acceptedFiles.length == 0}
+        disabled={
+          fileRejections.length > 0 || acceptedFiles.length == 0 || isUploading
+        }
         onClick={(e) => handlePdfUpload(e)}
       >
-        {uploading ? "Submitting" : "Submit"}
+        {isUploading ? "Submitting" : "Submit"}
       </Button>
     </section>
   );

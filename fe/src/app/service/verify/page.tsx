@@ -1,5 +1,3 @@
-"use client";
-
 import PdfDropzone from "@/components/PdfDropzone/PdfDropzone";
 
 function ServiceVerifyPage() {
