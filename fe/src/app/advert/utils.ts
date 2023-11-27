@@ -1,4 +1,4 @@
-import { object, string, boolean, array, date } from 'yup';
+import { object, string, boolean, array, date, number } from 'yup';
 
 export const SIMPLE_FORM_TYPE = "simple";
 export const QUESTIONS_FORM_TYPE = "questions";
@@ -7,14 +7,20 @@ export const simpleFormSchema = object({
   title: string().required(),
   photos: array().of(string()),
   description: string().required(),
-  endDate: date().min(new Date(), 'Date must be in the future').required()
+  endDate: date().min(new Date(), 'Date must be in the future').required(),
+  model: string().required(),
+  brand: string().required(),
+  manufactureYear: number().required(),
 });
 
 export const simpleFormDefaultValues = {
   title: "",
   photos: [],
   description: "",
-  endDate: null
+  endDate: null,
+  model: "",
+  brand: "",
+  manufactureYear: 0
 };
 
 export const questionsFormSchema = object({
@@ -26,7 +32,10 @@ export const questionsFormSchema = object({
   isLeakedLiquids: boolean().required(),
   isUnstableCar: boolean().required(),
   description: string(),
-  endDate: date().min(new Date(), 'Date must be in the future').required()
+  endDate: date().min(new Date(), 'Date must be in the future').required(),
+  model: string().required(),
+  brand: string().required(),
+  manufactureYear: number().required(),
 });
 
 export const questionsFormDefaultValues = {
@@ -38,5 +47,8 @@ export const questionsFormDefaultValues = {
   isLeakedLiquids: undefined,
   isUnstableCar: undefined,
   description: "",
-  endDate: null
+  endDate: null,
+  model: "",
+  brand: "",
+  manufactureYear: 0
 };

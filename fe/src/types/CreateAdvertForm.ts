@@ -10,6 +10,9 @@ export type QuestionsFormType = {
   isLeakedLiquids?: boolean;
   isUnstableCar?: boolean;
   description: string;
+  brand: string;
+  model: string;
+  manufactureYear: number;
 };
 
 export type SimpleFormType = {
@@ -17,4 +20,7 @@ export type SimpleFormType = {
   endDate: DateType | null;
   photos: Array<string>;
   description: string;
+  brand: string;
+  model: string;
+  manufactureYear: number;
 };

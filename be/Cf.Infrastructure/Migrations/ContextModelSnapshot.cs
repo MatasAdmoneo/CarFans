@@ -29,6 +29,10 @@ namespace Cf.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -56,6 +60,13 @@ namespace Cf.Infrastructure.Migrations
 
                     b.Property<bool>("IsUnstableCar")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("ManufactureYear")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<List<string>>("Photos")
                         .IsRequired()

@@ -10,6 +10,12 @@ public class Advert : Entity
 
     public string Description { get; set; }
 
+    public string Model { get; set; }
+
+    public string Brand { get; set; }
+
+    public int ManufactureYear { get; set; }
+
     public List<string> Photos { get; set; } = new List<string>();
 
     public DateTime EndDate { get; set; }
@@ -32,6 +38,9 @@ public class Advert : Entity
         string userId,
         string title,
         string description,
+        string brand,
+        string model,
+        int manufactureYear,
         List<string> photos,
         bool isQuestionsFormType,
         bool isSoundBad,
@@ -44,6 +53,9 @@ public class Advert : Entity
         UserId = userId;
         Title = title;
         Description = description;
+        Brand = brand;
+        Model = model;
+        ManufactureYear = manufactureYear;
         Photos = photos;
         IsQuestionsFormType = isQuestionsFormType;
         IsSoundBad = isSoundBad;

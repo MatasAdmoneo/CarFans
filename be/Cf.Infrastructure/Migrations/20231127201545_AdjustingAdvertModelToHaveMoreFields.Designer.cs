@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cf.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231125131242_AddingFormTypeAndOtherBooleanFieldsToAdvertModel")]
-    partial class AddingFormTypeAndOtherBooleanFieldsToAdvertModel
+    [Migration("20231127201545_AdjustingAdvertModelToHaveMoreFields")]
+    partial class AdjustingAdvertModelToHaveMoreFields
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,10 @@ namespace Cf.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -59,6 +63,13 @@ namespace Cf.Infrastructure.Migrations
 
                     b.Property<bool>("IsUnstableCar")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("ManufactureYear")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<List<string>>("Photos")
                         .IsRequired()

@@ -33,8 +33,7 @@ function ImageDropzone({ onUpload, uploadedPhotos }: ImageDropzoneType) {
     const readerResult = await readUploadedFile(acceptedFiles);
     onUpload(readerResult);
   }
-  console.log(uploadedPhotos);
-
+  
   const acceptedFileItems = !fileRejections.length && acceptedFiles.map((file: FileWithPath) => (
     <li key={file.path}>
       {file.path} - {file.size} bytes

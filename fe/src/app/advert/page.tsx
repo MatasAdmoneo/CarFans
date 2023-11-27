@@ -79,7 +79,6 @@ const AdvertPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("ASDF ->", simpleFormData)
     const isValid = await validateData();
 
     if (isValid) {
@@ -139,6 +138,9 @@ const AdvertPage = () => {
         >
           <TabPanel value="simple">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <Input crossOrigin="" value={simpleFormData.brand} name="brand" onChange={handleChange} color="blue-gray" label="Brand" />
+              <Input crossOrigin="" value={simpleFormData.model} name="model" onChange={handleChange} color="blue-gray" label="Model" />
+              <Input crossOrigin="" type="number" value={simpleFormData.manufactureYear} name="manufactureYear" onChange={handleChange} color="blue-gray" label="Manufacture year" />
               <Datepicker
                 placeholder={"Select advert's end date"}
                 minDate={new Date()}
@@ -157,6 +159,9 @@ const AdvertPage = () => {
           </TabPanel>
           <TabPanel value="questions">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <Input crossOrigin="" value={questionsFormData.brand} name="brand" onChange={handleChange} color="blue-gray" label="Brand" />
+              <Input crossOrigin="" value={questionsFormData.model} name="model" onChange={handleChange} color="blue-gray" label="Model" />
+              <Input crossOrigin="" type="number" value={questionsFormData.manufactureYear} name="manufactureYear" onChange={handleChange} color="blue-gray" label="Manufacture year" />
               <Datepicker
                 placeholder={"Select advert's end date"}
                 minDate={new Date()}

@@ -23,7 +23,8 @@ public class UserAdvertService : IUserAdvertService
 
     public async Task<Response.AdvertIdResponse> CreateAsync(AdvertModel model, string? userId)
     {
-        if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) || string.IsNullOrWhiteSpace(userId))
+        if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) || string.IsNullOrWhiteSpace(userId) ||
+            string.IsNullOrWhiteSpace(model.Brand) || string.IsNullOrWhiteSpace(model.Model))
             throw new ApplicationException();
 
         if (model.EndDate < DateTime.UtcNow)
@@ -46,6 +47,9 @@ public class UserAdvertService : IUserAdvertService
             userId,
             model.Title,
             model.Description,
+            model.Brand,
+            model.Model,
+            model.ManufactureYear,
             imagesUrls,
             model.IsQuestionsFormType,
             model.IsSoundBad,

@@ -6,11 +6,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Cf.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddingFormTypeAndOtherBooleanFieldsToAdvertModel : Migration
+    public partial class AdjustingAdvertModelToHaveMoreFields : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "Brand",
+                table: "Adverts",
+                type: "text",
+                nullable: false,
+                defaultValue: "");
+
             migrationBuilder.AddColumn<DateTime>(
                 name: "EndDate",
                 table: "Adverts",
@@ -59,11 +66,29 @@ namespace Cf.Infrastructure.Migrations
                 type: "boolean",
                 nullable: false,
                 defaultValue: false);
+
+            migrationBuilder.AddColumn<int>(
+                name: "ManufactureYear",
+                table: "Adverts",
+                type: "integer",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Model",
+                table: "Adverts",
+                type: "text",
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "Brand",
+                table: "Adverts");
+
             migrationBuilder.DropColumn(
                 name: "EndDate",
                 table: "Adverts");
@@ -90,6 +115,14 @@ namespace Cf.Infrastructure.Migrations
 
             migrationBuilder.DropColumn(
                 name: "IsUnstableCar",
+                table: "Adverts");
+
+            migrationBuilder.DropColumn(
+                name: "ManufactureYear",
+                table: "Adverts");
+
+            migrationBuilder.DropColumn(
+                name: "Model",
                 table: "Adverts");
         }
     }
