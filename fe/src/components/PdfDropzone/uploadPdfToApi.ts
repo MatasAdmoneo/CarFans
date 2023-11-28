@@ -13,15 +13,15 @@ export const uploadPdfToApi = async (
 ) => {
   const accessToken = await getToken();
   const reader = new FileReader();
-  console.log(file);
 
   reader.onload = async () => {
     // Extract base64 content from data URL
     const base64Content = reader.result?.toString().split(",")[1];
     if (!base64Content) {
-      toast.error("Pdf file is empty");
+      toast.error("Error reading Pdf file");
       return;
     }
+
     try {
       const res = await fetch(
         `${BASE_API_URL}${SERVICE_DOCUMENT_UPLOAD_ROUTE}`,
@@ -44,7 +44,7 @@ export const uploadPdfToApi = async (
 
       setIsUploading(false);
       toast.success("Documents uploaded successfully.");
-      // router.push(`verify/success`);
+      router.push(`verify/success`);
     } catch (error) {
       toast.error("Failed to upload file.");
     }

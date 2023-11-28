@@ -20,14 +20,13 @@ public class ServiceDocumentService : IServiceDocumentService
     public async Task SavePdfAsync(string? base64Content, string? serviceId)
     {
         if (string.IsNullOrEmpty(base64Content))
-        {
-            throw new BadRequestException(DomainErrors.Service.NotFound);
-        }
+            throw new BadRequestException(DomainErrors.Service.PdfNotProvided); 
 
         if (serviceId is null)
             throw new ApplicationException();
 
         byte[] pdfBytes;
+
         try
         {
             pdfBytes = Convert.FromBase64String(base64Content);

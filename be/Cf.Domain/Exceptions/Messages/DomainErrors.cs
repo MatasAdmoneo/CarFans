@@ -18,7 +18,7 @@ public static class DomainErrors
 
     public static class Service
     {
-        public static MessageInfo NotFound => new MessageInfo("Could not find any content attached to a request body.");
+        public static MessageInfo PdfNotProvided => new MessageInfo("Could not find any document attached.");
         public static MessageInfo FailedUpload => new MessageInfo("Failed to process the PDF content. Try again.");
     }
 }
