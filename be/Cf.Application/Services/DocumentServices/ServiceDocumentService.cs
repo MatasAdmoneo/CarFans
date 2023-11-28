@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Cryptography;
 using Cf.Application.Services.Interfaces;
 using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Exceptions;
@@ -47,7 +48,7 @@ public class ServiceDocumentService : IServiceDocumentService
         }
 
         else
-            service.Data.Add(pdfBytes);
+            service.AddData(pdfBytes);
 
         await _context.SaveChangesAsync();
     }
