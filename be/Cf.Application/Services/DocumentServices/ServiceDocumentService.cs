@@ -1,6 +1,4 @@
-﻿
-using System.Security.Cryptography;
-using Cf.Application.Services.Interfaces;
+﻿using Cf.Application.Services.Interfaces;
 using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Exceptions;
 using Cf.Domain.Exceptions.Messages;
