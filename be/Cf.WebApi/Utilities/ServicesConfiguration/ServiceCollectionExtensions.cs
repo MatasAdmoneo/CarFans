@@ -81,6 +81,18 @@ public static class ServiceCollectionExtensions
 
             c.OperationFilter<SecurityRequirementsOperationFilter>();
         });
+
+        var origins = configuration["CorsPolicy:OriginAllowance"];
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: origins!,
+                              builder =>
+                              {
+                                  builder.WithOrigins("https://localhost:3000")
+                                  .WithMethods("GET", "POST","PUT","DELETE")
+                                  .AllowAnyHeader();
+                              });
+        });
     }
 }
 

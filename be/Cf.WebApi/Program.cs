@@ -41,6 +41,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+var origins = configuration["CorsPolicy:OriginAllowance"];
+app.UseCors(origins!);
+
 var api = app
     .NewVersionedApi("Cf")
     .MapGroup("v{version:apiVersion}");

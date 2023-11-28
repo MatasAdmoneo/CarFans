@@ -18,5 +18,11 @@ public class Service : Entity
         Status = ServiceStatus.Pending;
         Data = new List<byte[]> { data };
     }
+
+    public void AddData(byte[] pdfBytes)
+    {
+        Data.Add(pdfBytes);
+        UpdatedDate = DateTime.UtcNow;
+    }
 }
 
