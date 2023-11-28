@@ -84,10 +84,10 @@ public static class ServiceCollectionExtensions
             c.OperationFilter<SecurityRequirementsOperationFilter>();
         });
 
-        var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        var origins = configuration["CorsPolicy:OriginAllowance"];
         services.AddCors(options =>
         {
-            options.AddPolicy(name: MyAllowSpecificOrigins,
+            options.AddPolicy(name: origins!,
                               builder =>
                               {
                                   builder.WithOrigins("https://localhost:3000")

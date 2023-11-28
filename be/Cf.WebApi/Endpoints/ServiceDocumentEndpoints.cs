@@ -19,27 +19,13 @@ public static class ServiceDocumentEndpoints
             .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapPost("UploadpdfBytes", UploadPdfBytesAsync);
+        group.MapPost("UploadPdfBytes", UploadPdfBytesAsync);
     }
 
     [Authorize(Roles = "Service")]
-    private static async Task UploadPdfBytesAsync([FromServices] IServiceDocumentService pdfService, IHttpContextAccessor httpContextAccessor, [FromBody] string base64Content)
-    {
-        if (string.IsNullOrEmpty(base64Content))
-        {
-            throw new BadRequestException(DomainErrors.Service.NotFound);
-        }
-
-        try
-        {
-            byte[] pdfBytes = Convert.FromBase64String(base64Content);
-            await pdfService.SavePdfAsync(pdfBytes, GetServiceId(httpContextAccessor));
-        }
-        catch (Exception)
-        {
-            throw new InternalException(DomainErrors.Service.FailedUpload);
-        }
-    }
+    private static async Task UploadPdfBytesAsync([FromServices] IServiceDocumentService pdfService, IHttpContextAccessor httpContextAccessor, [FromBody] string base64Content) =>
+        await pdfService.SavePdfAsync(base64Content, GetServiceId(httpContextAccessor));
+   
 
     private static string? GetServiceId(IHttpContextAccessor httpContextAccessor) =>
         httpContextAccessor.HttpContext?.User.FindFirst("https://CarFans.com/id")?.Value;

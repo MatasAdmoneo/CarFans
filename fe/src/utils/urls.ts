@@ -8,4 +8,4 @@ export const SERVICE_ADVERTRS_ROUTE = `/${VERSION}/serviceAdverts`;
 
 export const USER_ADVERTS_ROUTE = `/${VERSION}/userAdverts`;
 
-export const SERVICE_DOCUMENT_UPLOAD_ROUTE = `/${VERSION}/serviceDocuments/UploadpdfBytes`;
+export const SERVICE_DOCUMENT_UPLOAD_ROUTE = `/${VERSION}/serviceDocuments/UploadPdfBytes`;

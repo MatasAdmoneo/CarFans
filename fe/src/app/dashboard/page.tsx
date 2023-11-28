@@ -1,7 +1,7 @@
 import React from "react";
-import { getSession } from "@auth0/nextjs-auth0";
 import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
-import { getAccessToken } from "@auth0/nextjs-auth0";
+import { getAccessToken, getSession } from "@auth0/nextjs-auth0";
+import { UNKNOW_ERROR_MESSAGE } from "@/utils/genericMessages";
 
 const getServiceAdvertsData = async () => {
   const { accessToken } = await getAccessToken();
@@ -22,7 +22,7 @@ const getServiceAdvertsData = async () => {
     const json = await res.json();
 
     return {
-      text: json.message || res.statusText || "Unknown error occoured.",
+      text: json.message || res.statusText || UNKNOW_ERROR_MESSAGE,
     };
   }
   return res.json();
@@ -31,7 +31,7 @@ const getServiceAdvertsData = async () => {
 export default async function DashboardPage() {
   const { user }: any = await getSession();
   const serviceAdverts = await getServiceAdvertsData();
-  console.log(JSON.stringify(serviceAdverts));
+
   return (
     <>
       <div>Hello {user.name}</div>
