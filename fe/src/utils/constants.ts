@@ -5,3 +5,5 @@ export const FORM_BOX_SHADOW = `
   0px 0px 16.4px rgba(0, 0, 0, 0.102),
   0px 0px 45px rgba(0, 0, 0, 0.17)
 `;
+
+export const CarProblemsCategories = ["Engine", "Chassis", "Body", "Tyres", "Maintenance", "Other", "Unknown"];

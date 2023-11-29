@@ -13,6 +13,7 @@ export type QuestionsFormType = {
   brand: string;
   model: string;
   manufactureYear: number;
+  problemType: string;
 };
 
 export type SimpleFormType = {
@@ -23,4 +24,5 @@ export type SimpleFormType = {
   brand: string;
   model: string;
   manufactureYear: number;
+  problemType: string;
 };

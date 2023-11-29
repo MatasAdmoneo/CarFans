@@ -4,6 +4,8 @@ public class AdvertModel
 {
     public string Title { get; set; } = null!;
 
+    public string ProblemType { get; set; } = null!;
+
     public string? Description { get; set; }
 
     public string Model { get; set; } = null!;

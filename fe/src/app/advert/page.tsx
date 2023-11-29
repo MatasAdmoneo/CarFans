@@ -2,9 +2,9 @@
 import { useState } from "react";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker"; 
 import YesOrNoChoice from "@/components/YesOrNoChoice/YesOrNoChoice";
-import { Button, Input, Tab, TabPanel, Tabs, TabsBody, TabsHeader, Textarea } from "@/lib/materialTailwindExports";
+import { Button, Input, Select, Tab, TabPanel, Tabs, TabsBody, TabsHeader, Textarea, Option } from "@/lib/materialTailwindExports";
 import { QuestionsFormType, SimpleFormType } from "@/types/CreateAdvertForm";
-import { FORM_BOX_SHADOW } from "@/utils/constants";
+import { CarProblemsCategories, FORM_BOX_SHADOW } from "@/utils/constants";
 import { QUESTIONS_FORM_TYPE, SIMPLE_FORM_TYPE, questionsFormDefaultValues, questionsFormSchema, simpleFormDefaultValues, simpleFormSchema } from "./utils";
 import { BASE_API_URL, USER_ADVERTS_ROUTE } from "@/utils/urls";
 import ImageDropzone from "@/components/ImageDropzone/ImageDropzone";
@@ -44,6 +44,20 @@ const AdvertPage = () => {
       }));
     }
   };
+
+  const handleProblemTypeChange = (problemType?: string) => {
+    if (formType === SIMPLE_FORM_TYPE && problemType) {
+      setSimpleFormData((formData) => ({
+        ...formData,
+        problemType
+      }));
+    } else if (problemType) {
+      setQuestionsFormData((formData) => ({
+        ...formData,
+        problemType
+      }));
+    }
+  }
 
   const handleYesOrNoValue = (e: React.ChangeEvent<HTMLInputElement>, value: boolean) => {
     const { name } = e.target;
@@ -150,6 +164,11 @@ const AdvertPage = () => {
                 onChange={handleEndDateChange} 
               />
               <Input crossOrigin="" value={simpleFormData.title} name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
+              <Select value={questionsFormData.problemType} onChange={handleProblemTypeChange} label="Select problem type">
+                {CarProblemsCategories.map(category => (
+                  <Option key={category} value={category}>{category}</Option>
+                ))}
+              </Select>
               <Textarea value={simpleFormData.description} name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Description of the problem" />
               <ImageDropzone uploadedPhotos={simpleFormData.photos} onUpload={handleImagesUpload} />
               <Button type="submit" size="lg" className="rounded-md">
@@ -171,6 +190,11 @@ const AdvertPage = () => {
                 onChange={handleEndDateChange} 
               />
               <Input value={questionsFormData.title} crossOrigin="" name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
+              <Select onChange={handleProblemTypeChange} value={questionsFormData.problemType} label="Select problem type">
+                {CarProblemsCategories.map(category => (
+                  <Option key={category} value={category}>{category}</Option>
+                ))}
+              </Select>
               <YesOrNoChoice name="isSoundBad" value={questionsFormData.isSoundBad} onChange={handleYesOrNoValue} question="Have you noticed strange sounds coming from your car?" />
               <YesOrNoChoice name="isScentBad" value={questionsFormData.isScentBad} onChange={handleYesOrNoValue} question="Have you noticed a strange scent coming from your car?" />
               <YesOrNoChoice name="isPanelInvalid" value={questionsFormData.isPanelInvalid} onChange={handleYesOrNoValue} question="Does your car shows warning or error marks in a panel?" />

@@ -1,4 +1,5 @@
 ﻿using Cf.Domain.Aggregates.Jobs;
+using Cf.Domain.Enums;
 
 namespace Cf.Domain.Aggregates.Adverts;
 
@@ -7,6 +8,8 @@ public class Advert : Entity
     public string UserId { get; private set; }
 
     public string Title { get; set; }
+
+    public ProblemType ProblemType { get; set; }
 
     public string Description { get; set; }
 
@@ -37,6 +40,7 @@ public class Advert : Entity
     public Advert(
         string userId,
         string title,
+        ProblemType problemType,
         string description,
         string brand,
         string model,
@@ -52,6 +56,7 @@ public class Advert : Entity
     {
         UserId = userId;
         Title = title;
+        ProblemType = problemType;
         Description = description;
         Brand = brand;
         Model = model;

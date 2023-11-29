@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cf.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231127201545_AdjustingAdvertModelToHaveMoreFields")]
+    [Migration("20231129213344_AdjustingAdvertModelToHaveMoreFields")]
     partial class AdjustingAdvertModelToHaveMoreFields
     {
         /// <inheritdoc />
@@ -74,6 +74,9 @@ namespace Cf.Infrastructure.Migrations
                     b.Property<List<string>>("Photos")
                         .IsRequired()
                         .HasColumnType("text[]");
+
+                    b.Property<int>("ProblemType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()

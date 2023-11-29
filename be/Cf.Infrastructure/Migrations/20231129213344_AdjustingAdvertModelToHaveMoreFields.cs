@@ -80,6 +80,13 @@ namespace Cf.Infrastructure.Migrations
                 type: "text",
                 nullable: false,
                 defaultValue: "");
+
+            migrationBuilder.AddColumn<int>(
+                name: "ProblemType",
+                table: "Adverts",
+                type: "integer",
+                nullable: false,
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
@@ -123,6 +130,10 @@ namespace Cf.Infrastructure.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Model",
+                table: "Adverts");
+
+            migrationBuilder.DropColumn(
+                name: "ProblemType",
                 table: "Adverts");
         }
     }

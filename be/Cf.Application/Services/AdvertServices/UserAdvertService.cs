@@ -2,6 +2,7 @@
 using Cf.Application.Services.Interfaces;
 using Cf.Contracts.Mappers;
 using Cf.Contracts.Responses;
+using Cf.Domain.Enums;
 using Cf.Domain.Exceptions;
 using Cf.Domain.Exceptions.Messages;
 using Cf.Domain.Models;
@@ -24,7 +25,7 @@ public class UserAdvertService : IUserAdvertService
     public async Task<Response.AdvertIdResponse> CreateAsync(AdvertModel model, string? userId)
     {
         if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) || string.IsNullOrWhiteSpace(userId) ||
-            string.IsNullOrWhiteSpace(model.Brand) || string.IsNullOrWhiteSpace(model.Model))
+            string.IsNullOrWhiteSpace(model.Brand) || string.IsNullOrWhiteSpace(model.Model) || !Enum.TryParse(model.ProblemType, out ProblemType problemType))
             throw new ApplicationException();
 
         if (model.EndDate < DateTime.UtcNow)
@@ -46,6 +47,7 @@ public class UserAdvertService : IUserAdvertService
         var advert = new Domain.Aggregates.Adverts.Advert(
             userId,
             model.Title,
+            problemType,
             model.Description,
             model.Brand,
             model.Model,

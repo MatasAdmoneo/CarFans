@@ -11,6 +11,7 @@ export const simpleFormSchema = object({
   model: string().required(),
   brand: string().required(),
   manufactureYear: number().required(),
+  problemType: string().required()
 });
 
 export const simpleFormDefaultValues = {
@@ -20,7 +21,8 @@ export const simpleFormDefaultValues = {
   endDate: null,
   model: "",
   brand: "",
-  manufactureYear: 0
+  manufactureYear: 0,
+  problemType: ""
 };
 
 export const questionsFormSchema = object({
@@ -36,6 +38,7 @@ export const questionsFormSchema = object({
   model: string().required(),
   brand: string().required(),
   manufactureYear: number().required(),
+  problemType: string().required()
 });
 
 export const questionsFormDefaultValues = {
@@ -50,5 +53,6 @@ export const questionsFormDefaultValues = {
   endDate: null,
   model: "",
   brand: "",
-  manufactureYear: 0
+  manufactureYear: 0,
+  problemType: ""
 };
