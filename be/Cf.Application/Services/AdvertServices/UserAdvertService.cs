@@ -26,7 +26,7 @@ public class UserAdvertService : IUserAdvertService
     {
         if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) || string.IsNullOrWhiteSpace(userId) ||
             string.IsNullOrWhiteSpace(model.Brand) || string.IsNullOrWhiteSpace(model.Model) || !Enum.TryParse(model.ProblemType, out ProblemType problemType))
-            throw new ApplicationException();
+            throw new BadRequestException(DomainErrors.Advert.OneOrMoreRequiredFlieldsUnspecified);
 
         if (model.EndDate < DateTime.UtcNow)
             throw new BadRequestException(DomainErrors.Advert.InvalidAdvertEndDate);
