@@ -2,8 +2,6 @@
 using Cf.Contracts.Mappers;
 using Cf.Contracts.Responses;
 using Cf.Domain.Enums;
-using Cf.Domain.Exceptions;
-using Cf.Domain.Exceptions.Messages;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;

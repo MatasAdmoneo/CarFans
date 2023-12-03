@@ -1,21 +1,19 @@
 "use client";
-import Image from "next/image";
-import { useState, useEffect } from "react";
+
 import { useRouter } from "next/navigation";
 import {
   Navbar as Nav,
-  MobileNav,
   Typography,
   Button,
   IconButton,
-  Card,
 } from "@/lib/materialTailwindExports";
-import Link from "next/link";
+import Link from 'next/link'
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useState } from "react";
 
 const Navbar = () => {
   const [openNav, setOpenNav] = useState(false);
-  const { user, error, isLoading } = useUser();
+  const { user, isLoading } = useUser();
   const router = useRouter();
 
   const navigateToLogin = () => {
@@ -26,15 +24,18 @@ const Navbar = () => {
     router.push("/api/auth/logout");
   };
 
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
-
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <Link href="/dashboard" className="flex items-center">
+          Dashboard
+        </Link>
+      </Typography>
       <Typography
         as="li"
         variant="small"
@@ -53,6 +54,16 @@ const Navbar = () => {
       >
         <Link href="#" className="flex items-center">
           About Us
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <Link href="/advert" className="flex items-center">
+          Advert
         </Link>
       </Typography>
       <Typography
@@ -86,7 +97,7 @@ const Navbar = () => {
           href="#"
           className="mr-4 cursor-pointer py-1.5 font-medium"
         >
-          Material Tailwind
+          Car Fans
         </Typography>
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
@@ -100,7 +111,7 @@ const Navbar = () => {
               >
                 Log out
               </Button>
-            ) : (
+            ) : !isLoading && (
               <>
                 <Button
                   variant="text"
@@ -159,37 +170,6 @@ const Navbar = () => {
           </IconButton>
         </div>
       </div>
-      <MobileNav open={openNav}>
-        {navList}
-        {user ? (
-          <div className="flex items-center gap-x-1">
-            <Button
-              fullWidth
-              variant="gradient"
-              size="sm"
-              className=""
-              onClick={() => navigateToLogout()}
-            >
-              Log out
-            </Button>
-          </div>
-        ) : (
-          <div className="flex items-center gap-x-1">
-            <Button
-              fullWidth
-              variant="text"
-              size="sm"
-              className=""
-              onClick={() => navigateToLogin()}
-            >
-              Log In
-            </Button>
-            <Button fullWidth variant="gradient" size="sm" className="">
-              <span>Sign in</span>
-            </Button>
-          </div>
-        )}
-      </MobileNav>
     </Nav>
   );
 };

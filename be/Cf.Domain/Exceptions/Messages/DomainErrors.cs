@@ -1,5 +1,4 @@
-﻿
-namespace Cf.Domain.Exceptions.Messages;
+﻿namespace Cf.Domain.Exceptions.Messages;
 
 public static class DomainErrors
 {
@@ -7,6 +6,10 @@ public static class DomainErrors
     {
         public static MessageInfo NotFound => new MessageInfo("Skelbimas nerastas");
         public static MessageInfo ActiveJobs => new MessageInfo("Skelbimo negalima istrinti, nes egzistuoja su juo susije darbai");
+        public static MessageInfo TooMuchImages => new MessageInfo("Skelbimas negali turėti daugiau nei 5 nuotraukas");
+        public static MessageInfo ImageUploadFailed => new MessageInfo("Nepavyko įkelti nuotraukos į debesį");
+        public static MessageInfo InvalidAdvertEndDate => new MessageInfo("Skelbimo pabaigos data turi būti ateities data");
+        public static MessageInfo OneOrMoreRequiredFlieldsUnspecified => new MessageInfo("One or more required fields are missing.");
     }
 
     public static class Job
