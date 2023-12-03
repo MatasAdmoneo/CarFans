@@ -5,20 +5,27 @@ namespace Cf.Domain.Aggregates.Jobs;
 
 public class Job : Entity
 {
+    public string ServiceId {  get; set; }
+
     public JobStatus Status { get; private set; }
 
     public decimal? Price { get; private set; }
 
     public DateTime? StartDate { get; private set; }
 
+    public string? Description { get; set; }
+
     public Guid AdvertId { get; set; }
+
     public Advert Advert { get; set; }
 
-    public Job(DateTime? startDate, decimal? price) : base()
+    public Job(string serviceId, DateTime? startDate, decimal? price, string? description) : base()
     {
+        ServiceId = serviceId;
         Status = JobStatus.Pending;
         StartDate = startDate;
         Price = price;
+        Description = description;
     }
 
     public void UpdateStatus(JobStatus jobStatus)

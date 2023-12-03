@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import Footer from "@/components/Footer/Footer";
+import { Toaster } from "@/lib/reactHotToastExports";
 import Navbar from "@/components/Navbar/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,10 +20,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        {children}
-      </body>
+      <UserProvider>
+        <body className={`min-h-screen ${inter.className}`}>
+          <Navbar />
+          <div
+            style={{
+              minHeight: "calc(100vh - 72px - 96px)",
+              overflowY: "auto",
+            }}
+          >
+            {children}
+            <Toaster
+              containerStyle={{
+                top: 70,
+              }}
+            />
+          </div>
+          <Footer />
+        </body>
+      </UserProvider>
     </html>
   );
 }

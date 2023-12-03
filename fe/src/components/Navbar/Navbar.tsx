@@ -1,24 +1,28 @@
 "use client";
-import Image from "next/image";
-import { useState, useEffect } from "react";
+
+import { useRouter } from "next/navigation";
 import {
   Navbar as Nav,
-  MobileNav,
   Typography,
   Button,
   IconButton,
-  Card,
 } from "@/lib/materialTailwindExports";
+import Link from 'next/link'
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useState } from "react";
 
 const Navbar = () => {
   const [openNav, setOpenNav] = useState(false);
+  const { user, isLoading } = useUser();
+  const router = useRouter();
 
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
+  const navigateToLogin = () => {
+    router.push("/api/auth/login");
+  };
+
+  const navigateToLogout = () => {
+    router.push("/api/auth/logout");
+  };
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -28,9 +32,9 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Pages
-        </a>
+        <Link href="/dashboard" className="flex items-center">
+          Dashboard
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -38,9 +42,9 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Account
-        </a>
+        <Link href="#" className="flex items-center">
+          Car Services
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -48,9 +52,9 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Blocks
-        </a>
+        <Link href="#" className="flex items-center">
+          About Us
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -58,9 +62,29 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Docs
-        </a>
+        <Link href="/advert" className="flex items-center">
+          Advert
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <Link href="#" className="flex items-center">
+          Privacy Policy
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <Link href="#" className="flex items-center">
+          Contact
+        </Link>
       </Typography>
     </ul>
   );
@@ -73,21 +97,39 @@ const Navbar = () => {
           href="#"
           className="mr-4 cursor-pointer py-1.5 font-medium"
         >
-          Material Tailwind
+          Car Fans
         </Typography>
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <div className="flex items-center gap-x-1">
-            <Button variant="text" size="sm" className="hidden lg:inline-block">
-              <span>Log In</span>
-            </Button>
-            <Button
-              variant="gradient"
-              size="sm"
-              className="hidden lg:inline-block"
-            >
-              <span>Sign in</span>
-            </Button>
+            {user ? (
+              <Button
+                variant="gradient"
+                size="sm"
+                className="hidden lg:inline-block"
+                onClick={() => navigateToLogout()}
+              >
+                Log out
+              </Button>
+            ) : !isLoading && (
+              <>
+                <Button
+                  variant="text"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                  onClick={() => navigateToLogin()}
+                >
+                  Log In
+                </Button>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="hidden lg:inline-block"
+                >
+                  <span>Sign in</span>
+                </Button>
+              </>
+            )}
           </div>
           <IconButton
             variant="text"
@@ -128,17 +170,6 @@ const Navbar = () => {
           </IconButton>
         </div>
       </div>
-      <MobileNav open={openNav}>
-        {navList}
-        <div className="flex items-center gap-x-1">
-          <Button fullWidth variant="text" size="sm" className="">
-            <span>Log In</span>
-          </Button>
-          <Button fullWidth variant="gradient" size="sm" className="">
-            <span>Sign in</span>
-          </Button>
-        </div>
-      </MobileNav>
     </Nav>
   );
 };

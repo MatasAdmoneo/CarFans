@@ -18,6 +18,7 @@ services.ConfigureJsonOptions();
 services.ConfigureServices(configuration);
 services.AddCustomApiVersioning();
 
+
 services.AddDbContext<Context>(options =>
 {
     options.UseNpgsql(configuration["ConnectionStrings:Database"]);
@@ -29,22 +30,41 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
+        c.OAuthClientId(configuration["Authentication:ClientId"]);
+    });
 }
 
 app.UseHttpsRedirection();
+
+var origins = configuration["CorsPolicy:OriginAllowance"];
+app.UseCors(origins!);
 
 var api = app
     .NewVersionedApi("Cf")
     .MapGroup("v{version:apiVersion}");
 
+api.MapAdminAdvertRoutes();
+api.MapAdminJobRoutes();
+api.MapAdminDocumentRoutes();
 
-api.MapAdvertRoutes();
-api.MapJobRoutes();
+api.MapServiceAdvertRoutes();
+api.MapServiceJobRoutes();
+api.MapServiceDocumentRoutes();
+
+api.MapUserAdvertRoutes();
+api.MapUserJobRoutes();
+
+
 
 await using var scope = app.Services.CreateAsyncScope();
 await using var db = scope.ServiceProvider.GetService<Context>();
 await db.Database.MigrateAsync();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 
