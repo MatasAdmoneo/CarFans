@@ -8,6 +8,8 @@ using Cf.WebApi.Utilities.Filters;
 using Cf.Application.Services.Interfaces;
 using Cf.Application.Services.JobServices;
 using Cf.Application.Services.DocumentServices;
+using Cf.Application.Services.ServiceInfoServices.DocumentServices;
+using Cf.Application.Services.ServiceInfoServices;
 
 namespace Cf.WebApi.Utilities.ServicesConfiguration;
 
@@ -32,6 +34,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IServiceDocumentService, ServiceDocumentService>();
         services.AddScoped<IAdminDocumentService, AdminDocumentService>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<IServicelnfoService, ServiceInfoService>();
 
 
         services.AddAuthentication(options =>

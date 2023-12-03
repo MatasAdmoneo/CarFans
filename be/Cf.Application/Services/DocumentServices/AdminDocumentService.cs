@@ -8,7 +8,7 @@ using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
 
-namespace Cf.Application.Services.DocumentServices;
+namespace Cf.Application.Services.ServiceInfoServices.DocumentServices;
 
 public class AdminDocumentService : IAdminDocumentService
 {
