@@ -2,9 +2,9 @@
 
 import { getToken } from "@/utils/getToken";
 import { BASE_API_URL, SERVICE_DOCUMENT_UPLOAD_ROUTE } from "@/utils/urls";
-import { Dispatch, SetStateAction } from "react";
 import { toast } from "@/lib/reactHotToastExports";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { Dispatch, SetStateAction } from "react";
 
 export const uploadPdfToApi = async (
   file: File,

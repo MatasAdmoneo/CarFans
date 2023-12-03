@@ -7,6 +7,16 @@ import {
   Button,
   IconButton,
   Card,
+  Tabs,
+  Tab,
+  TabsHeader,
+  TabsBody,
+  TabPanel,
+  Textarea,
+  Input,
+  Radio,
+  Select,
+  Option
 } from "@material-tailwind/react";
 
-export { Navbar, MobileNav, Typography, Button, IconButton, Card };
+export { Navbar, MobileNav, Typography, Button, IconButton, Card, Tabs, Tab, TabsHeader, TabsBody, TabPanel, Textarea, Input, Radio, Select, Option };
