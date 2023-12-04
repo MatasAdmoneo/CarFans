@@ -2,7 +2,6 @@
 using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cf.Application.Services.ServiceInfoServices
 {

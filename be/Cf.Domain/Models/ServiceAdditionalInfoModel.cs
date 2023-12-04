@@ -1,5 +1,4 @@
-﻿using Cf.Domain.Aggregates.Services;
-
+﻿
 namespace Cf.Domain.Models
 {
     public class ServiceAdditionalInfoModel

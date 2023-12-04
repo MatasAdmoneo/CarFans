@@ -34,8 +34,8 @@ public class Context : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<WorkingDay>()
-        .HasOne(w => w.Service)
-        .WithMany(s => s.WeeklyWorkingHours)
-        .HasForeignKey(w => w.ServiceId);
+            .HasOne(w => w.Service)
+            .WithMany(s => s.WeeklyWorkingHours)
+            .HasForeignKey(w => w.ServiceId);
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Cf.Application.Services.Interfaces;
-using Cf.Domain.Exceptions.Messages;
-using Cf.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cf.WebApi.Endpoints;
