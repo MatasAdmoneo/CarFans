@@ -161,7 +161,8 @@ const AdvertPage = () => {
                 startFrom={new Date()}
                 asSingle={true}
                 value={{ startDate: simpleFormData.endDate, endDate: simpleFormData.endDate }}
-                onChange={handleEndDateChange} 
+                onChange={handleEndDateChange}
+                containerClassName="date-color-override"
               />
               <Input crossOrigin="" value={simpleFormData.title} name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
               <Select value={questionsFormData.problemType} onChange={handleProblemTypeChange} label="Select problem type">
@@ -187,11 +188,12 @@ const AdvertPage = () => {
                 startFrom={new Date()}
                 asSingle={true}
                 value={{ startDate: questionsFormData.endDate, endDate: questionsFormData.endDate }}
-                onChange={handleEndDateChange} 
+                onChange={handleEndDateChange}
+                containerClassName="date-color-override"
               />
               <Input value={questionsFormData.title} crossOrigin="" name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
               <Select onChange={handleProblemTypeChange} value={questionsFormData.problemType} label="Select problem type">
-                {CarProblemsCategories.map(category => (
+                {CarProblemsCategories.map((category: string) => (
                   <Option key={category} value={category}>{category}</Option>
                 ))}
               </Select>

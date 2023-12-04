@@ -1,7 +1,9 @@
 import Carousel from "@/components/Carousel/Carousel";
+import ChipWithTooltip from "@/components/ChipWithTooltip/ChipWithTooltip";
 import Timer from "@/components/Timer/Timer";
-import { Button, Chip, Typography } from "@/lib/materialTailwindExports";
+import { Breadcrumbs, Button, Chip, Typography } from "@/lib/materialTailwindExports";
 import { AdvertType } from "@/types/AdvertType";
+import { ChipTooltipText } from "@/utils/constants";
 import { getToken } from "@/utils/getToken";
 import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
 import { FaCheckCircle } from "react-icons/fa";
@@ -30,15 +32,26 @@ export default async function AdvertInfoPage({ params: { jobId } }: { params: { 
 
   return (
     <div className="flex flex-col gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
+      <Breadcrumbs>
+        <a href="/home" className="opacity-60">
+          <span>Home</span>
+        </a>
+        <a href="/jobs" className="opacity-60">
+          <span>Jobs</span>
+        </a>
+        <a href="#">
+          <span>Advert</span>
+        </a>
+      </Breadcrumbs>
       <Typography variant="h3">
         {advert.title}
       </Typography>
       <div className="flex justify-between">
         <div className="flex gap-5">
-          <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.brand} />
-          <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.model} />
-          <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.manufactureYear} />
-          <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.problemType} />
+          <ChipWithTooltip value={advert.brand} tooltipText={ChipTooltipText.Brand} />
+          <ChipWithTooltip value={advert.model} tooltipText={ChipTooltipText.Model} />
+          <ChipWithTooltip value={advert.manufactureYear.toString()} tooltipText={ChipTooltipText.ManufactureYear} />
+          <ChipWithTooltip value={advert.problemType} tooltipText={ChipTooltipText.ProblemType} />
         </div>
         <Chip
           variant="ghost"

@@ -5,6 +5,7 @@ import {
   MobileNav,
   Typography,
   Button,
+  Breadcrumbs,
   IconButton,
   Card,
   CardHeader,
@@ -15,6 +16,7 @@ import {
   TabsBody,
   TabPanel,
   Textarea,
+  Tooltip,
   Input,
   Radio,
   Select,
@@ -22,4 +24,4 @@ import {
   Chip
 } from "@material-tailwind/react";
 
-export { Navbar, MobileNav, Typography, Button, IconButton, Card, CardHeader, CardBody, Tabs, Tab, TabsHeader, TabsBody, TabPanel, Textarea, Input, Radio, Select, Option, Chip };
+export { Navbar, MobileNav, Typography, Button, Breadcrumbs, IconButton, Card, CardHeader, CardBody, Tabs, Tab, TabsHeader, TabsBody, TabPanel, Tooltip, Textarea, Input, Radio, Select, Option, Chip };

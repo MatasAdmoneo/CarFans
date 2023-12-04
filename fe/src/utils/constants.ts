@@ -7,3 +7,10 @@ export const FORM_BOX_SHADOW = `
 `;
 
 export const CarProblemsCategories = ["Engine", "Chassis", "Body", "Tyres", "Maintenance", "Other", "Unknown"];
+
+export enum ChipTooltipText {
+  Brand,
+  Model,
+  ManufactureYear,
+  ProblemType,
+}

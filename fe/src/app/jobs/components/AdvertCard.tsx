@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { Card, CardBody, CardHeader, Chip, Typography } from "@/lib/materialTailwindExports"
 import { AdvertType } from "@/types/AdvertType"
 import Timer from '@/components/Timer/Timer';
+import ChipWithTooltip from '@/components/ChipWithTooltip/ChipWithTooltip';
+import { ChipTooltipText } from '@/utils/constants';
 
 const AdvertCard = ({ advert }: { advert: AdvertType }) => {
   return (
@@ -30,10 +32,10 @@ const AdvertCard = ({ advert }: { advert: AdvertType }) => {
               />
             </div>
             <div className="flex gap-5">
-              {advert.brand && <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.brand} />}
-              {advert.model && <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.model} />}
-              {advert.manufactureYear && <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.manufactureYear} />}
-              {advert.problemType && <Chip size="lg" variant="gradient" className="rounded-full chip-opacity" value={advert.problemType} />}
+              <ChipWithTooltip value={advert.brand} tooltipText={ChipTooltipText.Brand} />
+              <ChipWithTooltip value={advert.model} tooltipText={ChipTooltipText.Model} />
+              <ChipWithTooltip value={advert.manufactureYear.toString()} tooltipText={ChipTooltipText.ManufactureYear} />
+              <ChipWithTooltip value={advert.problemType} tooltipText={ChipTooltipText.ProblemType} />
             </div>
           </div>
         </CardHeader>
