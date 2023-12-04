@@ -1,9 +1,8 @@
-import { DateType } from "react-tailwindcss-datepicker";
-
 export type AdvertType = {
   id: string;
   title: string;
-  endDate: DateType | null;
+  endDate: Date;
+  isQuestionsFormType: boolean;
   isSoundBad?: boolean;
   isScentBad?: boolean;
   isPanelInvalid?: boolean;

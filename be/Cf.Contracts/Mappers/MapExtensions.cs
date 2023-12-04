@@ -28,5 +28,11 @@ public static class MapExtensions
 
     public static Response.ServiceInfo ToModel(this Service service) =>
         new(service.ServiceId, service.Status, service.CreatedDate);
+
+    public static Response.ServiceAdvertResponse ToServiceAdvertModel(this Advert model) =>
+        new(model.Id, model.Title, model.Description, model.Brand, model.Model, model.ManufactureYear, model.ProblemType, model.EndDate);
+
+    public static Response.ServiceAdvertByIdResponse ToServiceAdvertByIdModel(this Advert model) =>
+        new(model.Title, model.Description, model.Brand, model.Model, model.ManufactureYear, model.ProblemType, model.Photos, model.IsQuestionsFormType, model.IsSoundBad, model.IsScentBad, model.IsPanelInvalid, model.IsLeakedLiquids, model.IsUnstableCar, model.EndDate);
 }
 

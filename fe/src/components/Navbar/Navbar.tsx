@@ -62,8 +62,8 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link href="/advert" className="flex items-center">
-          Advert
+        <Link href="/advertForm" className="flex items-center">
+          Advert form
         </Link>
       </Typography>
       <Typography

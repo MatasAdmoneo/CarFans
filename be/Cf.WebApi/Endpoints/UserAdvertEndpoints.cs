@@ -5,7 +5,6 @@ using Cf.Contracts.Responses;
 using Cf.WebApi.Routing;
 using Cf.Domain.Aggregates.Adverts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Cf.WebApi.Endpoints;
 
