@@ -34,8 +34,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IServiceDocumentService, ServiceDocumentService>();
         services.AddScoped<IAdminDocumentService, AdminDocumentService>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<IServiceWorkingDaysService, ServiceWorkingDaysService>();
         services.AddScoped<IServicelnfoService, ServiceInfoService>();
-
+        
 
         services.AddAuthentication(options =>
         {

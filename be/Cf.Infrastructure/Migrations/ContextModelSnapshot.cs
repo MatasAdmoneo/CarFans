@@ -136,6 +136,47 @@ namespace Cf.Infrastructure.Migrations
                     b.ToTable("Services");
                 });
 
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.WorkingDay", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EndTime")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LunchBreakEndTime")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LunchBreakStartTime")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("StartTime")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("WorkingDays");
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Jobs.Job", b =>
                 {
                     b.HasOne("Cf.Domain.Aggregates.Adverts.Advert", "Advert")
@@ -147,9 +188,25 @@ namespace Cf.Infrastructure.Migrations
                     b.Navigation("Advert");
                 });
 
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.WorkingDay", b =>
+                {
+                    b.HasOne("Cf.Domain.Aggregates.Services.Service", "Service")
+                        .WithMany("WeeklyWorkingHours")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Adverts.Advert", b =>
                 {
                     b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
+                {
+                    b.Navigation("WeeklyWorkingHours");
                 });
 #pragma warning restore 612, 618
         }

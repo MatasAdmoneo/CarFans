@@ -1,4 +1,4 @@
-﻿using static Cf.Domain.Aggregates.Services.Service;
+﻿using Cf.Domain.Aggregates.Services;
 
 namespace Cf.Domain.Models
 {
@@ -7,7 +7,7 @@ namespace Cf.Domain.Models
         public string? ServiceName { get; set; }
         public string? Adress { get; set; }
         public string? City { get; set; }
-        public List<WorkingDay>? WeeklyWorkingHours { get; set; }
+        public List<ServiceWorkingHours>? WeeklyWorkingHours { get; set; }
         public string? ContactPhone { get; set; }
         public string? Description { get; set; }
     }

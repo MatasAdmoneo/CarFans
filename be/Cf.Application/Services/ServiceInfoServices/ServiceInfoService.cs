@@ -7,11 +7,6 @@ using Cf.Domain.Exceptions;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Cf.Contracts.Mappers;
 
 namespace Cf.Application.Services.ServiceInfoServices
@@ -19,10 +14,12 @@ namespace Cf.Application.Services.ServiceInfoServices
     public class ServiceInfoService : IServicelnfoService
     {
         private readonly Context _context;
+        private readonly IServiceWorkingDaysService _serviceWorkingDaysService;
 
-        public ServiceInfoService(Context context)
+        public ServiceInfoService(Context context, IServiceWorkingDaysService serviceWorkingDaysService)
         {
             _context = context;
+            _serviceWorkingDaysService = serviceWorkingDaysService;
         }
 
         public async Task UpdateInfoAsync(string? serviceId, ServiceAdditionalInfoModel additionalInfo)
@@ -51,17 +48,21 @@ namespace Cf.Application.Services.ServiceInfoServices
                     additionalInfo.ContactPhone != null)
                 {
                     var newService = new Service(
-                        serviceId,
-                        ServiceStatus.CreatedInDataBase,
-                        additionalInfo.ServiceName,
-                        additionalInfo.City,
-                        additionalInfo.Adress,
-                        additionalInfo.WeeklyWorkingHours,
-                        additionalInfo.ContactPhone,
-                        additionalInfo.Description);
+                    serviceId,
+                    ServiceStatus.CreatedInDataBase,
+                    additionalInfo.ServiceName,
+                    additionalInfo.City,
+                    additionalInfo.Adress,
+                    null!,
+                    additionalInfo.ContactPhone,
+                    additionalInfo.Description);
 
-                    // Set any other properties as needed
+                    _serviceWorkingDaysService.AddWorkingDaysByServiceId(newService.Id, additionalInfo.WeeklyWorkingHours);
 
+                    newService.WeeklyWorkingHours = await _context.WorkingDays
+                    .Where(wd => wd.ServiceId == newService.Id)
+                    .ToListAsync();                    
+                   
                     // Add the new service to the context and mark it as Added
                     _context.Services.Add(newService);
 
@@ -75,12 +76,18 @@ namespace Cf.Application.Services.ServiceInfoServices
                 }
             }
 
-            service.ServiceName = additionalInfo.ServiceName != null ? additionalInfo.ServiceName : service.ServiceName; ;
-            service.Adress = additionalInfo.Adress != null ? additionalInfo.Adress : service.Adress; ;
-            service.City = additionalInfo.City != null ? additionalInfo.City : service.City; ;
-            service.ContactPhone = additionalInfo.ContactPhone != null ? additionalInfo.ContactPhone : service.ContactPhone; ;
+            service.ServiceName = additionalInfo.ServiceName != null ? additionalInfo.ServiceName : service.ServiceName;
+            service.Adress = additionalInfo.Adress != null ? additionalInfo.Adress : service.Adress;
+            service.City = additionalInfo.City != null ? additionalInfo.City : service.City;
+            service.ContactPhone = additionalInfo.ContactPhone != null ? additionalInfo.ContactPhone : service.ContactPhone;
             service.Description = additionalInfo.Description != null ? additionalInfo.Description : service.Description;
-            
+
+            if(additionalInfo.WeeklyWorkingHours != null) { 
+            _serviceWorkingDaysService.AddWorkingDaysByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
+                service.WeeklyWorkingHours = await _context.WorkingDays
+                    .Where(wd => wd.ServiceId == service.Id)
+                    .ToListAsync();
+            }
             if (additionalInfo != null)
             {
                 service.UpdatedDate = DateTime.UtcNow;
@@ -95,7 +102,7 @@ namespace Cf.Application.Services.ServiceInfoServices
             return;
         }
 
-        private bool ValidateWeeklyWorkingHoursFormat(List<Service.WorkingDay> weeklyWorkingHours)
+        private bool ValidateWeeklyWorkingHoursFormat(List<ServiceWorkingHours> weeklyWorkingHours)
         {
             foreach (var workingDay in weeklyWorkingHours)
             {

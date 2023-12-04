@@ -1,5 +1,4 @@
 ﻿using Cf.Domain.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cf.Domain.Aggregates.Services;
 
@@ -41,16 +40,6 @@ public class Service : Entity
     {
         Data.Add(pdfBytes);
         UpdatedDate = DateTime.UtcNow;
-    }
-
-    [NotMapped]
-    public class WorkingDay
-    {
-        public required DayOfWeek DayOfWeek { get; set; }
-        public required string StartTime { get; set; }
-        public required string EndTime { get; set; }
-        public required string LunchBreakStartTime { get; set; }
-        public required string LunchBreakEndTime { get; set; }
-    }
+    }   
 }
 
