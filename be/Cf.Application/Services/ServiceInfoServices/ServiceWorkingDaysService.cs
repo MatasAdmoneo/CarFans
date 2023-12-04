@@ -2,6 +2,7 @@
 using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cf.Application.Services.ServiceInfoServices
 {
@@ -26,12 +27,19 @@ namespace Cf.Application.Services.ServiceInfoServices
                     EndTime = day.EndTime,
                     LunchBreakStartTime = day.LunchBreakStartTime,
                     LunchBreakEndTime = day.LunchBreakEndTime,
-                    ServiceId = serviceId // Set the ServiceId
+                    ServiceId = serviceId
                 };
 
-                workingDays.Add(workingDay);
+                workingDays.Add(workingDay);           
             }
             _context.WorkingDays.AddRange(workingDays);
+            _context.SaveChanges();
+        }
+
+        public void RemoveWorkingDaysByServiceId(Guid serviceId)
+        {
+            var existingWorkingDays = _context.WorkingDays.Where(wd => wd.ServiceId == serviceId);
+            _context.WorkingDays.RemoveRange(existingWorkingDays);
         }
     }
 }

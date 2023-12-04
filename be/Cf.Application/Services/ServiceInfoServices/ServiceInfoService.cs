@@ -82,8 +82,13 @@ namespace Cf.Application.Services.ServiceInfoServices
             service.ContactPhone = additionalInfo.ContactPhone != null ? additionalInfo.ContactPhone : service.ContactPhone;
             service.Description = additionalInfo.Description != null ? additionalInfo.Description : service.Description;
 
-            if(additionalInfo.WeeklyWorkingHours != null) { 
-            _serviceWorkingDaysService.AddWorkingDaysByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
+            if(additionalInfo.WeeklyWorkingHours != null) {
+
+                // First remove all workingDays associated with that service id
+                _serviceWorkingDaysService.RemoveWorkingDaysByServiceId(service.Id);         
+
+                // Add new provided workingDays
+                _serviceWorkingDaysService.AddWorkingDaysByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
                 service.WeeklyWorkingHours = await _context.WorkingDays
                     .Where(wd => wd.ServiceId == service.Id)
                     .ToListAsync();
@@ -92,14 +97,43 @@ namespace Cf.Application.Services.ServiceInfoServices
             {
                 service.UpdatedDate = DateTime.UtcNow;
 
-                // Ensure that Entity Framework tracks the changes and persists them to the database
                 _context.Entry(service).State = EntityState.Modified;
-
+                
                 // Update the entity in the database
                 await _context.SaveChangesAsync();
             }
             // If no info was provided, just return
             return;
+        }
+
+        public async Task<Response.ServiceAdditionalFields> GetByServiceIdAsync(string? serviceId)
+        {
+            if (serviceId is null)
+                throw new ApplicationException();
+
+            var service = await _context.Services
+                .Include(s => s.WeeklyWorkingHours)
+                .FirstOrDefaultAsync(x => x.ServiceId == serviceId);
+
+            if (service == null)
+                throw new NotFoundException(DomainErrors.Service.NotFound);
+
+            if (service.ServiceId != serviceId)
+                throw new ApplicationException();
+
+            return service.ToServiceInfoModel();
+        }
+
+        public async Task<ServiceStatus> GetServiceStatusByIdAsync(string? serviceId)
+        {
+            if (serviceId is null)
+                throw new ApplicationException();
+            var service = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == serviceId);
+
+            if (service == null)
+                return ServiceStatus.Exists;
+            
+            return service.Status;
         }
 
         private bool ValidateWeeklyWorkingHoursFormat(List<ServiceWorkingHours> weeklyWorkingHours)
@@ -143,25 +177,7 @@ namespace Cf.Application.Services.ServiceInfoServices
                 return false;
             }
 
-            // Additional custom checks specific to your requirements can be added here
-
             return true; // Format is valid
-        }
-
-        public async Task<Response.ServiceAdditionalFields> GetByServiceIdAsync(string? serviceId)
-        {
-            if (serviceId is null)
-                throw new ApplicationException();
-
-            var service = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == serviceId);
-
-            if (service == null)
-                throw new NotFoundException(DomainErrors.Service.NotFound);
-
-            if (service.ServiceId != serviceId)
-                throw new ApplicationException();
-
-            return service.ToServiceInfoModel();
         }
     }
 }

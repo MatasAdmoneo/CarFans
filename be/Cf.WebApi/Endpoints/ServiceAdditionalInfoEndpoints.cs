@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Cf.Domain.Models;
 using Cf.WebApi.Routing;
 using Cf.Contracts.Responses;
+using Cf.Domain.Enums;
 
 namespace Cf.WebApi.Endpoints;
 
@@ -21,6 +22,7 @@ public static class ServiceAdditionalInfoEndpoints
 
         group.MapPut(UpdateAsync);
         group.MapGet(GetByServiceIdAsync);
+        group.MapGet("Status", GetServiceStatusByIdAsync);
     }
 
     [Authorize(Roles = "Service")]
@@ -30,6 +32,10 @@ public static class ServiceAdditionalInfoEndpoints
     [Authorize(Roles = "Service")]
     private static async Task<Response.ServiceAdditionalFields> GetByServiceIdAsync([FromServices] IServicelnfoService additionalInfoService, IHttpContextAccessor httpContextAccessor) =>
         await additionalInfoService.GetByServiceIdAsync(GetServiceId(httpContextAccessor));
+
+    [Authorize(Roles = "Service")]
+    private static async Task<ServiceStatus> GetServiceStatusByIdAsync([FromServices] IServicelnfoService additionalInfoService, IHttpContextAccessor httpContextAccessor) =>
+        await additionalInfoService.GetServiceStatusByIdAsync(GetServiceId(httpContextAccessor));
 
     private static string? GetServiceId(IHttpContextAccessor httpContextAccessor) =>
         httpContextAccessor.HttpContext?.User.FindFirst("https://CarFans.com/id")?.Value;
