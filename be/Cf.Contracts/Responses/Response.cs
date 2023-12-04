@@ -12,6 +12,7 @@ public static partial class Response
     public record AdvertResponse(string Title, string Desciption, DateTime startDate, DateTime updateDate);
 
     public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
-    public record ServiceAdditionalFields(string Id, ServiceAdditionalInfoModel ServiceAdditionalInfo);
+
+    public record ServiceAdditionalFields(ServiceAdditionalInfoModel ServiceAdditionalInfo);
 }
 

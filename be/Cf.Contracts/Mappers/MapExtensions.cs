@@ -29,5 +29,16 @@ public static class MapExtensions
 
     public static Response.ServiceInfo ToModel(this Service service) =>
         new(service.ServiceId, service.Status, service.CreatedDate);
+
+    public static Response.ServiceAdditionalFields ToServiceInfoModel(this Service service) =>
+        new (new ServiceAdditionalInfoModel
+        {
+            ServiceName = service.ServiceName,
+            Adress = service.Adress,
+            City = service.City,
+            WeeklyWorkingHours = service.WeeklyWorkingHours,
+            ContactPhone = service.ContactPhone,
+            Description = service.Description
+        });
 }
 

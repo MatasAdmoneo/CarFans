@@ -100,15 +100,29 @@ namespace Cf.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Adress")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPhone")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<List<byte[]>>("Data")
-                        .IsRequired()
                         .HasColumnType("bytea[]");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<string>("ServiceId")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServiceName")
                         .HasColumnType("text");
 
                     b.Property<int>("Status")

@@ -30,18 +30,6 @@ public class Service : Entity
         Description = description;
     }
 
-    public Service(string serviceId, string serviceName, string adress, List<WorkingDay> weeklyWorkingHours, string contactPhone, string description)
-    {
-        ServiceId = serviceId;
-        Status = ServiceStatus.Pending;
-        ServiceName = serviceName;
-        Adress = adress;
-        WeeklyWorkingHours = weeklyWorkingHours;
-        ContactPhone = contactPhone;
-        Description = description;
-
-    }
-
     public Service(string serviceId, byte[] data) : base()
     {
         ServiceId = serviceId;
