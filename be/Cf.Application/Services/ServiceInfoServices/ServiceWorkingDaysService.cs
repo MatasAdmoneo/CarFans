@@ -13,7 +13,7 @@ namespace Cf.Application.Services.ServiceInfoServices
         {
             _context = context;
         }
-        public void AddWorkingDaysByServiceId(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours)
+        public void AddByServiceId(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours)
         {
             List<WorkingDay> workingDays = new List<WorkingDay>();
 
@@ -35,7 +35,7 @@ namespace Cf.Application.Services.ServiceInfoServices
             _context.SaveChanges();
         }
 
-        public void RemoveWorkingDaysByServiceId(Guid serviceId)
+        public void RemoveByServiceId(Guid serviceId)
         {
             var existingWorkingDays = _context.WorkingDays.Where(wd => wd.ServiceId == serviceId);
             _context.WorkingDays.RemoveRange(existingWorkingDays);

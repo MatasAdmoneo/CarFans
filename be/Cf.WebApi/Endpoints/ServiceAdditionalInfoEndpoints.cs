@@ -27,7 +27,7 @@ public static class ServiceAdditionalInfoEndpoints
 
     [Authorize(Roles = "Service")]
     private static async Task UpdateAsync([FromServices] IServicelnfoService additionalInfoService, IHttpContextAccessor httpContextAccessor,[FromBody] ServiceAdditionalInfoModel additionalInfo) =>
-        await additionalInfoService.UpdateInfoAsync(GetServiceId(httpContextAccessor), additionalInfo);
+        await additionalInfoService.UpdateAsync(GetServiceId(httpContextAccessor), additionalInfo);
 
     [Authorize(Roles = "Service")]
     private static async Task<Response.ServiceAdditionalFields> GetByServiceIdAsync([FromServices] IServicelnfoService additionalInfoService, IHttpContextAccessor httpContextAccessor) =>
@@ -35,7 +35,7 @@ public static class ServiceAdditionalInfoEndpoints
 
     [Authorize(Roles = "Service")]
     private static async Task<ServiceStatus> GetServiceStatusByIdAsync([FromServices] IServicelnfoService additionalInfoService, IHttpContextAccessor httpContextAccessor) =>
-        await additionalInfoService.GetServiceStatusByIdAsync(GetServiceId(httpContextAccessor));
+        await additionalInfoService.GetStatusByIdAsync(GetServiceId(httpContextAccessor));
 
     private static string? GetServiceId(IHttpContextAccessor httpContextAccessor) =>
         httpContextAccessor.HttpContext?.User.FindFirst("https://CarFans.com/id")?.Value;

@@ -22,7 +22,7 @@ namespace Cf.Application.Services.ServiceInfoServices
             _serviceWorkingDaysService = serviceWorkingDaysService;
         }
 
-        public async Task UpdateInfoAsync(string? serviceId, ServiceAdditionalInfoModel additionalInfo)
+        public async Task UpdateAsync(string? serviceId, ServiceAdditionalInfoModel additionalInfo)
         {
             if (serviceId is null)
                 throw new ApplicationException();
@@ -57,7 +57,7 @@ namespace Cf.Application.Services.ServiceInfoServices
                     additionalInfo.ContactPhone,
                     additionalInfo.Description);
 
-                    _serviceWorkingDaysService.AddWorkingDaysByServiceId(newService.Id, additionalInfo.WeeklyWorkingHours);
+                    _serviceWorkingDaysService.AddByServiceId(newService.Id, additionalInfo.WeeklyWorkingHours);
 
                     newService.WeeklyWorkingHours = await _context.WorkingDays
                     .Where(wd => wd.ServiceId == newService.Id)
@@ -85,10 +85,10 @@ namespace Cf.Application.Services.ServiceInfoServices
             if(additionalInfo.WeeklyWorkingHours != null) {
 
                 // First remove all workingDays associated with that service id
-                _serviceWorkingDaysService.RemoveWorkingDaysByServiceId(service.Id);         
+                _serviceWorkingDaysService.RemoveByServiceId(service.Id);         
 
                 // Add new provided workingDays
-                _serviceWorkingDaysService.AddWorkingDaysByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
+                _serviceWorkingDaysService.AddByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
                 service.WeeklyWorkingHours = await _context.WorkingDays
                     .Where(wd => wd.ServiceId == service.Id)
                     .ToListAsync();
@@ -124,7 +124,7 @@ namespace Cf.Application.Services.ServiceInfoServices
             return service.ToServiceInfoModel();
         }
 
-        public async Task<ServiceStatus> GetServiceStatusByIdAsync(string? serviceId)
+        public async Task<ServiceStatus> GetStatusByIdAsync(string? serviceId)
         {
             if (serviceId is null)
                 throw new ApplicationException();
