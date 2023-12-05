@@ -9,7 +9,7 @@ using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Cf.Contracts.Mappers;
 
-namespace Cf.Application.Services.ServiceInfoServices
+namespace Cf.Application.Services.ServiceInformation
 {
     public class ServiceInfoService : IServicelnfoService
     {
@@ -20,6 +20,61 @@ namespace Cf.Application.Services.ServiceInfoServices
         {
             _context = context;
             _serviceWorkingDaysService = serviceWorkingDaysService;
+        }
+
+        public async Task AddAsync(string? serviceId, ServiceAdditionalInfoModel additionalInfo)
+        {
+            if (serviceId is null)
+                throw new ApplicationException();
+
+            if (additionalInfo.WeeklyWorkingHours != null)
+            {
+                var isTimeFormatValid = ValidateWeeklyWorkingHoursFormat(additionalInfo.WeeklyWorkingHours);
+                if (!isTimeFormatValid)
+                    throw new BadRequestException(DomainErrors.Service.InvalidFormatUnspecified);
+            }
+
+            var service = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == serviceId);
+
+            if (service is not null)
+                throw new ApplicationException();
+
+            // Ensure that all fields in additionalInfo are not null before creating a new service
+            if (additionalInfo != null &&
+                additionalInfo.ServiceName != null &&
+                additionalInfo.City != null &&
+                additionalInfo.Adress != null &&
+                additionalInfo.WeeklyWorkingHours != null &&
+                additionalInfo.ContactPhone != null)
+            {
+                var newService = new Service(
+                serviceId,
+                ServiceStatus.CreatedInDataBase,
+                additionalInfo.ServiceName,
+                additionalInfo.City,
+                additionalInfo.Adress,
+                null!,
+                additionalInfo.ContactPhone,
+                additionalInfo.Description);
+
+                var workingDays = await _serviceWorkingDaysService.AddByServiceId(newService.Id, additionalInfo.WeeklyWorkingHours);
+
+                newService.WeeklyWorkingHours = await _context.WorkingDays
+                .Where(wd => wd.ServiceId == newService.Id)
+                .ToListAsync();
+
+                // Add the new service to the context and mark it as Added
+                _context.Services.Add(newService);
+                _context.WorkingDays.AddRange(workingDays);
+
+                // Persist the changes to the database
+                await _context.SaveChangesAsync();
+                return;
+            }
+            else
+            {
+                throw new BadRequestException(DomainErrors.Service.FieldsMissing);
+            }
         }
 
         public async Task UpdateAsync(string? serviceId, ServiceAdditionalInfoModel additionalInfo)
@@ -35,46 +90,10 @@ namespace Cf.Application.Services.ServiceInfoServices
                     throw new BadRequestException(DomainErrors.Service.InvalidFormatUnspecified);
             }
 
-            var service = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == serviceId);
-
+            var service = await _context.Services.Include(x => x.WeeklyWorkingHours).FirstOrDefaultAsync(x => x.ServiceId == serviceId);
+  
             if (service is null)
-            {
-                // Ensure that all fields in additionalInfo are not null before creating a new service
-                if (additionalInfo != null &&
-                    additionalInfo.ServiceName != null &&
-                    additionalInfo.City != null &&
-                    additionalInfo.Adress != null &&
-                    additionalInfo.WeeklyWorkingHours != null &&
-                    additionalInfo.ContactPhone != null)
-                {
-                    var newService = new Service(
-                    serviceId,
-                    ServiceStatus.CreatedInDataBase,
-                    additionalInfo.ServiceName,
-                    additionalInfo.City,
-                    additionalInfo.Adress,
-                    null!,
-                    additionalInfo.ContactPhone,
-                    additionalInfo.Description);
-
-                    _serviceWorkingDaysService.AddByServiceId(newService.Id, additionalInfo.WeeklyWorkingHours);
-
-                    newService.WeeklyWorkingHours = await _context.WorkingDays
-                    .Where(wd => wd.ServiceId == newService.Id)
-                    .ToListAsync();                    
-                   
-                    // Add the new service to the context and mark it as Added
-                    _context.Services.Add(newService);
-
-                    // Persist the changes to the database
-                    await _context.SaveChangesAsync();
-                    return;
-                }
-                else
-                {
-                    throw new BadRequestException(DomainErrors.Service.FieldsMissing);
-                }
-            }
+                throw new NotFoundException(DomainErrors.Service.NotFound);
 
             service.ServiceName = additionalInfo.ServiceName != null ? additionalInfo.ServiceName : service.ServiceName;
             service.Adress = additionalInfo.Adress != null ? additionalInfo.Adress : service.Adress;
@@ -85,25 +104,22 @@ namespace Cf.Application.Services.ServiceInfoServices
             if(additionalInfo.WeeklyWorkingHours != null) {
 
                 // First remove all workingDays associated with that service id
-                _serviceWorkingDaysService.RemoveByServiceId(service.Id);         
-
+                _serviceWorkingDaysService.RemoveByServiceId(service.Id);
+                //await _context.SaveChangesAsync();
                 // Add new provided workingDays
-                _serviceWorkingDaysService.AddByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
-                service.WeeklyWorkingHours = await _context.WorkingDays
-                    .Where(wd => wd.ServiceId == service.Id)
-                    .ToListAsync();
-            }
-            if (additionalInfo != null)
-            {
-                service.UpdatedDate = DateTime.UtcNow;
+                var newWorkingDays = await _serviceWorkingDaysService.AddByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
 
-                _context.Entry(service).State = EntityState.Modified;
-                
-                // Update the entity in the database
-                await _context.SaveChangesAsync();
+                //foreach (var day in newWorkingDays)
+                //{
+                //    _context.Entry(day).State = EntityState.Added;
+                //}
+
+                service.WeeklyWorkingHours = newWorkingDays;
             }
-            // If no info was provided, just return
-            return;
+          
+            service.UpdatedDate = DateTime.UtcNow;           
+                // Update the entity in the database
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Response.ServiceAdditionalFields> GetByServiceIdAsync(string? serviceId)

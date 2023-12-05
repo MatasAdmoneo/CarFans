@@ -9,7 +9,7 @@ using Cf.Application.Services.Interfaces;
 using Cf.Application.Services.JobServices;
 using Cf.Application.Services.DocumentServices;
 using Cf.Application.Services.ServiceInfoServices.DocumentServices;
-using Cf.Application.Services.ServiceInfoServices;
+using Cf.Application.Services.ServiceInformation;
 
 namespace Cf.WebApi.Utilities.ServicesConfiguration;
 

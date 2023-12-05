@@ -54,7 +54,6 @@ api.MapAdminDocumentRoutes();
 
 api.MapServiceAdvertRoutes();
 api.MapServiceJobRoutes();
-api.MapServiceDocumentRoutes();
 api.MapServiceInfoRoutes();
 
 api.MapUserAdvertRoutes();

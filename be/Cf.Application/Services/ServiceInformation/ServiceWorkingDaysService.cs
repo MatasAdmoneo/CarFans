@@ -3,7 +3,7 @@ using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
 
-namespace Cf.Application.Services.ServiceInfoServices
+namespace Cf.Application.Services.ServiceInformation
 {
     public class ServiceWorkingDaysService : IServiceWorkingDaysService
     {
@@ -13,7 +13,7 @@ namespace Cf.Application.Services.ServiceInfoServices
         {
             _context = context;
         }
-        public void AddByServiceId(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours)
+        public Task<List<WorkingDay>> AddByServiceId(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours)
         {
             List<WorkingDay> workingDays = new List<WorkingDay>();
 
@@ -29,15 +29,15 @@ namespace Cf.Application.Services.ServiceInfoServices
                     ServiceId = serviceId
                 };
 
-                workingDays.Add(workingDay);           
+                workingDays.Add(workingDay);
+                _context.Add(workingDay);
             }
-            _context.WorkingDays.AddRange(workingDays);
-            _context.SaveChanges();
+            return Task.FromResult(workingDays);
         }
 
         public void RemoveByServiceId(Guid serviceId)
         {
-            var existingWorkingDays = _context.WorkingDays.Where(wd => wd.ServiceId == serviceId);
+            var existingWorkingDays = _context.WorkingDays.Where(wd => wd.ServiceId == serviceId).ToList();
             _context.WorkingDays.RemoveRange(existingWorkingDays);
         }
     }
