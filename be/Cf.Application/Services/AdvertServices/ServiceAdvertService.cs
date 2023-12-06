@@ -4,7 +4,6 @@ using Cf.Domain.Exceptions;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Cf.Contracts.Mappers;
-using Cf.Domain.Aggregates.Adverts;
 
 namespace Cf.Application.Services.AdvertServices;
 
@@ -17,21 +16,22 @@ public class ServiceAdvertService : IServiceAdvertService
         _context = context;
     }
 
-    public async Task<Contracts.Responses.Response.AdvertResponse> GetByIdAsync(Guid id)
+    public async Task<Contracts.Responses.Response.ServiceAdvertByIdResponse> GetByIdAsync(Guid id)
     {
         var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id);
 
         if (advert == null)
             throw new NotFoundException(DomainErrors.Advert.NotFound);
 
-        return advert.ToAdvertModel();
+        return advert.ToServiceAdvertByIdModel();
     }
 
-    public async Task<List<Advert>> GetListAsync()
+    public async Task<List<Contracts.Responses.Response.ServiceAdvertResponse>> GetListAsync()
     {
-        var adverts = await _context.Adverts.ToListAsync();
+        var adverts = await _context.Adverts.Where(a => a.EndDate > DateTime.UtcNow).OrderBy(x => x.EndDate).ToListAsync();
+        var result = adverts.Select(a => a.ToServiceAdvertModel()).ToList();
 
-        return adverts;
+        return result;
     }
 }
 

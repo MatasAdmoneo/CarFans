@@ -29,6 +29,10 @@ namespace Cf.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -36,9 +40,40 @@ namespace Cf.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsLeakedLiquids")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPanelInvalid")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsQuestionsFormType")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsScentBad")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsSoundBad")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUnstableCar")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("ManufactureYear")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<List<string>>("Photos")
                         .IsRequired()
                         .HasColumnType("text[]");
+
+                    b.Property<int>("ProblemType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()

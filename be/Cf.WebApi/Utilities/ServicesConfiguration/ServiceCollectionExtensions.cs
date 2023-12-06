@@ -10,6 +10,7 @@ using Cf.Application.Services.JobServices;
 using Cf.Application.Services.DocumentServices;
 using Cf.Application.Services.ServiceInfoServices.DocumentServices;
 using Cf.Application.Services.ServiceInformation;
+using Cf.Application.Services.ImageUploadServices;
 
 namespace Cf.WebApi.Utilities.ServicesConfiguration;
 
@@ -34,9 +35,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IServiceDocumentService, ServiceDocumentService>();
         services.AddScoped<IAdminDocumentService, AdminDocumentService>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<IImageUploadService, ImageUploadService>();
         services.AddScoped<IServiceWorkingDaysService, ServiceWorkingDaysService>();
         services.AddScoped<IServicelnfoService, ServiceInfoService>();
-        
+
 
         services.AddAuthentication(options =>
         {
@@ -93,7 +95,7 @@ public static class ServiceCollectionExtensions
                               builder =>
                               {
                                   builder.WithOrigins("https://localhost:3000")
-                                  .WithMethods("GET", "POST","PUT","DELETE")
+                                  .WithMethods("GET", "POST", "PUT", "DELETE")
                                   .AllowAnyHeader();
                               });
         });
