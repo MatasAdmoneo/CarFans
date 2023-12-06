@@ -1,4 +1,3 @@
-import { Typography } from "@/lib/materialTailwindExports"
 import { getToken } from "@/utils/getToken"
 import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls"
 import AdvertsList from "./components/AdvertsList"
@@ -25,9 +24,6 @@ export default async function Page() {
 
   return (
     <div className="max-w-3xl mx-auto my-5 py-10 px-5">
-      <div className="pb-5">
-        <Typography variant="h2">Adverts</Typography>
-      </div>
       <AdvertsList adverts={adverts} />
     </div>
   )

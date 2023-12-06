@@ -28,7 +28,7 @@ public class ServiceAdvertService : IServiceAdvertService
 
     public async Task<List<Contracts.Responses.Response.ServiceAdvertResponse>> GetListAsync()
     {
-        var adverts = await _context.Adverts.Where(a => a.EndDate > DateTime.UtcNow).OrderByDescending(x => x.EndDate).ToListAsync();
+        var adverts = await _context.Adverts.Where(a => a.EndDate > DateTime.UtcNow).OrderBy(x => x.EndDate).ToListAsync();
         var result = adverts.Select(a => a.ToServiceAdvertModel()).ToList();
 
         return result;
