@@ -1,6 +1,7 @@
 import { getSession } from "@auth0/nextjs-auth0";
+
 //TODO: disable this page access if service is accepted or didn't submit documents
-async function PdfUploadSuccesspage() {
+const Success = async () => {
   const { user }: any = await getSession();
   return (
     <main className="text-center">
@@ -13,6 +14,6 @@ async function PdfUploadSuccesspage() {
       </p>
     </main>
   );
-}
+};
 
-export default PdfUploadSuccesspage;
+export default Success;
