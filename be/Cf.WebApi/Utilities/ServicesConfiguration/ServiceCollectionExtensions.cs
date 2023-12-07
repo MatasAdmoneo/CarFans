@@ -95,7 +95,7 @@ public static class ServiceCollectionExtensions
                               builder =>
                               {
                                   builder.WithOrigins("https://localhost:3000")
-                                  .WithMethods("GET", "POST", "PUT", "DELETE")
+                                  .WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")
                                   .AllowAnyHeader();
                               });
         });
