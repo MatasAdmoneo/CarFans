@@ -22,23 +22,18 @@ public class Service : Entity
         ServiceId = serviceId;
         Status = status;
         ServiceName = serviceName;
-        City = city;       
+        City = city;
+        Data = new List<byte[]>();
         Adress = adress;
         WeeklyWorkingHours = weeklyWorkingHours;
         ContactPhone = contactPhone;
         Description = description;
     }
 
-    public Service(string serviceId, byte[] data) : base()
-    {
-        ServiceId = serviceId;
-        Status = ServiceStatus.CreatedInDataBase;
-        Data = new List<byte[]> { data };
-    }
-
     public void AddData(byte[] pdfBytes)
     {
         Data.Add(pdfBytes);
+        Status = ServiceStatus.Pending;
         UpdatedDate = DateTime.UtcNow;
     }   
 }

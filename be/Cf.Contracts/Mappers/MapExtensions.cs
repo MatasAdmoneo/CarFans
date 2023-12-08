@@ -40,7 +40,7 @@ public static class MapExtensions
         List<ServiceWorkingHours>? convertedHours = service.WeeklyWorkingHours?
             .Select(wd => new ServiceWorkingHours
             {
-                DayOfWeek = wd.DayOfWeek,
+                DayOfWeek = (int)wd.DayOfWeek,
                 StartTime = wd.StartTime,
                 EndTime = wd.EndTime,
                 LunchBreakStartTime = wd.LunchBreakStartTime,

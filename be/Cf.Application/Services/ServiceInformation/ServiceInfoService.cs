@@ -105,20 +105,14 @@ namespace Cf.Application.Services.ServiceInformation
 
                 // First remove all workingDays associated with that service id
                 _serviceWorkingDaysService.RemoveByServiceId(service.Id);
-                //await _context.SaveChangesAsync();
                 // Add new provided workingDays
                 var newWorkingDays = await _serviceWorkingDaysService.AddByServiceId(service.Id, additionalInfo.WeeklyWorkingHours);
-
-                //foreach (var day in newWorkingDays)
-                //{
-                //    _context.Entry(day).State = EntityState.Added;
-                //}
 
                 service.WeeklyWorkingHours = newWorkingDays;
             }
           
             service.UpdatedDate = DateTime.UtcNow;           
-                // Update the entity in the database
+            // Update the entity in the database
             await _context.SaveChangesAsync();
         }
 

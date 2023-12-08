@@ -21,7 +21,7 @@ namespace Cf.Application.Services.ServiceInformation
             {
                 var workingDay = new WorkingDay
                 {
-                    DayOfWeek = day.DayOfWeek,
+                    DayOfWeek = (DayOfWeek)day.DayOfWeek,
                     StartTime = day.StartTime,
                     EndTime = day.EndTime,
                     LunchBreakStartTime = day.LunchBreakStartTime,

@@ -3,7 +3,7 @@ namespace Cf.Domain.Models
 {
     public class ServiceWorkingHours
     {
-        public required DayOfWeek DayOfWeek { get; set; }
+        public required int DayOfWeek { get; set; }
         public required string StartTime { get; set; }
         public required string EndTime { get; set; }
         public required string LunchBreakStartTime { get; set; }
