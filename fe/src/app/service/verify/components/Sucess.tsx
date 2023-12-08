@@ -1,6 +1,5 @@
 import { getSession } from "@auth0/nextjs-auth0";
 
-//TODO: disable this page access if service is accepted or didn't submit documents
 const Success = async () => {
   const { user }: any = await getSession();
   return (

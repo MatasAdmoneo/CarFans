@@ -1,7 +1,7 @@
 "use client";
 
 import { ServiceInfoForm } from "@/types/ServiceInfoForm";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { emptyInfoFormValues, serviceInfoFormSchema } from "./utils";
 import { getToken } from "@/utils/getToken";
 import { BASE_API_URL, SERVICE_ADDITIONAL_INFO_ROUTE } from "@/utils/urls";
@@ -9,12 +9,21 @@ import toast from "react-hot-toast";
 import { Button, Input, Textarea } from "@/lib/materialTailwindExports";
 import DayPicker from "./DayPicker";
 
-const InfoForm = () => {
+type InfoFormProps = {
+  isForwardButtonDisabled: boolean;
+  setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
+};
+
+const InfoForm = ({
+  isForwardButtonDisabled,
+  setIsForwardButtonDisabled,
+}: InfoFormProps) => {
   const [formData, setFormData] =
     useState<ServiceInfoForm>(emptyInfoFormValues);
 
   useEffect(() => {
     getServiceInfo();
+    setIsForwardButtonDisabled(false);
   }, []);
 
   const handleChange = (
@@ -49,9 +58,9 @@ const InfoForm = () => {
         },
       }
     );
-    const json = await response.json();
-    if (json.serviceAdditionalInfo) {
-      setFormData(json.serviceAdditionalInfo);
+    const serviceInfo = await response.json();
+    if (serviceInfo.serviceAdditionalInfo) {
+      setFormData(serviceInfo.serviceAdditionalInfo);
     }
   };
 
@@ -68,7 +77,7 @@ const InfoForm = () => {
       const response = await fetch(
         `${BASE_API_URL}${SERVICE_ADDITIONAL_INFO_ROUTE}`,
         {
-          method: "PATCH",
+          method: `${isForwardButtonDisabled ? "POST" : "PATCH"}`,
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -85,6 +94,7 @@ const InfoForm = () => {
         return;
       }
       toast.success("Your info has been successfully submitted");
+      setIsForwardButtonDisabled(false);
     } else {
       toast.error("Please fulfill all form fields");
     }
@@ -146,6 +156,7 @@ const InfoForm = () => {
         />
         <Button
           type="submit"
+          color="blue"
           size="lg"
           className="w-fit self-center rounded-md"
         >
