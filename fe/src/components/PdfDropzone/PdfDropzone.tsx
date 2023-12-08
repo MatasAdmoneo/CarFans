@@ -6,7 +6,6 @@ import {
   FormEvent,
   SetStateAction,
   useEffect,
-  useLayoutEffect,
   useState,
 } from "react";
 import { useDropzone, FileWithPath } from "react-dropzone";
@@ -40,7 +39,6 @@ function PdfDropzone({ setIsForwardButtonDisabled }: PdfDropZoneProps) {
     maxFiles: 1,
     maxSize: maxFileSize,
   });
-  const router = useRouter();
 
   const acceptedFileItems = acceptedFiles.map((file: FileWithPath) => (
     <li key={file.path}>

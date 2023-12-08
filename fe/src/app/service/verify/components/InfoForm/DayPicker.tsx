@@ -44,7 +44,16 @@ type DayPickerProps = {
 const DayPicker = ({ formData, setFormData }: DayPickerProps) => {
   const [selectedDay, setSelectedDay] = useState<number>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleModalOpen = () => setIsModalOpen((prev) => !prev);
+  const handleModalChange = () => setIsModalOpen((prev) => !prev);
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      weeklyWorkingHours: prevFormData.weeklyWorkingHours.filter(
+        (day) => day.dayOfWeek !== selectedDay
+      ),
+    }));
+  };
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;
     setSelectedDay(Number(value));
@@ -102,7 +111,8 @@ const DayPicker = ({ formData, setFormData }: DayPickerProps) => {
         ))}
         <Modal
           isOpen={isModalOpen}
-          handler={handleModalOpen}
+          handleSave={handleModalChange}
+          handleClose={handleModalClose}
           workingDay={selectedDay}
           formData={formData}
           setFormData={setFormData}

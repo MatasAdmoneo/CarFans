@@ -11,17 +11,17 @@ import { Dispatch, SetStateAction } from "react";
 
 type ModalProps = {
   isOpen: boolean;
-  handler: () => void;
+  handleSave: () => void;
+  handleClose: () => void;
   workingDay: number | undefined;
   formData: ServiceInfoForm;
   setFormData: Dispatch<SetStateAction<ServiceInfoForm>>;
 };
 
-const saveWorkingDay = () => {};
-
 const Modal = ({
   isOpen,
-  handler,
+  handleSave,
+  handleClose,
   workingDay,
   formData,
   setFormData,
@@ -36,8 +36,8 @@ const Modal = ({
     }));
   };
   return (
-    <Dialog open={isOpen} size="xs" handler={handler}>
-      <DialogHeader>Select ..day.. working hours</DialogHeader>
+    <Dialog open={isOpen} size="xs" handler={handleClose}>
+      <DialogHeader>Select working hours</DialogHeader>
       <DialogBody className="[&>div]:my-5">
         <Input
           size="lg"
@@ -101,10 +101,15 @@ const Modal = ({
         />
       </DialogBody>
       <DialogFooter>
-        <Button variant="text" color="red" onClick={handler} className="mr-1">
+        <Button
+          variant="text"
+          color="red"
+          onClick={handleClose}
+          className="mr-1"
+        >
           <span>Cancel</span>
         </Button>
-        <Button variant="gradient" onClick={saveWorkingDay}>
+        <Button variant="gradient" onClick={handleSave}>
           <span>Confirm</span>
         </Button>
       </DialogFooter>
