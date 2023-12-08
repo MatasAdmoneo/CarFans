@@ -13,11 +13,14 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
     if (roles.length === 0 || !roles.includes("Service")) {
       return NextResponse.redirect(req.nextUrl.origin);
     }
+    const serviceStatus = await getServiceStatus();
     if (req.nextUrl.pathname === "/service/verify") {
-      const serviceStatus = await getServiceStatus();
       if (serviceStatus === 3) {
         return NextResponse.redirect("https://localhost:3000/jobs");
       }
+    }
+    if (serviceStatus !== 3 && req.nextUrl.pathname !== "/service/verify") {
+      return NextResponse.redirect("https://localhost:3000/service/verify");
     }
   }
 
