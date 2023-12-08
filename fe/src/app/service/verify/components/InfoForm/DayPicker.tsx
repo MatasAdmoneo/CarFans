@@ -2,8 +2,7 @@
 
 import { ServiceInfoForm, WorkingDay } from "@/types/ServiceInfoForm";
 import { Checkbox, Typography } from "@/lib/materialTailwindExports";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import type { CheckboxProps } from "@material-tailwind/react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import Modal from "./Modal";
 
 const DAYS = [
@@ -43,18 +42,16 @@ type DayPickerProps = {
 };
 
 const DayPicker = ({ formData, setFormData }: DayPickerProps) => {
-  const [days, setDays] = useState(
-    formData.weeklyWorkingHours.map((day) => day.dayOfWeek)
-  );
   const [selectedDay, setSelectedDay] = useState<number>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => setIsModalOpen((prev) => !prev);
-  const handleCheckboxChange = (value: boolean, dayValue: number) => {
-    setSelectedDay(dayValue);
+  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { checked, value } = e.target;
+    setSelectedDay(Number(value));
 
-    if (value) {
+    if (checked) {
       const newWorkingHour = {
-        dayOfWeek: dayValue,
+        dayOfWeek: Number(value),
         startTime: "",
         endTime: "",
         lunchBreakStartTime: "",
@@ -74,12 +71,12 @@ const DayPicker = ({ formData, setFormData }: DayPickerProps) => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         weeklyWorkingHours: prevFormData.weeklyWorkingHours.filter(
-          (day) => day.dayOfWeek !== dayValue
+          (day) => day.dayOfWeek !== Number(value)
         ),
       }));
     }
   };
-
+  console.log(formData);
   return (
     <div className="border-blue-gray-200 border-[1px] rounded-md p-1 pb-2">
       <Typography className="text-blue-gray-500 text-[0.875rem] ml-2 mt-1">
@@ -89,13 +86,16 @@ const DayPicker = ({ formData, setFormData }: DayPickerProps) => {
         {DAYS.map((day, index) => (
           <div key={day.value} className="w-fit">
             <Checkbox
-              onChange={(e) =>
-                handleCheckboxChange(e.target.checked, day.value)
-              }
+              onChange={(e) => handleCheckboxChange(e)}
               ripple={false}
               className="h-8 w-8 rounded-full border-gray-900/20 bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0"
               crossOrigin=""
               value={day.value}
+              checked={
+                formData.weeklyWorkingHours[day.value]?.dayOfWeek !== undefined
+                  ? true
+                  : false
+              }
             />
             <span className="block text-center">{day.label}</span>
           </div>

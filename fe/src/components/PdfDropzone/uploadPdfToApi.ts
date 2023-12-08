@@ -44,7 +44,6 @@ export const uploadPdfToApi = async (
 
       setIsUploading(false);
       toast.success("Documents uploaded successfully.");
-      router.push(`verify/success`);
     } catch (error) {
       toast.error("Failed to upload file.");
     }

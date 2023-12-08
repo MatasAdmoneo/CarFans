@@ -1,7 +1,7 @@
 "use client";
 
 import { ServiceInfoForm } from "@/types/ServiceInfoForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { emptyInfoFormValues, serviceInfoFormSchema } from "./utils";
 import { getToken } from "@/utils/getToken";
 import { BASE_API_URL, SERVICE_ADDITIONAL_INFO_ROUTE } from "@/utils/urls";
@@ -12,6 +12,10 @@ import DayPicker from "./DayPicker";
 const InfoForm = () => {
   const [formData, setFormData] =
     useState<ServiceInfoForm>(emptyInfoFormValues);
+
+  useEffect(() => {
+    getServiceInfo();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,6 +34,24 @@ const InfoForm = () => {
       return true;
     } catch {
       return false;
+    }
+  };
+
+  const getServiceInfo = async () => {
+    const token = await getToken();
+    const response = await fetch(
+      `${BASE_API_URL}${SERVICE_ADDITIONAL_INFO_ROUTE}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const json = await response.json();
+    if (json.serviceAdditionalInfo) {
+      setFormData(json.serviceAdditionalInfo);
     }
   };
 
