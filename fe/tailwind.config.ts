@@ -9,12 +9,6 @@ const config: Config = withMT({
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
-    colors: {
-      primary: {
-        400: '#b0bec5',
-        800: '#455A64'
-      }
-    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

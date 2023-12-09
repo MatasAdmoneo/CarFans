@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 import { defaultValues, offerFormSchema } from "./utils";
 import Link from "next/link";
+import { DateSelectInputClassNames } from "@/utils/constants";
 
 const OfferForm = () => {
   const [offerData, setOfferData] = useState<OfferType>(defaultValues);
@@ -95,7 +96,8 @@ const OfferForm = () => {
           asSingle={true}
           value={{ startDate: offerData.startDate!, endDate: offerData.startDate! }}
           onChange={handleStartDateChange}
-          containerClassName="text-primary-800 rounded-lg border-primary-400 border"
+          containerClassName="relative w-full"
+          inputClassName={DateSelectInputClassNames}
         />
         <Input crossOrigin="" type="number" value={offerData.price} name="price" onChange={handleChange} color="blue-gray" label="Price" />
         <Textarea value={offerData.description} name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Description" />

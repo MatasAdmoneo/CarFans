@@ -4,7 +4,7 @@ import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 import YesOrNoChoice from "@/components/YesOrNoChoice/YesOrNoChoice";
 import { Button, Input, Select, Tab, TabPanel, Tabs, TabsBody, TabsHeader, Textarea, Option } from "@/lib/materialTailwindExports";
 import { QuestionsFormType, SimpleFormType } from "@/types/CreateAdvertForm";
-import { CarProblemsCategories, FORM_BOX_SHADOW } from "@/utils/constants";
+import { CarProblemsCategories, DateSelectInputClassNames, FORM_BOX_SHADOW } from "@/utils/constants";
 import { QUESTIONS_FORM_TYPE, SIMPLE_FORM_TYPE, questionsFormDefaultValues, questionsFormSchema, simpleFormDefaultValues, simpleFormSchema } from "./utils";
 import { BASE_API_URL, USER_ADVERTS_ROUTE } from "@/utils/urls";
 import ImageDropzone from "@/components/ImageDropzone/ImageDropzone";
@@ -162,7 +162,7 @@ const AdvertPage = () => {
                 asSingle={true}
                 value={{ startDate: simpleFormData.endDate, endDate: simpleFormData.endDate }}
                 onChange={handleEndDateChange}
-                containerClassName="date-color-override"
+                inputClassName={DateSelectInputClassNames}
               />
               <Input crossOrigin="" value={simpleFormData.title} name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
               <Select value={questionsFormData.problemType} onChange={handleProblemTypeChange} label="Select problem type">
@@ -189,7 +189,7 @@ const AdvertPage = () => {
                 asSingle={true}
                 value={{ startDate: questionsFormData.endDate, endDate: questionsFormData.endDate }}
                 onChange={handleEndDateChange}
-                containerClassName="date-color-override"
+                inputClassName={DateSelectInputClassNames}
               />
               <Input value={questionsFormData.title} crossOrigin="" name="title" onChange={handleChange} color="blue-gray" label="Problem title" />
               <Select onChange={handleProblemTypeChange} value={questionsFormData.problemType} label="Select problem type">
