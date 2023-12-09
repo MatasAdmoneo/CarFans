@@ -34,15 +34,15 @@ export default async function AdvertInfoPage({ params: { jobId } }: { params: { 
   return (
     <div className="flex flex-col gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
       <Breadcrumbs>
-        <a href="/home" className="opacity-60">
+        <Link href="/home" className="opacity-60">
           <span>Home</span>
-        </a>
-        <a href="/jobs" className="opacity-60">
+        </Link>
+        <Link href="/jobs" className="opacity-60">
           <span>Jobs</span>
-        </a>
-        <a href="#">
+        </Link>
+        <Link href="#">
           <span>Advert</span>
-        </a>
+        </Link>
       </Breadcrumbs>
       <Typography variant="h3">
         {advert.title}

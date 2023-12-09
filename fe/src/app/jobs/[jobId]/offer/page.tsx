@@ -7,19 +7,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from "react"
 import toast from "react-hot-toast";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
-import { date, number, object, string } from "yup"
-
-const offerFormSchema = object({
-  price: number().min(1).required(),
-  startDate: date().min(new Date(), 'Date must be in the future').required(),
-  description: string().max(1000).required(),
-});
-
-const defaultValues = {
-  price: 0,
-  description: "",
-  startDate: null
-};
+import { defaultValues, offerFormSchema } from "./utils";
+import Link from "next/link";
 
 const OfferForm = () => {
   const [offerData, setOfferData] = useState<OfferType>(defaultValues);
@@ -84,29 +73,29 @@ const OfferForm = () => {
   return (
     <div className="flex flex-col gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
       <Breadcrumbs>
-        <a href="/home" className="opacity-60">
+        <Link href="/home" className="opacity-60">
           <span>Home</span>
-        </a>
-        <a href="/jobs" className="opacity-60">
+        </Link>
+        <Link href="/jobs" className="opacity-60">
           <span>Jobs</span>
-        </a>
-        <a href={`/jobs/${params.jobId}`} className="opacity-60">
+        </Link>
+        <Link href={`/jobs/${params.jobId}`} className="opacity-60">
           <span>Advert</span>
-        </a>
-        <a href="#">
+        </Link>
+        <Link href="#">
           <span>Offer</span>
-        </a>
+        </Link>
       </Breadcrumbs>
       <Typography variant="h3">Offer form</Typography>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <Datepicker
-          placeholder={"Select preliminari job start date"}
+          placeholder={"Select estimated job start date"}
           minDate={new Date()}
           startFrom={new Date()}
           asSingle={true}
           value={{ startDate: offerData.startDate!, endDate: offerData.startDate! }}
           onChange={handleStartDateChange}
-          containerClassName="date-color-override"
+          containerClassName="text-primary-800 rounded-lg border-primary-400 border"
         />
         <Input crossOrigin="" type="number" value={offerData.price} name="price" onChange={handleChange} color="blue-gray" label="Price" />
         <Textarea value={offerData.description} name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Description" />
