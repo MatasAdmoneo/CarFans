@@ -96,7 +96,6 @@ const OfferForm = () => {
           asSingle={true}
           value={{ startDate: offerData.startDate!, endDate: offerData.startDate! }}
           onChange={handleStartDateChange}
-          containerClassName="relative w-full"
           inputClassName={DateSelectInputClassNames}
         />
         <Input crossOrigin="" type="number" value={offerData.price} name="price" onChange={handleChange} color="blue-gray" label="Price" />
