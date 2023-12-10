@@ -6,6 +6,7 @@ import { AdvertType } from "@/types/AdvertType";
 import { ChipTooltipText } from "@/utils/constants";
 import { getToken } from "@/utils/getToken";
 import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
+import Link from "next/link";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaCircleXmark } from "react-icons/fa6";
 
@@ -33,15 +34,15 @@ export default async function AdvertInfoPage({ params: { jobId } }: { params: { 
   return (
     <div className="flex flex-col gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
       <Breadcrumbs>
-        <a href="/home" className="opacity-60">
+        <Link href="/home" className="opacity-60">
           <span>Home</span>
-        </a>
-        <a href="/jobs" className="opacity-60">
+        </Link>
+        <Link href="/jobs" className="opacity-60">
           <span>Jobs</span>
-        </a>
-        <a href="#">
+        </Link>
+        <Link href="#">
           <span>Advert</span>
-        </a>
+        </Link>
       </Breadcrumbs>
       <Typography variant="h3">
         {advert.title}
@@ -109,7 +110,9 @@ export default async function AdvertInfoPage({ params: { jobId } }: { params: { 
           </Typography>
         </div>
       </div>
-      <Button variant="gradient">Send an offer</Button>
+      <Button className="p-0" variant="gradient">
+        <Link className="w-full flex justify-center px-5 py-3" href={`/jobs/${jobId}/offer`}>Send an offer</Link>
+      </Button>
     </div>
   )
 }

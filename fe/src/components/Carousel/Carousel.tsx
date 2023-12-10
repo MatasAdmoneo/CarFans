@@ -13,7 +13,6 @@ export default function Carousel({ photos }: { photos: string[] }) {
           navigation
           pagination={{ type: 'fraction' }}
           modules={[Navigation, Pagination]}
-          onSwiper={swiper => console.log(swiper)}
           className='h-96 w-full rounded-lg'
         >
           {photos.map((url, index) => (

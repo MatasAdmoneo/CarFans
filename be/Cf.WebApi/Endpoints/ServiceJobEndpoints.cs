@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Cf.WebApi.Routing;
 using Cf.Application.Services.Interfaces;
 using Cf.Domain.Aggregates.Jobs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cf.WebApi.Endpoints;
 
@@ -18,15 +19,15 @@ public static class ServiceJobEndpoints
         .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapPost(AddAsync);
+        group.MapPost("{advertId}", AddAsync);
         group.MapPut(UpdateAsync);
         group.MapGet(GetListAsync);
     }
 
     [Authorize(Roles = "Service")]
-    private static async Task<Contracts.Responses.Response.JobIdResponse> AddAsync(IServiceJobService service, IHttpContextAccessor httpContextAccessor, Guid advertId, JobModel model)
+    private static async Task<Contracts.Responses.Response.JobIdResponse> AddAsync(IServiceJobService service, IHttpContextAccessor httpContextAccessor, [FromRoute] Guid advertId, JobModel model)
     {
-        var job = await service.CreateAsync(advertId, GetServiceId(httpContextAccessor),model);
+        var job = await service.CreateAsync(advertId, GetServiceId(httpContextAccessor), model);
 
         return job;
     }
