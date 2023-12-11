@@ -34,7 +34,8 @@ const Stepper = ({ children }: { children: ReactNode }) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    const serviceStatus = await response.json();
+    const serviceStatusObject = await response.json();
+    const serviceStatus = serviceStatusObject.status;
     console.log(serviceStatus);
     if (serviceStatus === "Exists" || serviceStatus === "Denied") {
       setIsForwardButtonDisabled(true);
