@@ -11,21 +11,21 @@ public class Service : Entity
 
     public string? City { get; set; }
     public List<byte[]>? Data { get; set; }
-    public string? Adress {  get; set; }
+    public string? Address {  get; set; }
     public List<WorkingDay>? WeeklyWorkingHours { get; set; }
     public string? ContactPhone { get; set; }
     public string? Description { get; set; }
 
     public Service() { }
 
-    public Service(string serviceId, ServiceStatus status, string serviceName, string city, string adress, List<WorkingDay> weeklyWorkingHours, string contactPhone, string? description)
+    public Service(string serviceId, ServiceStatus status, string serviceName, string city, string address, List<WorkingDay> weeklyWorkingHours, string contactPhone, string? description)
     {
         ServiceId = serviceId;
         Status = status;
         ServiceName = serviceName;
         City = city;
         Data = new List<byte[]>();
-        Adress = adress;
+        Address = address;
         WeeklyWorkingHours = weeklyWorkingHours;
         ContactPhone = contactPhone;
         Description = description;

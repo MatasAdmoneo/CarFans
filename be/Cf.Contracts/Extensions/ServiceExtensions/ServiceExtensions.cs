@@ -8,7 +8,7 @@ public static class ServiceExtensions
     public static Service UpdateFields(this Service service, ServiceAdditionalInfoModel additionalInfo)
     {
         service.ServiceName = additionalInfo.ServiceName != null ? additionalInfo.ServiceName : service.ServiceName;
-        service.Adress = additionalInfo.Address != null ? additionalInfo.Address : service.Adress;
+        service.Address = additionalInfo.Address != null ? additionalInfo.Address : service.Address;
         service.City = additionalInfo.City != null ? additionalInfo.City : service.City;
         service.ContactPhone = additionalInfo.ContactPhone != null ? additionalInfo.ContactPhone : service.ContactPhone;
         service.Description = additionalInfo.Description != null ? additionalInfo.Description : service.Description;

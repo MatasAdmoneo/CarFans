@@ -50,7 +50,7 @@ public static class MapExtensions
 
         return new Response.ServiceAdditionalFields(
             service.ServiceName,
-            service.Adress,
+            service.Address,
             service.City,
             convertedHours,
             service.ContactPhone,
