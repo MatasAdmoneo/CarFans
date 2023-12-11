@@ -10,4 +10,3 @@ public interface IUserJobService
 
     Task<List<Job>> GetListAsync(Guid advertId, string? userId);
 }
-

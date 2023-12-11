@@ -2,7 +2,7 @@ import { object, string, array, number } from "yup";
 
 export const serviceInfoFormSchema = object({
   serviceName: string().required(),
-  adress: string().required(),
+  address: string().required(),
   city: string().required(),
   weeklyWorkingHours: array()
     .of(
@@ -22,7 +22,7 @@ export const serviceInfoFormSchema = object({
 
 export const emptyInfoFormValues = {
   serviceName: "",
-  adress: "",
+  address: "",
   city: "",
   weeklyWorkingHours: [],
   contactPhone: "+370",

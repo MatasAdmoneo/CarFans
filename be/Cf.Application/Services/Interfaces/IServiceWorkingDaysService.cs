@@ -5,8 +5,6 @@ namespace Cf.Application.Services.Interfaces
 {
     public interface IServiceWorkingDaysService
     {
-        public Task<List<WorkingDay>> AddByServiceId(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours);
-
-        public void RemoveByServiceId(Guid serviceId);
+        public Task CreateAsync(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours);
     }
 }

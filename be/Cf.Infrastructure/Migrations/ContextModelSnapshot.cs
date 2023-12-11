@@ -135,7 +135,7 @@ namespace Cf.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .HasColumnType("text");
 
                     b.Property<string>("City")
@@ -168,6 +168,9 @@ namespace Cf.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ServiceId")
+                        .IsUnique();
+
                     b.ToTable("Services");
                 });
 
@@ -184,22 +187,18 @@ namespace Cf.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("EndTime")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LunchBreakEndTime")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LunchBreakStartTime")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("ServiceId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("StartTime")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedDate")

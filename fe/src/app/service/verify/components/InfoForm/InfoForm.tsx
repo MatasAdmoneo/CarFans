@@ -59,8 +59,8 @@ const InfoForm = ({
       }
     );
     const serviceInfo = await response.json();
-    if (serviceInfo.serviceAdditionalInfo) {
-      setFormData(serviceInfo.serviceAdditionalInfo);
+    if (serviceInfo && Object.keys(serviceInfo).length !== 0) {
+      setFormData(serviceInfo);
     }
   };
 
@@ -118,11 +118,11 @@ const InfoForm = ({
         <Input
           crossOrigin=""
           required
-          value={formData.adress}
-          name="adress"
+          value={formData.address}
+          name="address"
           onChange={handleChange}
           color="blue-gray"
-          label="Adress"
+          label="Address"
         />
         <Input
           crossOrigin=""

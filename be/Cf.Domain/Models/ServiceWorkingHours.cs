@@ -1,12 +1,16 @@
 ﻿
-namespace Cf.Domain.Models
+namespace Cf.Domain.Models;
+
+public class ServiceWorkingHours
 {
-    public class ServiceWorkingHours
-    {
-        public required int DayOfWeek { get; set; }
-        public required string StartTime { get; set; }
-        public required string EndTime { get; set; }
-        public required string LunchBreakStartTime { get; set; }
-        public required string LunchBreakEndTime { get; set; }
-    }
+    public int DayOfWeek { get; set; }
+
+    public string? StartTime { get; set; }
+
+    public string? EndTime { get; set; }
+
+    public string? LunchBreakStartTime { get; set; }
+
+    public string? LunchBreakEndTime { get; set; }
 }
+

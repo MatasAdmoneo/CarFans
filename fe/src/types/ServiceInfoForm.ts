@@ -1,6 +1,6 @@
 export type ServiceInfoForm = {
   serviceName: string;
-  adress: string;
+  address: string;
   city: string;
   weeklyWorkingHours: {
     dayOfWeek: number;

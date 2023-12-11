@@ -2,6 +2,7 @@
 using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cf.Application.Services.ServiceInformation
 {
@@ -13,32 +14,29 @@ namespace Cf.Application.Services.ServiceInformation
         {
             _context = context;
         }
-        public Task<List<WorkingDay>> AddByServiceId(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours)
+        public async Task CreateAsync(Guid serviceId, List<ServiceWorkingHours> serviceWorkingHours)
         {
-            List<WorkingDay> workingDays = new List<WorkingDay>();
+            await RemoveByIdAsync(serviceId);
 
-            foreach (var day in serviceWorkingHours)
+            var workingDays = serviceWorkingHours.Select(x => new WorkingDay
             {
-                var workingDay = new WorkingDay
-                {
-                    DayOfWeek = (DayOfWeek)day.DayOfWeek,
-                    StartTime = day.StartTime,
-                    EndTime = day.EndTime,
-                    LunchBreakStartTime = day.LunchBreakStartTime,
-                    LunchBreakEndTime = day.LunchBreakEndTime,
-                    ServiceId = serviceId
-                };
+                DayOfWeek = (DayOfWeek)x.DayOfWeek,
+                StartTime = x.StartTime,
+                EndTime = x.EndTime,
+                LunchBreakStartTime = x.LunchBreakStartTime,
+                LunchBreakEndTime = x.LunchBreakEndTime,
+                ServiceId = serviceId
+            }).ToList();
 
-                workingDays.Add(workingDay);
-                _context.Add(workingDay);
-            }
-            return Task.FromResult(workingDays);
+            await _context.AddRangeAsync(workingDays);
+            await _context.SaveChangesAsync();
         }
 
-        public void RemoveByServiceId(Guid serviceId)
+        private async Task RemoveByIdAsync(Guid serviceId)
         {
             var existingWorkingDays = _context.WorkingDays.Where(wd => wd.ServiceId == serviceId).ToList();
             _context.WorkingDays.RemoveRange(existingWorkingDays);
+            await _context.SaveChangesAsync();
         }
     }
 }

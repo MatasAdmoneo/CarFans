@@ -40,7 +40,7 @@ public static class ServiceInformationEndpoints
         await additionalInfoService.GetByServiceIdAsync(GetServiceId(httpContextAccessor));
 
     [Authorize(Roles = "Service")]
-    private static async Task<ServiceStatus> GetServiceStatusByIdAsync([FromServices] IServicelnfoService additionalInfoService, IHttpContextAccessor httpContextAccessor) =>
+    private static async Task<Response.ServiceStatusInfo> GetServiceStatusByIdAsync([FromServices] IServicelnfoService additionalInfoService, IHttpContextAccessor httpContextAccessor) =>
         await additionalInfoService.GetStatusByIdAsync(GetServiceId(httpContextAccessor));
 
     [Authorize(Roles = "Service")]

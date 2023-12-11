@@ -39,6 +39,14 @@ public static partial class Response
 
     public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
 
-    public record ServiceAdditionalFields(ServiceAdditionalInfoModel ServiceAdditionalInfo);
+    public record ServiceAdditionalFields(
+        string? ServiceName,
+        string? Address,
+        string? City,
+        List<ServiceWorkingHours>? WeeklyWorkingHours,
+        string? ContactPhone,
+        string? Description);
+
+    public record ServiceStatusInfo(ServiceStatus Status);
 }
 
