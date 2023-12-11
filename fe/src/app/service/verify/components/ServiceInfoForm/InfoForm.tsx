@@ -78,9 +78,8 @@ const InfoForm = ({
     const isValid = await validateFormData();
 
     if (isValid) {
-      const data = formData;
       const body = {
-        ...data,
+        ...formData,
       };
       const token = await getToken();
       const response = await fetch(
@@ -164,7 +163,7 @@ const InfoForm = ({
         />
         <Button
           type="submit"
-          color="blue"
+          variant="gradient"
           size="lg"
           className="w-fit self-center rounded-md"
         >

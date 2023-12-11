@@ -97,7 +97,7 @@ function PdfDropzone({ setIsForwardButtonDisabled }: PdfDropZoneProps) {
       </aside>
       <Button
         type="submit"
-        color="blue"
+        variant="gradient"
         size="lg"
         className="mt-5"
         disabled={

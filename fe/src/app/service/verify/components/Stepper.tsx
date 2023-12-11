@@ -7,7 +7,7 @@ import {
   HiOutlineDocumentText,
   IoDocumentAttachSharp,
 } from "@/lib/reactIconsExports";
-import InfoForm from "./InfoForm/InfoForm";
+import InfoForm from "./ServiceInfoForm/InfoForm";
 import PdfForm from "./PdfForm";
 import { BASE_API_URL, SERVICE_STATUS_ROUTE } from "@/utils/urls";
 import { getToken } from "@/utils/getToken";
