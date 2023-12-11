@@ -11,6 +11,7 @@ import InfoForm from "./InfoForm/InfoForm";
 import PdfForm from "./PdfForm";
 import { BASE_API_URL, SERVICE_STATUS_ROUTE } from "@/utils/urls";
 import { getToken } from "@/utils/getToken";
+import { ServiceStatus } from "@/utils/constants";
 
 const Stepper = ({ children }: { children: ReactNode }) => {
   const [activeStep, setActiveStep] = useState(-1);
@@ -36,13 +37,17 @@ const Stepper = ({ children }: { children: ReactNode }) => {
     });
     const serviceStatusObject = await response.json();
     const serviceStatus = serviceStatusObject.status;
-    console.log(serviceStatus);
-    if (serviceStatus === "Exists" || serviceStatus === "Denied") {
+    if (
+      serviceStatus === ServiceStatus[ServiceStatus.Exists] ||
+      serviceStatus === ServiceStatus[ServiceStatus.Denied]
+    ) {
       setIsForwardButtonDisabled(true);
       setActiveStep(0);
-    } else if (serviceStatus === "CreatedInDataBase") {
+    } else if (
+      serviceStatus === ServiceStatus[ServiceStatus.CreatedInDataBase]
+    ) {
       setActiveStep(1);
-    } else if (serviceStatus === "Pending") {
+    } else if (serviceStatus === ServiceStatus[ServiceStatus.Pending]) {
       setActiveStep(2);
     }
   };

@@ -16,7 +16,7 @@ export const serviceInfoFormSchema = object({
     )
     .min(1)
     .required(),
-  contactPhone: string().required(),
+  contactPhone: string(),
   description: string(),
 });
 

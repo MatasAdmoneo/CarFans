@@ -6,11 +6,27 @@ export const FORM_BOX_SHADOW = `
   0px 0px 45px rgba(0, 0, 0, 0.17)
 `;
 
-export const CarProblemsCategories = ["Engine", "Chassis", "Body", "Tyres", "Maintenance", "Other", "Unknown"];
+export const CarProblemsCategories = [
+  "Engine",
+  "Chassis",
+  "Body",
+  "Tyres",
+  "Maintenance",
+  "Other",
+  "Unknown",
+];
 
 export enum ChipTooltipText {
   Brand,
   Model,
   ManufactureYear,
   ProblemType,
+}
+
+export enum ServiceStatus {
+  Exists,
+  CreatedInDataBase,
+  Pending,
+  Accepted,
+  Denied,
 }

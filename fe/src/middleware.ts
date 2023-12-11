@@ -2,6 +2,7 @@ import { withMiddlewareAuthRequired } from "@auth0/nextjs-auth0/edge";
 import { NextRequest, NextResponse } from "next/server";
 import { getRole } from "./utils/getRole";
 import { getServiceStatus } from "./utils/getServiceStatus";
+import { ServiceStatus } from "./utils/constants";
 export default withMiddlewareAuthRequired(async function middleware(req) {
   const user = await getRole();
   const roles = user["https://CarFans.com/roles"];
@@ -15,11 +16,14 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
     }
     const serviceStatus = await getServiceStatus();
     if (req.nextUrl.pathname === "/service/verify") {
-      if (serviceStatus === 3) {
+      if (serviceStatus === ServiceStatus[ServiceStatus.Accepted]) {
         return NextResponse.redirect("https://localhost:3000/jobs");
       }
     }
-    if (serviceStatus !== 3 && req.nextUrl.pathname !== "/service/verify") {
+    if (
+      serviceStatus !== ServiceStatus[ServiceStatus.Accepted] &&
+      req.nextUrl.pathname !== "/service/verify"
+    ) {
       return NextResponse.redirect("https://localhost:3000/service/verify");
     }
   }
