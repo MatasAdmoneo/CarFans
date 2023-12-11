@@ -2,7 +2,6 @@
 using Cf.Domain.Aggregates.Jobs;
 using Cf.Domain.Aggregates.Services;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Cf.Infrastructure;
 
@@ -37,5 +36,9 @@ public class Context : DbContext
             .HasOne(w => w.Service)
             .WithMany(s => s.WeeklyWorkingHours)
             .HasForeignKey(w => w.ServiceId);
+
+        modelBuilder.Entity<Service>()
+            .HasIndex(s => s.ServiceId)
+            .IsUnique();
     }
 }

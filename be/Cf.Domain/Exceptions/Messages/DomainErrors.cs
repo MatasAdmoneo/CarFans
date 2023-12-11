@@ -25,6 +25,6 @@ public static class DomainErrors
         public static MessageInfo FailedUpload => new MessageInfo("Failed to process the PDF content. Try again.");
         public static MessageInfo InvalidFormatUnspecified => new MessageInfo("Provided time is not in a valid format.");
         public static MessageInfo NotFound => new MessageInfo("Service not found.");
-        public static MessageInfo FieldsMissing => new MessageInfo("Please fill all fields.");
+        public static MessageInfo FieldsMissing => new MessageInfo("Not all required fields provided.");
     }
 }

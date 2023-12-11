@@ -40,7 +40,7 @@ public class ServiceDocumentService : IServiceDocumentService
         if (service is null)
             throw new InternalException(DomainErrors.Service.NotFound);
  
-            service.AddData(pdfBytes);
+        service.AddData(pdfBytes);
 
         await _context.SaveChangesAsync();
     }

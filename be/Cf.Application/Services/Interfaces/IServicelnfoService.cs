@@ -13,6 +13,6 @@ namespace Cf.Application.Services.Interfaces
         
         Task<Response.ServiceAdditionalFields> GetByServiceIdAsync(string? serviceId);
 
-        Task<ServiceStatus> GetStatusByIdAsync(string? serviceId);
+        Task<Response.ServiceStatusInfo> GetStatusByIdAsync(string? serviceId);
     }
 }

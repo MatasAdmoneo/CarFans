@@ -37,26 +37,24 @@ public static class MapExtensions
 
     public static Response.ServiceAdditionalFields ToServiceInfoModel(this Service service)
     {
-        List<ServiceWorkingHours>? convertedHours = service.WeeklyWorkingHours?
-            .Select(wd => new ServiceWorkingHours
+        var convertedHours = service.WeeklyWorkingHours?
+            .Select(x => new ServiceWorkingHours
             {
-                DayOfWeek = (int)wd.DayOfWeek,
-                StartTime = wd.StartTime,
-                EndTime = wd.EndTime,
-                LunchBreakStartTime = wd.LunchBreakStartTime,
-                LunchBreakEndTime = wd.LunchBreakEndTime
+                DayOfWeek = (int)x.DayOfWeek,
+                StartTime = x.StartTime,
+                EndTime = x.EndTime,
+                LunchBreakStartTime = x.LunchBreakStartTime,
+                LunchBreakEndTime = x.LunchBreakEndTime
             })
             .ToList() ?? new List<ServiceWorkingHours>();
 
-        return new Response.ServiceAdditionalFields(new ServiceAdditionalInfoModel
-        {
-            ServiceName = service.ServiceName,
-            Adress = service.Adress,
-            City = service.City,
-            WeeklyWorkingHours = convertedHours,
-            ContactPhone = service.ContactPhone,
-            Description = service.Description
-        });
+        return new Response.ServiceAdditionalFields(
+            service.ServiceName,
+            service.Adress,
+            service.City,
+            convertedHours,
+            service.ContactPhone,
+            service.Description);
     }
 }
 

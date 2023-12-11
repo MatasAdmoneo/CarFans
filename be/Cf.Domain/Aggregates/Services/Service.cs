@@ -1,4 +1,5 @@
-﻿using Cf.Domain.Enums;
+﻿#pragma warning disable CS8618
+using Cf.Domain.Enums;
 
 namespace Cf.Domain.Aggregates.Services;
 
@@ -32,7 +33,7 @@ public class Service : Entity
 
     public void AddData(byte[] pdfBytes)
     {
-        Data.Add(pdfBytes);
+        Data!.Add(pdfBytes);
         Status = ServiceStatus.Pending;
         UpdatedDate = DateTime.UtcNow;
     }   
