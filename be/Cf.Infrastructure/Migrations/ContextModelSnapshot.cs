@@ -129,6 +129,36 @@ namespace Cf.Infrastructure.Migrations
                     b.ToTable("Jobs");
                 });
 
+            modelBuilder.Entity("Cf.Domain.Aggregates.Reviews.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId")
+                        .IsUnique();
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
                 {
                     b.Property<Guid>("Id")
@@ -168,9 +198,26 @@ namespace Cf.Infrastructure.Migrations
                     b.Navigation("Advert");
                 });
 
+            modelBuilder.Entity("Cf.Domain.Aggregates.Reviews.Review", b =>
+                {
+                    b.HasOne("Cf.Domain.Aggregates.Jobs.Job", "Job")
+                        .WithOne("Review")
+                        .HasForeignKey("Cf.Domain.Aggregates.Reviews.Review", "JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Adverts.Advert", b =>
                 {
                     b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Jobs.Job", b =>
+                {
+                    b.Navigation("Review")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

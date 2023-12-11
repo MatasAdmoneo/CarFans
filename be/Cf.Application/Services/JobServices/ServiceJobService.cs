@@ -85,7 +85,7 @@ public class ServiceJobService : IServiceJobService
             throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
 
         // Job can be cancelled by service after it was created or accepted by the client or in progress of it
-        if (newStatus == JobStatus.Cancelled && oldStatus != JobStatus.Accepted || oldStatus != JobStatus.InProgress || oldStatus != JobStatus.Pending)
+        if (newStatus == JobStatus.Cancelled && (oldStatus != JobStatus.Accepted || oldStatus != JobStatus.InProgress || oldStatus != JobStatus.Pending))
             throw new BadRequestException(DomainErrors.Job.IncorrectStatus);
     }
 }

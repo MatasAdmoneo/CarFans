@@ -24,4 +24,11 @@ public static class DomainErrors
         public static MessageInfo PdfNotProvided => new MessageInfo("Could not find any document attached.");
         public static MessageInfo FailedUpload => new MessageInfo("Failed to process the PDF content. Try again.");
     }
+
+    public static class Review
+    {
+        public static MessageInfo NotValidUser => new MessageInfo("Only the advert creator can post a review");
+
+        public static MessageInfo NotFinished => new MessageInfo("Review can not be posted unless the job status is done");
+    }
 }

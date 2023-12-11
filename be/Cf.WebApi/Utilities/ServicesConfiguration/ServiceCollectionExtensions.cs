@@ -9,6 +9,7 @@ using Cf.Application.Services.Interfaces;
 using Cf.Application.Services.JobServices;
 using Cf.Application.Services.DocumentServices;
 using Cf.Application.Services.ImageUploadServices;
+using Cf.Application.Services.ReviewServices;
 
 namespace Cf.WebApi.Utilities.ServicesConfiguration;
 
@@ -32,9 +33,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IServiceJobService, ServiceJobService>();
         services.AddScoped<IServiceDocumentService, ServiceDocumentService>();
         services.AddScoped<IAdminDocumentService, AdminDocumentService>();
+        services.AddScoped<IUserReviewService, UserReviewService>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IImageUploadService, ImageUploadService>();
-
 
         services.AddAuthentication(options =>
         {

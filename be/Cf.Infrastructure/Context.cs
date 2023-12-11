@@ -1,5 +1,6 @@
 ﻿using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Aggregates.Jobs;
+using Cf.Domain.Aggregates.Reviews;
 using Cf.Domain.Aggregates.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,8 +24,16 @@ public class Context : DbContext
 
     public DbSet<Service> Services { get; set; }
 
+    public DbSet<Review> Reviews { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Job>()
+            .HasOne(j => j.Review)
+            .WithOne(r => r.Job)
+            .HasForeignKey<Review>(r => r.JobId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         modelBuilder.Entity<Job>()
             .HasOne(j => j.Advert)
             .WithMany(a => a.Jobs)

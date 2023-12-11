@@ -56,7 +56,7 @@ api.MapServiceDocumentRoutes();
 
 api.MapUserAdvertRoutes();
 api.MapUserJobRoutes();
-
+api.MapUserReviewRoutes();
 
 
 await using var scope = app.Services.CreateAsyncScope();

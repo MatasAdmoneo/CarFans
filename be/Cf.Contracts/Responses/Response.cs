@@ -1,4 +1,5 @@
 ﻿using Cf.Domain.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cf.Contracts.Responses;
 
@@ -37,5 +38,7 @@ public static partial class Response
         DateTime EndDate);
 
     public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
+
+    public record ReviewInfo(double score, string description);
 }
 
