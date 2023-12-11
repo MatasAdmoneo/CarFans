@@ -105,7 +105,7 @@ const InfoForm = ({
       <h2 className="text-3xl font-bold py-10 px-4 text-center">
         Please fill out the form
       </h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
         <Input
           crossOrigin=""
           required
@@ -135,7 +135,6 @@ const InfoForm = ({
         />
         <Input
           crossOrigin=""
-          required
           value={formData.contactPhone}
           name="contactPhone"
           onChange={handleChange}

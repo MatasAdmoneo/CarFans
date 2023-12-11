@@ -92,7 +92,7 @@ const DayPicker = ({ formData, setFormData }: DayPickerProps) => {
         Working days<span className="text-red-500"> *</span>
       </Typography>
       <div className="flex justify-center">
-        {DAYS.map((day, index) => (
+        {DAYS.map((day) => (
           <div key={day.value} className="w-fit">
             <Checkbox
               onChange={(e) => handleCheckboxChange(e)}
@@ -100,11 +100,9 @@ const DayPicker = ({ formData, setFormData }: DayPickerProps) => {
               className="h-8 w-8 rounded-full border-gray-900/20 bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0"
               crossOrigin=""
               value={day.value}
-              checked={
-                formData.weeklyWorkingHours[day.value]?.dayOfWeek !== undefined
-                  ? true
-                  : false
-              }
+              checked={formData.weeklyWorkingHours.some(
+                (d) => d.dayOfWeek === day.value
+              )}
             />
             <span className="block text-center">{day.label}</span>
           </div>
