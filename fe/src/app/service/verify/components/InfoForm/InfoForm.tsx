@@ -8,6 +8,7 @@ import { BASE_API_URL, SERVICE_ADDITIONAL_INFO_ROUTE } from "@/utils/urls";
 import toast from "react-hot-toast";
 import { Button, Input, Textarea } from "@/lib/materialTailwindExports";
 import DayPicker from "./DayPicker";
+import { ValidationError } from "yup";
 
 type InfoFormProps = {
   isForwardButtonDisabled: boolean;
@@ -39,9 +40,17 @@ const InfoForm = ({
 
   const validateFormData = async (): Promise<boolean> => {
     try {
-      await serviceInfoFormSchema.validate(formData, { abortEarly: false });
+      await serviceInfoFormSchema.validate(formData, {
+        abortEarly: false,
+      });
       return true;
-    } catch {
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        const validationErrors = error as ValidationError;
+        validationErrors.errors.map((error) => toast.error(error));
+      } else {
+        return false;
+      }
       return false;
     }
   };
@@ -96,7 +105,7 @@ const InfoForm = ({
       toast.success("Your info has been successfully submitted");
       setIsForwardButtonDisabled(false);
     } else {
-      toast.error("Please fulfill all form fields");
+      return;
     }
   };
 

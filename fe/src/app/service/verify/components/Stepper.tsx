@@ -70,21 +70,21 @@ const Stepper = ({ children }: { children: ReactNode }) => {
         </Step>
       </St>
       <div className="shadow-lg flex flex-col justify-center rounded-xl my-5 p-4 min-h-">
-        {activeStep == -1 && (
+        {activeStep === -1 && (
           <h2 className="text-3xl font-bold py-10 px-4 text-center">
             Loading...
           </h2>
         )}
-        {activeStep == 0 && (
+        {activeStep === 0 && (
           <InfoForm
             isForwardButtonDisabled={isForwardButtonDisabled}
             setIsForwardButtonDisabled={setIsForwardButtonDisabled}
           />
         )}
-        {activeStep == 1 && (
+        {activeStep === 1 && (
           <PdfForm setIsForwardButtonDisabled={setIsForwardButtonDisabled} />
         )}
-        {activeStep == 2 && children}
+        {activeStep === 2 && children}
       </div>
       {activeStep !== 2 && activeStep !== -1 && (
         <div className="mt-8 flex justify-end gap-2">
