@@ -29,6 +29,14 @@ export const serviceInfoFormSchema = object({
   description: string(),
 });
 
+export const serviceWorkingDayFormSchema = object({
+  dayOfWeek: number().min(0).max(6).required(),
+  startTime: string().required("Opening hours were not selected"),
+  endTime: string().required("Closing hours were not selected"),
+  lunchBreakStartTime: string().required("Lunch start hours were not selected"),
+  lunchBreakEndTime: string().required("Lunch end hours were not selected"),
+});
+
 export const emptyInfoFormValues = {
   serviceName: "",
   address: "",
