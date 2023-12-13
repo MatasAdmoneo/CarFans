@@ -19,17 +19,17 @@ public static class UserReviewEndpoints
         .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapPost(CreateAsync);
-        group.MapGet(GetByServiceId);
+        group.MapPost("{jobId}", CreateAsync);
+        group.MapGet("{serviceId}", GetByServiceId);
     }
 
     [Authorize(Roles = "User")]
-    private static async Task CreateAsync([FromServices] IUserReviewService service, Guid jobId, ReviewModel model, IHttpContextAccessor httpContextAccessor) =>
+    private static async Task CreateAsync([FromServices] IUserReviewService service, [FromRoute] Guid jobId, ReviewModel model, IHttpContextAccessor httpContextAccessor) =>
         await service.CreateAsync(GetUserId(httpContextAccessor), jobId, model);
     
 
     [Authorize(Roles = "User")]
-    private static async Task<Response.FullReviewInfo> GetByServiceId([FromServices] IUserReviewService service, string serviceId) =>
+    private static async Task<Response.FullReviewInfo> GetByServiceId([FromServices] IUserReviewService service, [FromRoute] string serviceId) =>
         await service.GetByServiceId(serviceId);
     
 
