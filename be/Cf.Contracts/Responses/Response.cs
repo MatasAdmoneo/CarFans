@@ -10,6 +10,17 @@ public static partial class Response
 
     public record AdvertResponse(string Title, string Desciption, DateTime startDate, DateTime updateDate);
 
+    public record UserAdvertResponse(
+        Guid Id,
+        string Title,
+        string Description,
+        DateTime EndDate,
+        ProblemType ProblemType,
+        string Model,
+        string Brand,
+        int ManufactureYear,
+        bool IsOfferAccepted);
+
     public record ServiceAdvertResponse(
         Guid Id,
         string Title,

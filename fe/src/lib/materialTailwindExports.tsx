@@ -10,6 +10,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Tabs,
   Tab,
   TabsHeader,
@@ -29,4 +30,4 @@ import {
   MenuList
 } from "@material-tailwind/react";
 
-export { Navbar, MobileNav, Typography, Button, Breadcrumbs, IconButton, Card, CardHeader, CardBody, Checkbox, Tabs, Tab, TabsHeader, TabsBody, TabPanel, Tooltip, Textarea, Input, Radio, Select, Option, Chip, Menu, MenuHandler, MenuItem, MenuList };
+export { Navbar, MobileNav, Typography, Button, Breadcrumbs, IconButton, Card, CardHeader, CardBody, CardFooter, Checkbox, Tabs, Tab, TabsHeader, TabsBody, TabPanel, Tooltip, Textarea, Input, Radio, Select, Option, Chip, Menu, MenuHandler, MenuItem, MenuList };

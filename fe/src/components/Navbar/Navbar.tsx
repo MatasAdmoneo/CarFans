@@ -51,16 +51,28 @@ const Navbar = () => {
           </Typography>
         </>
       ) : (
-        <Typography
-          as="li"
-          variant="small"
-          color="blue-gray"
-          className="p-1 font-normal"
-        >
-          <Link href="/advert" className="flex items-center">
-            Advert
-          </Link>
-        </Typography>
+        <>
+          <Typography
+            as="li"
+            variant="small"
+            color="blue-gray"
+            className="p-1 font-normal"
+          >
+            <Link href="/advert" className="flex items-center">
+              Create advert
+            </Link>
+          </Typography>
+          <Typography
+            as="li"
+            variant="small"
+            color="blue-gray"
+            className="p-1 font-normal"
+          >
+            <Link href="/list" className="flex items-center">
+              My Adverts
+            </Link>
+          </Typography>
+        </>
       ))}
     </ul>
   );

@@ -11,3 +11,5 @@ export const USER_ADVERTS_ROUTE = `/${VERSION}/userAdverts`;
 export const SERVICE_DOCUMENT_UPLOAD_ROUTE = `/${VERSION}/serviceDocuments/UploadPdfBytes`;
 
 export const SERVICE_ADVERTS_ROUTE = `/${VERSION}/serviceAdverts`;
+
+export const USER_JOBS_ROUTE = `/${VERSION}/userJobs`;
