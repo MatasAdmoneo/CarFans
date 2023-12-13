@@ -7,6 +7,5 @@ public interface IUserReviewService
 {
     Task CreateAsync(string? userId, Guid jobId, ReviewModel model);
 
-    Task<List<Response.ReviewInfo>> GetByServiceId(string serviceId);
+    Task<Response.FullReviewInfo> GetByServiceId(string serviceId);
 }
-

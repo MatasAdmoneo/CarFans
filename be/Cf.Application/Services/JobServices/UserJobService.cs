@@ -5,7 +5,8 @@ using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Cf.Domain.Enums;
 using Cf.Application.Services.Interfaces;
-using Cf.Domain.Aggregates.Jobs;
+using Cf.Contracts.Mappers;
+using Cf.Contracts.Responses;
 
 namespace Cf.Application.Services.JobServices;
 
@@ -34,7 +35,7 @@ public class UserJobService : IUserJobService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Job>> GetListAsync(Guid advertId, string? userId)
+    public async Task<List<Response.UserJobInfo>> GetListAsync(Guid advertId, string? userId)
     {
         var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == advertId);
 
@@ -46,7 +47,7 @@ public class UserJobService : IUserJobService
 
         var jobs = await _context.Jobs.Where(x => x.AdvertId == advertId).ToListAsync();
 
-        return jobs;
+        return jobs.Select(x => x.ToUserModel()).ToList();
     }
 
     private void ValidateUpdate(JobStatus newStatus, JobStatus oldStatus)

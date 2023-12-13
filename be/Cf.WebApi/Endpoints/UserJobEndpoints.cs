@@ -1,9 +1,9 @@
 ﻿using Cf.Application.Services.Interfaces;
+using Cf.Contracts.Responses;
 using Cf.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Cf.WebApi.Routing;
-using Cf.Domain.Aggregates.Jobs;
 
 namespace Cf.WebApi.Endpoints;
 
@@ -30,7 +30,7 @@ public static class UserJobEndpoints
     }
 
     [Authorize(Roles = "User")]
-    private static async Task<List<Job>> GetListAsync(IUserJobService service, Guid id, IHttpContextAccessor httpContextAccessor)
+    private static async Task<List<Response.UserJobInfo>> GetListAsync(IUserJobService service, Guid id, IHttpContextAccessor httpContextAccessor)
     {
         return await service.GetListAsync(id, GetUserId(httpContextAccessor));
     }

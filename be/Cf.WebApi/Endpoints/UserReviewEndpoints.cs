@@ -29,11 +29,10 @@ public static class UserReviewEndpoints
     
 
     [Authorize(Roles = "User")]
-    private static async Task<List<Response.ReviewInfo>> GetByServiceId([FromServices] IUserReviewService service, string serviceId) =>
+    private static async Task<Response.FullReviewInfo> GetByServiceId([FromServices] IUserReviewService service, string serviceId) =>
         await service.GetByServiceId(serviceId);
     
 
     private static string? GetUserId(IHttpContextAccessor httpContextAccessor) =>
         httpContextAccessor.HttpContext?.User.FindFirst("https://CarFans.com/id")?.Value;
 }
-

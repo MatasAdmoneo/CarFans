@@ -4,21 +4,24 @@ namespace Cf.Domain.Aggregates.Reviews;
 
 public class Review : Entity
 {
-    public Guid JobId { get; set; }
+    public string FullName { get; set; }
 
     public double Score { get; set; }
 
     public string Description { get; set; }
 
+    public Guid JobId { get; set; }
+
     public virtual Job Job { get; set; }
 
     public Review() { }
 
-    public Review(Guid jobId, double score, string description) : base()
+    public Review(string fullName, double score, string description, Guid jobId) : base()
     {
-        JobId = jobId;
+        FullName = fullName;
         Score = score;
         Description = description;
+        JobId = jobId;
     }
 }
 

@@ -27,17 +27,20 @@ public class UserReviewService : IUserReviewService
 
         ValidateReview(userId, job);
 
-        var review = new Review(job.Id, model.Score, model.Description);
+        var review = new Review(model.FullName, model.Score, model.Description, job.Id);
 
         await _context.AddAsync(review);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Response.ReviewInfo>> GetByServiceId(string serviceId)
+    public async Task<Response.FullReviewInfo> GetByServiceId(string serviceId)
     {
-        var reviews = await _context.Reviews.Include(x => x.Job).Where(r => r.Job.ServiceId == serviceId).ToListAsync();
+        var reviews = await _context.Reviews.Where(r => r.Job.ServiceId == serviceId).ToListAsync();
 
-        return reviews.Select(x => x.ToReviewModel()).ToList();
+        var reviewModels = reviews.Select(x => x.ToReviewModel());
+        var averageScore = reviews.Select(x => x.Score).Average();
+
+        return new(reviewModels, averageScore);
     }
 
     private void ValidateReview(string? userId, Job? job)

@@ -39,6 +39,10 @@ public static partial class Response
 
     public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
 
-    public record ReviewInfo(double score, string description);
+    public record ReviewInfo(string FullName, double Score, string Description);
+
+    public record FullReviewInfo(IEnumerable<ReviewInfo> Reviews, double AverageRating);
+
+    public record UserJobInfo(Guid id, decimal? Price, DateTime? StartDate, string? Description, JobStatus Status, string ServiceId, Guid AdvertId);
 }
 
