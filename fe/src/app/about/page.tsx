@@ -20,7 +20,7 @@ const AboutUsPage = () => {
         </div>
         <div className="max-w-3xl mx-auto text-xl leading-relaxed">
           <p className="mb-6">
-            Currently   , in the car repair market, drivers waste time searching for suitable auto repair services, and communication between drivers and service centers can lead to misunderstandings and potential loss of customers.
+            Currently, in the car repair market, drivers waste time searching for suitable auto repair services, and communication between drivers and service centers can lead to misunderstandings and potential loss of customers.
           </p>
           <p className="mb-6">
             Our system simplifies the car registration process, providing drivers with easily understandable information about repair services. We supply service centers with the necessary information, enabling them to serve customers more quickly and efficiently. Our goal is to optimally align the needs of drivers and service centers, ensuring a smooth and effective collaboration.
