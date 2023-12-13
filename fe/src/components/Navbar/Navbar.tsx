@@ -51,7 +51,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link href="#" className="flex items-center">
+        <Link href="/about" className="flex items-center">
           About Us
         </Link>
       </Typography>
@@ -71,7 +71,7 @@ const Navbar = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link href="#" className="flex items-center">
+        <Link href="/contact" className="flex items-center">
           Contact
         </Link>
       </Typography>
