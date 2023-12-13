@@ -2,7 +2,7 @@ import { BASE_API_URL, USER_JOBS_ROUTE } from "@/utils/urls";
 import { getAccessToken } from "@auth0/nextjs-auth0";
 import { Breadcrumbs } from "@/lib/materialTailwindExports";
 import Link from "next/link";
-import MyOffersList from "../components/MyOffersList";
+import MyOffersList from "./components/MyOffersList";
 
 const getAdvertJobs = async (advertId: string) => {
   const { accessToken } = await getAccessToken();
