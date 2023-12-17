@@ -11,7 +11,7 @@ function HomePage() {
 
         <div className="flex justify-center mt-8">
           <Link
-            href="/problem"
+            href="/advert"
             className="bg-red-500 text-white px-8 py-4 rounded-full text-2xl font-bold"
           >
             Register Problem

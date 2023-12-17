@@ -38,14 +38,9 @@ public class ServiceDocumentService : IServiceDocumentService
         var service = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == serviceId);
         
         if (service is null)
-        {
-            var newService = new Service(serviceId, pdfBytes);
-
-            await _context.Services.AddAsync(newService);
-        }
-
-        else
-            service.AddData(pdfBytes);
+            throw new InternalException(DomainErrors.Service.NotFound);
+ 
+        service.AddData(pdfBytes);
 
         await _context.SaveChangesAsync();
     }
