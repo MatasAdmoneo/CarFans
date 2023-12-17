@@ -8,7 +8,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
   const roles = user["https://CarFans.com/roles"];
 
   const serviceRoutes = ["/service", "/jobs", "/dashboard"];
-  const driverRoutes = ["advert"];
+  const driverRoutes = ["/advert"];
 
   if (serviceRoutes.some((path) => req.nextUrl.pathname.startsWith(path))) {
     if (roles.length === 0 || !roles.includes("Service")) {
@@ -31,12 +31,12 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
   // client only routes
   if (driverRoutes.some((path) => req.nextUrl.pathname.startsWith(path))) {
     if (roles.length === 0 || !roles.includes("User")) {
-      return NextResponse.redirect(req.nextUrl.origin);
+      return NextResponse.redirect("https://localhost:3000/jobs");
     }
   }
   return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/dashboard", "/service/:path*", "/advert"],
+  matcher: ["/dashboard", "/service/:path*", "/advert", "/jobs"],
 };

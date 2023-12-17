@@ -9,7 +9,8 @@ import { Dispatch, SetStateAction } from "react";
 export const uploadPdfToApi = async (
   file: File,
   setIsUploading: Dispatch<SetStateAction<boolean>>,
-  setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>
+  setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>,
+  setActiveStep: Dispatch<SetStateAction<number>>
 ) => {
   const accessToken = await getToken();
   const reader = new FileReader();
@@ -44,7 +45,7 @@ export const uploadPdfToApi = async (
 
       setIsUploading(false);
       toast.success("Documents uploaded successfully.");
-      setIsForwardButtonDisabled(false);
+      setActiveStep(2);
     } catch (error) {
       toast.error("Failed to upload file.");
     }

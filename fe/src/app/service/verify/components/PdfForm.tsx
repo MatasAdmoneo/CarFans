@@ -2,10 +2,14 @@ import PdfDropzone from "@/components/PdfDropzone/PdfDropzone";
 import { Dispatch, SetStateAction } from "react";
 
 type PdfFormProps = {
+  setActiveStep: Dispatch<SetStateAction<number>>;
   setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
 };
 
-const PdfForm = ({ setIsForwardButtonDisabled }: PdfFormProps) => {
+const PdfForm = ({
+  setActiveStep,
+  setIsForwardButtonDisabled,
+}: PdfFormProps) => {
   return (
     <main className="text-center">
       <h2 className="text-3xl font-bold py-10 px-4">
@@ -14,7 +18,10 @@ const PdfForm = ({ setIsForwardButtonDisabled }: PdfFormProps) => {
       <p className="text-gray-700">
         Only files in &ldquo;.pdf&ldquo; format are accepted*
       </p>
-      <PdfDropzone setIsForwardButtonDisabled={setIsForwardButtonDisabled} />
+      <PdfDropzone
+        setActiveStep={setActiveStep}
+        setIsForwardButtonDisabled={setIsForwardButtonDisabled}
+      />
     </main>
   );
 };

@@ -14,10 +14,14 @@ import toast from "react-hot-toast/headless";
 import { useRouter } from "next/navigation";
 
 type PdfDropZoneProps = {
+  setActiveStep: Dispatch<SetStateAction<number>>;
   setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
 };
 
-function PdfDropzone({ setIsForwardButtonDisabled }: PdfDropZoneProps) {
+function PdfDropzone({
+  setActiveStep,
+  setIsForwardButtonDisabled,
+}: PdfDropZoneProps) {
   const maxFileSize = 10485760;
   const [isUploading, setIsUploading] = useState(false);
 
@@ -64,7 +68,8 @@ function PdfDropzone({ setIsForwardButtonDisabled }: PdfDropZoneProps) {
     await uploadPdfToApi(
       acceptedFiles[0],
       setIsUploading,
-      setIsForwardButtonDisabled
+      setIsForwardButtonDisabled,
+      setActiveStep
     );
   };
 

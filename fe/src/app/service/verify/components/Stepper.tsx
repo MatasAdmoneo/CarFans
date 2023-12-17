@@ -82,7 +82,10 @@ const Stepper = ({ children }: { children: ReactNode }) => {
           />
         )}
         {activeStep === 1 && (
-          <PdfForm setIsForwardButtonDisabled={setIsForwardButtonDisabled} />
+          <PdfForm
+            setActiveStep={setActiveStep}
+            setIsForwardButtonDisabled={setIsForwardButtonDisabled}
+          />
         )}
         {activeStep === 2 && children}
       </div>
