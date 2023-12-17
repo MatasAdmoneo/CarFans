@@ -27,11 +27,9 @@ const AdvertsList = ({ adverts }: { adverts: AdvertType[] }) => {
 
       if (compareValueA < compareValueB) {
         return sortDirection ? -1 : 1;
-      }
-      if (compareValueA > compareValueB) {
+      } else {
         return sortDirection ? 1 : -1;
       }
-      return 0;
     });
   }, [adverts, filterByProblemTypes, sortBy, sortDirection]);
 
