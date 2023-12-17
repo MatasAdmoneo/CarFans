@@ -37,5 +37,8 @@ public static class MapExtensions
 
     public static Response.ServiceAdvertByIdResponse ToServiceAdvertByIdModel(this Advert model) =>
         new(model.Title, model.Description, model.Brand, model.Model, model.ManufactureYear, model.ProblemType, model.Photos, model.IsQuestionsFormType, model.IsSoundBad, model.IsScentBad, model.IsPanelInvalid, model.IsLeakedLiquids, model.IsUnstableCar, model.EndDate);
+
+    public static Response.ServiceJob ToServiceJob(this Job model) =>
+        new(model.Id, model.Advert.Title, model.Advert.Brand, model.Advert.Model, model.Advert.ManufactureYear, model.Advert.ProblemType, model.Status, model.Price);
 }
 

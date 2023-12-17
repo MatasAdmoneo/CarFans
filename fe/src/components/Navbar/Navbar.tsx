@@ -35,8 +35,8 @@ const Navbar = () => {
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <Link href="/dashboard" className="flex items-center">
-              Dashboard
+            <Link href="/jobs" className="flex items-center">
+              Jobs
             </Link>
           </Typography>
           <Typography
@@ -45,8 +45,8 @@ const Navbar = () => {
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <Link href="/jobs" className="flex items-center">
-              Jobs
+            <Link href="/statuses" className="flex items-center">
+              Statuses
             </Link>
           </Typography>
         </>
