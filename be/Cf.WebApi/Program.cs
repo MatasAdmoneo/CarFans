@@ -52,12 +52,10 @@ api.MapAdminDocumentRoutes();
 
 api.MapServiceAdvertRoutes();
 api.MapServiceJobRoutes();
-api.MapServiceDocumentRoutes();
+api.MapServiceInfoRoutes();
 
 api.MapUserAdvertRoutes();
 api.MapUserJobRoutes();
-
-
 
 await using var scope = app.Services.CreateAsyncScope();
 await using var db = scope.ServiceProvider.GetService<Context>();

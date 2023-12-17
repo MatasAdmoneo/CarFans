@@ -15,7 +15,10 @@ const SERIVCE = "Service";
 const Navbar = () => {
   const { user, isLoading } = useUser();
   const router = useRouter();
-  const userRoles = useMemo(() => user ? user[ROLES_SELECTOR] as string[] : [], [user]);
+  const userRoles = useMemo(
+    () => (user ? (user[ROLES_SELECTOR] as string[]) : []),
+    [user]
+  );
 
   const navigateToLogin = () => {
     router.push("/api/auth/login");
@@ -27,41 +30,42 @@ const Navbar = () => {
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {user && (userRoles.includes(SERIVCE) ? (
-        <>
+      {user &&
+        (userRoles.includes(SERIVCE) ? (
+          <>
+            <Typography
+              as="li"
+              variant="small"
+              color="blue-gray"
+              className="p-1 font-normal"
+            >
+              <Link href="/dashboard" className="flex items-center">
+                Dashboard
+              </Link>
+            </Typography>
+            <Typography
+              as="li"
+              variant="small"
+              color="blue-gray"
+              className="p-1 font-normal"
+            >
+              <Link href="/jobs" className="flex items-center">
+                Jobs
+              </Link>
+            </Typography>
+          </>
+        ) : (
           <Typography
             as="li"
             variant="small"
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <Link href="/dashboard" className="flex items-center">
-              Dashboard
+            <Link href="/advert" className="flex items-center">
+              Advert
             </Link>
           </Typography>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <Link href="/jobs" className="flex items-center">
-              Jobs
-            </Link>
-          </Typography>
-        </>
-      ) : (
-        <Typography
-          as="li"
-          variant="small"
-          color="blue-gray"
-          className="p-1 font-normal"
-        >
-          <Link href="/advert" className="flex items-center">
-            Advert
-          </Link>
-        </Typography>
-      ))}
+        ))}
     </ul>
   );
 
@@ -74,35 +78,36 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <div className="flex items-center gap-x-1">
-            {!isLoading && (userRoles.length ? (
-              <Button
-                variant="gradient"
-                size="sm"
-                className="hidden lg:inline-block"
-                onClick={() => navigateToLogout()}
-              >
-                Log out
-              </Button>
-            ) : (
-              <>
+            {!isLoading &&
+              (userRoles.length ? (
                 <Button
-                  variant="text"
+                  variant="gradient"
                   size="sm"
                   className="hidden lg:inline-block"
-                  onClick={() => navigateToLogin()}
+                  onClick={() => navigateToLogout()}
                 >
-                  Log In
+                  Log out
                 </Button>
-                <Button
-                  variant="text"
-                  size="sm"
-                  className="hidden lg:inline-block"
-                  onClick={() => navigateToLogin()}
-                >
-                  Sign In
-                </Button>
-              </>
-            ))}
+              ) : (
+                <>
+                  <Button
+                    variant="gradient"
+                    size="sm"
+                    className="hidden lg:inline-block"
+                    onClick={() => navigateToLogin()}
+                  >
+                    Log In
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="sm"
+                    className="hidden lg:inline-block"
+                    onClick={() => navigateToLogin()}
+                  >
+                    Sign In
+                  </Button>
+                </>
+              ))}
           </div>
         </div>
       </div>

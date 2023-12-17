@@ -16,4 +16,3 @@ public interface IUserAdvertService
 
     Task DeleteAsync(Guid id, string? userId);
 }
-
