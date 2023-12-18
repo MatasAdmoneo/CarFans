@@ -21,7 +21,7 @@ const AdvertCard = ({ advert }: { advert: UserAdvertType }) => {
           </Typography>
           <div className="flex gap-2">
             {advert.isOfferAccepted && <Chip variant="ghost" size="lg" color="orange" value="Offer accepted" />}
-            <Chip variant="ghost" size="lg" color={new Date(advert.endDate) > new Date() ? "green" : "red"} value={new Date(advert.endDate) > new Date() ? "On going" : "Ended"} />
+            <Chip variant="ghost" size="lg" color={new Date(advert.endDate) > new Date() ? "green" : "red"} value={new Date(advert.endDate) > new Date() ? "Ongoing" : "Ended"} />
           </div>
         </div>
         <div className="flex gap-5 py-2">
@@ -34,7 +34,7 @@ const AdvertCard = ({ advert }: { advert: UserAdvertType }) => {
       </CardBody>
       <CardFooter className="pt-0">
         <Button disabled={advert.isOfferAccepted} className="p-0" variant="gradient">
-          <Link className="w-full flex justify-center px-5 py-3" href={`/list/${advert.id}`}>See offers</Link>
+          <Link className="w-full flex justify-center px-5 py-3" href={`/offers/${advert.id}`}>See offers</Link>
         </Button>
       </CardFooter>
     </Card>

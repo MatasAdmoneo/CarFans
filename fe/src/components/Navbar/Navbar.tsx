@@ -72,7 +72,7 @@ const Navbar = () => {
               color="blue-gray"
               className="p-1 font-normal"
             >
-              <Link href="/list" className="flex items-center">
+              <Link href="/offers" className="flex items-center">
                 My Adverts
               </Link>
             </Typography>

@@ -59,5 +59,8 @@ public static class MapExtensions
             service.ContactPhone,
             service.Description);
     }
+
+    public static Response.UserJobInfo ToUserJobInfo(this Job job, Service service) =>
+        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, service.ServiceName!, service.Address!, service.City!, service.ContactPhone!, service.Description);
 }
 

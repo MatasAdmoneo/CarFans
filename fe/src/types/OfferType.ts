@@ -11,6 +11,10 @@ export type JobType = {
   price: number;
   startDate: Date;
   description: string;
-  serviceId: string;
   status: number;
+  serviceName: string;
+  address: string;
+  city: string;
+  phone: string;
+  serviceDescription: string;
 };
