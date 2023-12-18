@@ -26,7 +26,9 @@ import {
   Menu,
   MenuHandler,
   MenuItem,
+  Dialog,
+  Rating,
   MenuList
 } from "@material-tailwind/react";
 
-export { Navbar, MobileNav, Typography, Button, Breadcrumbs, IconButton, Card, CardHeader, CardBody, Checkbox, Tabs, Tab, TabsHeader, TabsBody, TabPanel, Tooltip, Textarea, Input, Radio, Select, Option, Chip, Menu, MenuHandler, MenuItem, MenuList };
+export { Navbar, MobileNav, Typography, Button, Breadcrumbs, IconButton, Card, CardHeader, CardBody, Checkbox, Tabs, Tab, TabsHeader, TabsBody, TabPanel, Tooltip, Textarea, Input, Radio, Select, Option, Chip, Menu, MenuHandler, MenuItem, Dialog, Rating, MenuList };
