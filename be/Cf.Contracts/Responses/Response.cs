@@ -39,7 +39,7 @@ public static partial class Response
 
     public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
 
-    public record ReviewInfo(string FullName, double Score, string Description);
+    public record ReviewInfo(string FullName, double Rating, string Description);
 
     public record FullReviewInfo(IEnumerable<ReviewInfo> Reviews, double AverageRating);
 

@@ -149,7 +149,7 @@ namespace Cf.Infrastructure.Migrations
                     b.Property<Guid>("JobId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("Score")
+                    b.Property<double>("Rating")
                         .HasColumnType("double precision");
 
                     b.Property<DateTime>("UpdatedDate")

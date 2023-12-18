@@ -37,7 +37,7 @@ public static class MapExtensions
         new(model.Title, model.Description, model.Brand, model.Model, model.ManufactureYear, model.ProblemType, model.Photos, model.IsQuestionsFormType, model.IsSoundBad, model.IsScentBad, model.IsPanelInvalid, model.IsLeakedLiquids, model.IsUnstableCar, model.EndDate);
 
     public static Response.ReviewInfo ToReviewModel(this Review review) =>
-        new(review.FullName, review.Score, review.Description);
+        new(review.FullName, review.Rating, review.Description);
 
     public static Response.UserJobInfo ToUserModel(this Job job) =>
         new(job.Id, job.Price, job.StartDate, job.Description, job.Status, job.ServiceId, job.AdvertId);

@@ -27,7 +27,7 @@ public class UserReviewService : IUserReviewService
 
         ValidateReview(userId, job);
 
-        var review = new Review(model.FullName, model.Score, model.Description, job.Id);
+        var review = new Review(model.FullName, model.Rating, model.Description, job.Id);
 
         await _context.AddAsync(review);
         await _context.SaveChangesAsync();
@@ -38,9 +38,9 @@ public class UserReviewService : IUserReviewService
         var reviews = await _context.Reviews.Where(r => r.Job.ServiceId == serviceId).ToListAsync();
 
         var reviewModels = reviews.Select(x => x.ToReviewModel());
-        var averageScore = reviews.Select(x => x.Score).Average();
+        var averageRating = reviews.Select(x => x.Rating).Average();
 
-        return new(reviewModels, averageScore);
+        return new(reviewModels, averageRating);
     }
 
     private void ValidateReview(string? userId, Job? job)
