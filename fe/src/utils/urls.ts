@@ -12,5 +12,4 @@ export const SERVICE_DOCUMENT_UPLOAD_ROUTE = `/${VERSION}/serviceDocuments/Uploa
 
 export const SERVICE_ADVERTS_ROUTE = `/${VERSION}/serviceAdverts`;
 
-////??
-export const SERVICE_REVIEWS_ROUTE = `/${VERSION}/serviceReview`;
+export const USER_REVIEWS_ROUTE = `/${VERSION}/userReviews`;

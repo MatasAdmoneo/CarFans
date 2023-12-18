@@ -1,7 +1,7 @@
 "use client";
 import { Breadcrumbs, Button, Input, Textarea, Typography, Dialog, Rating } from "@/lib/materialTailwindExports";
 import { getToken } from "@/utils/getToken";
-import { BASE_API_URL, SERVICE_REVIEWS_ROUTE } from "@/utils/urls";
+import { BASE_API_URL, USER_REVIEWS_ROUTE } from "@/utils/urls";
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from "react";
 import Link from "next/link";
@@ -11,7 +11,6 @@ const ReviewForm = () => {
   const [reviewData, setReviewData] = useState({
     fullName: "",
     serviceName: "",
-    driverName: "",
     score: 0,
     description: "",
   });
@@ -30,7 +29,6 @@ const ReviewForm = () => {
     }));
   };
   
-
   // Validate form data
   const validateData = async (): Promise<boolean> => {
     try {
@@ -64,43 +62,53 @@ const ReviewForm = () => {
     }
   };
 
-  // Handle confirmation after dialog is shown
   const handleConfirm = async () => {
     const token = await getToken();
     const body = {
       ...reviewData,
-      // Additional fields to include in the request body
+
     };
-
-    const response = await fetch(`${BASE_API_URL}${SERVICE_REVIEWS_ROUTE}/${params?.serviceId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      const json = await response.json();
-      toast.error(json.message || response.statusText || "Unknown error occurred.");
-      return;
+  
+    try {
+      const response = await fetch(`${BASE_API_URL}${USER_REVIEWS_ROUTE}/${params?.serviceId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      });
+  
+      if (!response.ok) {
+        const text = await response.text();
+  
+        // Check if response body is empty
+        if (!text.trim()) {
+          toast.error(response.statusText || "Unknown error occurred.");
+        } else {
+          const json = JSON.parse(text);
+          toast.error(json.message || response.statusText || "Unknown error occurred.");
+        }
+  
+        return;
+      }
+  
+      toast.success("Review successfully submitted");
+    } catch (error) {
+      console.error("Error during fetch:", error);
+      toast.error("Failed to submit review. Please try again.");
+    } finally {
+      setReviewData({
+        fullName: "",
+        serviceName: "",
+        score: 0,
+        description: "",
+      });
+  
+      setShowDialog(false);
     }
-
-    setReviewData({
-      fullName: "",
-      serviceName: "",
-      driverName: "",
-      score: 0,
-      description: "",
-    });
-
-    router.push(`/services/${params?.serviceId}`);
-    toast.success("Review successfully submitted");
-
-    setShowDialog(false);
   };
-
+  
   return (
     <div className="flex flex-col gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
       <Breadcrumbs>
@@ -123,8 +131,6 @@ const ReviewForm = () => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <Input crossOrigin="" type="text" value={reviewData.fullName} name="fullName" onChange={handleChange} color="blue-gray" label="Full Name" />
         <Input crossOrigin="" type="text" value={reviewData.serviceName} name="serviceName" onChange={handleChange} color="blue-gray" label="Service Name" />
-        <Input crossOrigin="" type="text" value={reviewData.driverName} name="driverName" onChange={handleChange} color="blue-gray" label="Driver Name" />
-
         {/* Material Tailwind Rating component */}
         <Rating
           value={reviewData.score}
