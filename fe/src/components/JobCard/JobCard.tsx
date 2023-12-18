@@ -26,7 +26,7 @@ const JobCard = ({ job }: { job: JobType }) => {
     )
       .then(() => {
         toast.success("Offer succesfully accepted!");
-        router.push("/list");
+        router.push("/offers");
       })
       .catch(() => toast.error(SOMETHING_WENT_WRONG_MESSAGE));
   }
@@ -44,17 +44,43 @@ const JobCard = ({ job }: { job: JobType }) => {
             <Typography variant="h6" color="blue-gray">
               Start date: {new Date(job.startDate).toISOString().split('T')[0]}
             </Typography>
-            <Button variant="gradient" onClick={handleOfferAccept}>Accept</Button>
+            <Button disabled={new Date(job.startDate) < new Date()} variant="gradient" onClick={handleOfferAccept}>Accept</Button>
           </div>
           <Typography variant="h6" color="blue-gray">
             Price: {job.price}€
           </Typography>
         </div>
       </CardHeader>
-      <CardBody className="mb-6 p-0">
-        <label>Description:</label>
-        <Typography>{job.description}</Typography>
-        <Typography variant="h3">NEED TO SHOW SERVICE INFO</Typography>
+      <CardBody className="flex flex-col mb-6 p-0 gap-3">
+        <div>
+          <label>Description:</label>
+          <Typography>{job.description}</Typography>
+        </div>
+        <div>
+          <Typography variant="h5">Service info</Typography>
+          <div className="flex justify-between">
+            <div>
+              <label>Name:</label>
+              <Typography>{job.serviceName}</Typography>
+            </div>
+            <div>
+              <label>Address:</label>
+              <Typography>{job.address}</Typography>
+            </div>
+            <div>
+              <label>City:</label>
+              <Typography>{job.city}</Typography>
+            </div>
+            <div>
+              <label>Phone:</label>
+              <Typography>{job.phone}</Typography>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label>Description:</label>
+          <Typography>{job.serviceDescription}</Typography>
+        </div>
       </CardBody>
     </Card>
   )

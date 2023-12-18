@@ -20,7 +20,7 @@ public static class MapExtensions
     public static Advert ToUpdatedAdvert(this Advert advert, AdvertUpdateModel updateModel)
     {
         advert.Title = updateModel.Title == null ? advert.Title : updateModel.Title;
-        advert.Description = updateModel.Description == null? advert.Description : updateModel.Description;
+        advert.Description = updateModel.Description == null ? advert.Description : updateModel.Description;
         advert.UpdateDate();
 
         return advert;
@@ -40,5 +40,30 @@ public static class MapExtensions
 
     public static Response.ServiceJob ToServiceJob(this Job model) =>
         new(model.Id, model.Advert.Title, model.Advert.Brand, model.Advert.Model, model.Advert.ManufactureYear, model.Advert.ProblemType, model.Status, model.Price);
+    
+    public static Response.ServiceAdditionalFields ToServiceInfoModel(this Service service)
+    {
+        var convertedHours = service.WeeklyWorkingHours?
+            .Select(x => new ServiceWorkingHours
+            {
+                DayOfWeek = (int)x.DayOfWeek,
+                StartTime = x.StartTime,
+                EndTime = x.EndTime,
+                LunchBreakStartTime = x.LunchBreakStartTime,
+                LunchBreakEndTime = x.LunchBreakEndTime
+            })
+            .ToList() ?? new List<ServiceWorkingHours>();
+
+        return new Response.ServiceAdditionalFields(
+            service.ServiceName,
+            service.Address,
+            service.City,
+            convertedHours,
+            service.ContactPhone,
+            service.Description);
+    }
+
+    public static Response.UserJobInfo ToUserJobInfo(this Job job, Service service) =>
+        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, service.ServiceName!, service.Address!, service.City!, service.ContactPhone!, service.Description);
 }
 

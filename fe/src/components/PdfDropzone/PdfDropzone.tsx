@@ -1,16 +1,33 @@
 "use client";
 
 import { Button } from "@/lib/materialTailwindExports";
-import { FormEvent, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useDropzone, FileWithPath } from "react-dropzone";
 import { uploadPdfToApi } from "./uploadPdfToApi";
 import toast from "react-hot-toast/headless";
 import { useRouter } from "next/navigation";
 
-// TODO: not allow this page access if submission status is pending
-function PdfDropzone() {
+type PdfDropZoneProps = {
+  setActiveStep: Dispatch<SetStateAction<number>>;
+  setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
+};
+
+function PdfDropzone({
+  setActiveStep,
+  setIsForwardButtonDisabled,
+}: PdfDropZoneProps) {
   const maxFileSize = 10485760;
   const [isUploading, setIsUploading] = useState(false);
+
+  useEffect(() => {
+    setIsForwardButtonDisabled(true);
+  }, []);
 
   const {
     acceptedFiles,
@@ -26,7 +43,6 @@ function PdfDropzone() {
     maxFiles: 1,
     maxSize: maxFileSize,
   });
-  const router = useRouter();
 
   const acceptedFileItems = acceptedFiles.map((file: FileWithPath) => (
     <li key={file.path}>
@@ -49,7 +65,12 @@ function PdfDropzone() {
       return;
     }
     setIsUploading(true);
-    await uploadPdfToApi(acceptedFiles[0], router, setIsUploading);
+    await uploadPdfToApi(
+      acceptedFiles[0],
+      setIsUploading,
+      setIsForwardButtonDisabled,
+      setActiveStep
+    );
   };
 
   return (
@@ -81,7 +102,8 @@ function PdfDropzone() {
       </aside>
       <Button
         type="submit"
-        color="blue"
+        variant="gradient"
+        size="lg"
         className="mt-5"
         disabled={
           fileRejections.length > 0 || acceptedFiles.length == 0 || isUploading

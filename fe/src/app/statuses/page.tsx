@@ -90,10 +90,6 @@ const JobStatusesPage = () => {
       .catch(() => toast.error(SOMETHING_WENT_WRONG_MESSAGE));
   }
 
-  useEffect(() => {
-    console.log(jobs);
-  }, [jobs])
-
   return (
     <div className="max-w-3xl mx-auto my-5 py-10 px-5">
       <Typography variant="h3" className="pb-4">Job statuses:</Typography>

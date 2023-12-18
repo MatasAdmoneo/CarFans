@@ -6,9 +6,6 @@ import MyOffersList from "./components/MyOffersList";
 
 const getAdvertJobs = async (advertId: string) => {
   const { accessToken } = await getAccessToken();
-  if (!accessToken) {
-    throw new Error(`Requires authorization`);
-  }
   const res = await fetch(
     `${BASE_API_URL}${USER_JOBS_ROUTE}/${advertId}`,
     {
@@ -32,7 +29,7 @@ export default async function AdvertJobs({ params: { advertId } }: { params: { a
         <Link href="/home" className="opacity-60">
           <span>Home</span>
         </Link>
-        <Link href="/list" className="opacity-60">
+        <Link href="/offers" className="opacity-60">
           <span>My Adverts</span>
         </Link>
         <Link href="#">

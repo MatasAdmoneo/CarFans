@@ -1,4 +1,5 @@
-﻿using Cf.Domain.Aggregates.Adverts;
+﻿#pragma warning disable CS8618
+using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Enums;
 
 namespace Cf.Domain.Aggregates.Jobs;

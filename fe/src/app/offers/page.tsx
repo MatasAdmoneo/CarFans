@@ -24,7 +24,7 @@ const getUserAdvertsData = async () => {
   return res.json();
 };
 
-export default async function MyAdvertsListPage() {
+export default async function MyOffersPage() {
   const userAdverts = await getUserAdvertsData();
 
   if (!userAdverts) {
