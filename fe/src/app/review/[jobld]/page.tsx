@@ -19,7 +19,6 @@ const ReviewForm = () => {
   const router = useRouter();
   const [showDialog, setShowDialog] = useState(false);
 
-  // Handle input change
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
   
@@ -29,7 +28,6 @@ const ReviewForm = () => {
     }));
   };
   
-  // Validate form data
   const validateData = async (): Promise<boolean> => {
     try {
       for (const key in reviewData) {
@@ -50,7 +48,6 @@ const ReviewForm = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isValid = await validateData();
@@ -82,7 +79,6 @@ const ReviewForm = () => {
       if (!response.ok) {
         const text = await response.text();
   
-        // Check if response body is empty
         if (!text.trim()) {
           toast.error(response.statusText || "Unknown error occurred.");
         } else {
@@ -131,7 +127,6 @@ const ReviewForm = () => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <Input crossOrigin="" type="text" value={reviewData.fullName} name="fullName" onChange={handleChange} color="blue-gray" label="Full Name" />
         <Input crossOrigin="" type="text" value={reviewData.serviceName} name="serviceName" onChange={handleChange} color="blue-gray" label="Service Name" />
-        {/* Material Tailwind Rating component */}
         <Rating
           value={reviewData.score}
           onChange={(value) => setReviewData((data) => ({ ...data, score: value }))}
@@ -141,7 +136,6 @@ const ReviewForm = () => {
 
         <Button type="submit" variant="gradient">Submit Review</Button>
 
-        {/* Styled Dialog for confirmation */}
         <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
           <div className="text-left p-6 bg-white rounded-lg shadow-lg">
             <div className="text-lg font-medium mb-4">Leave a Review</div>
@@ -162,6 +156,5 @@ const ReviewForm = () => {
     </div>
   );
 };
-
 
 export default ReviewForm;
