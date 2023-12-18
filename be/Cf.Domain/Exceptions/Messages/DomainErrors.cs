@@ -30,5 +30,7 @@ public static class DomainErrors
         public static MessageInfo NotValidUser => new MessageInfo("Only the advert creator can post a review");
 
         public static MessageInfo NotFinished => new MessageInfo("Review can not be posted unless the job status is done");
+
+        public static MessageInfo RatingOutOfBounds => new MessageInfo("Rating must be from 0 to 5");
     }
 }

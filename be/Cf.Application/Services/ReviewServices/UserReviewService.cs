@@ -25,7 +25,7 @@ public class UserReviewService : IUserReviewService
     {
         var job = await _context.Jobs.Include(x => x.Advert).FirstOrDefaultAsync(x => x.Id == jobId);
 
-        ValidateReview(userId, job);
+        ValidateReview(userId, job, model);
 
         var review = new Review(model.FullName, model.Rating, model.Description, job.Id);
 
@@ -43,7 +43,7 @@ public class UserReviewService : IUserReviewService
         return new(reviewModels, averageRating);
     }
 
-    private void ValidateReview(string? userId, Job? job)
+    private void ValidateReview(string? userId, Job? job, ReviewModel model)
     {
         if (job == null)
             throw new BadRequestException(DomainErrors.Job.NotFound);
@@ -56,6 +56,9 @@ public class UserReviewService : IUserReviewService
 
         if (job.Status != JobStatus.Done)
             throw new BadRequestException(DomainErrors.Review.NotFinished);
+
+        if (model.Rating < 0 || model.Rating > 5)
+            throw new BadRequestException(DomainErrors.Review.RatingOutOfBounds);
     }
 }
 
