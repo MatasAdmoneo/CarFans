@@ -16,3 +16,15 @@ export type AdvertType = {
   problemType: string;
   createdDate: Date;
 };
+
+export type UserAdvertType = {
+  id: string;
+  title: string;
+  endDate: Date;
+  description: string;
+  brand: string;
+  model: string;
+  manufactureYear: number;
+  problemType: string;
+  isOfferAccepted: boolean;
+};

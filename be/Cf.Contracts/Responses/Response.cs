@@ -11,6 +11,17 @@ public static partial class Response
 
     public record AdvertResponse(string Title, string Desciption, DateTime startDate, DateTime updateDate);
 
+    public record UserAdvertResponse(
+        Guid Id,
+        string Title,
+        string Description,
+        DateTime EndDate,
+        ProblemType ProblemType,
+        string Model,
+        string Brand,
+        int ManufactureYear,
+        bool IsOfferAccepted);
+
     public record ServiceAdvertResponse(
         Guid Id,
         string Title,
@@ -48,5 +59,7 @@ public static partial class Response
         string? Description);
 
     public record ServiceStatusInfo(ServiceStatus Status);
+
+    public record UserJobInfo(Guid Id, decimal? Price, DateTime? StartDate, string? Description, JobStatus Status, string ServiceName, string Address, string City, string Phone, string? ServiceDescription);
 }
 

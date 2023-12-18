@@ -1,8 +1,9 @@
 import { withMiddlewareAuthRequired } from "@auth0/nextjs-auth0/edge";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getRole } from "./utils/getRole";
 import { getServiceStatus } from "./utils/getServiceStatus";
 import { ServiceStatus } from "./utils/constants";
+
 export default withMiddlewareAuthRequired(async function middleware(req) {
   const user = await getRole();
   const roles = user["https://CarFans.com/roles"];
@@ -38,5 +39,5 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 });
 
 export const config = {
-  matcher: ["/dashboard", "/service/:path*", "/advert", "/jobs"],
+  matcher: ["/dashboard", "/service/:path*", "/jobs/:path*", "/advert", "/offers/:path*"],
 };

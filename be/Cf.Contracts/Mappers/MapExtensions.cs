@@ -26,6 +26,9 @@ public static class MapExtensions
         return advert;
     }
 
+    public static Response.UserAdvertResponse ToUserAdvertModel(this Advert model, bool isOfferAccepted) =>
+        new(model.Id, model.Title, model.Description, model.EndDate, model.ProblemType, model.Model, model.Brand, model.ManufactureYear, isOfferAccepted);
+
     public static Response.ServiceInfo ToModel(this Service service) =>
         new(service.ServiceId, service.Status, service.CreatedDate);
 
@@ -56,5 +59,8 @@ public static class MapExtensions
             service.ContactPhone,
             service.Description);
     }
+
+    public static Response.UserJobInfo ToUserJobInfo(this Job job, Service service) =>
+        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, service.ServiceName!, service.Address!, service.City!, service.ContactPhone!, service.Description);
 }
 

@@ -23,6 +23,14 @@ export enum ChipTooltipText {
   ProblemType,
 }
 
+export enum JobStatus {
+  Pending,
+  Accepted,
+  InProgress,
+  Done,
+  Cancelled,
+  Declined,
+}
 export enum ServiceStatus {
   Exists,
   CreatedInDataBase,
