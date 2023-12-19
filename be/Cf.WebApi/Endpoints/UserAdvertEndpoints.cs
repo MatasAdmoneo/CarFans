@@ -36,7 +36,7 @@ public static class UserAdvertEndpoints
     }
 
     [Authorize(Roles = "User")]
-    private static async Task<List<Advert>> GetListAsync(IUserAdvertService service, IHttpContextAccessor httpContextAccessor)
+    private static async Task<List<Response.UserAdvertResponse>> GetListAsync(IUserAdvertService service, IHttpContextAccessor httpContextAccessor)
     {
         var adverts = await service.GetListAsync(GetUserId(httpContextAccessor));
 

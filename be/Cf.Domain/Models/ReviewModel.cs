@@ -4,7 +4,7 @@ public class ReviewModel
 {
     public string FullName { get; set; }
 
-    public double Score { get; set; }
+    public double Rating { get; set; }
 
     public string Description { get; set; }
 }

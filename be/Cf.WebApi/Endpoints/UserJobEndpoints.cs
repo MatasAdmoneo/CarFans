@@ -19,20 +19,20 @@ public static class UserJobEndpoints
         .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapPut("Id", UpdateAsync);
-        group.MapGet(GetListAsync);
+        group.MapPut("{jobId}", UpdateAsync);
+        group.MapGet("{advertId}", GetListAsync);
     }
 
     [Authorize(Roles = "User")]
-    private static async Task UpdateAsync(IUserJobService service, [FromBody] JobUpdateModel model, Guid id)
+    private static async Task UpdateAsync(IUserJobService service, [FromBody] JobUpdateModel model, [FromRoute] Guid jobId)
     {
-        await service.UpdateStatusAsync(id, model);
+        await service.UpdateStatusAsync(jobId, model);
     }
 
     [Authorize(Roles = "User")]
-    private static async Task<List<Response.UserJobInfo>> GetListAsync(IUserJobService service, Guid id, IHttpContextAccessor httpContextAccessor)
+    private static async Task<List<Response.UserJobInfo>> GetListAsync(IUserJobService service, [FromRoute] Guid advertId, IHttpContextAccessor httpContextAccessor)
     {
-        return await service.GetListAsync(id, GetUserId(httpContextAccessor));
+        return await service.GetListAsync(advertId, GetUserId(httpContextAccessor));
     }
 
     private static string? GetUserId(IHttpContextAccessor httpContextAccessor) =>

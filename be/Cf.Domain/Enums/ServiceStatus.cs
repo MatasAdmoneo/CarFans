@@ -3,8 +3,10 @@ namespace Cf.Domain.Enums;
 
 public enum ServiceStatus
 {
-    Pending = 0,
-    Accepted = 1,
-    Denied = 2
+    Exists = 0,
+    CreatedInDataBase = 1,
+    Pending = 2,
+    Accepted = 3,
+    Denied = 4
 }
 

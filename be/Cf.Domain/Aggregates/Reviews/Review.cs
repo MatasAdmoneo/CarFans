@@ -6,7 +6,7 @@ public class Review : Entity
 {
     public string FullName { get; set; }
 
-    public double Score { get; set; }
+    public double Rating { get; set; }
 
     public string Description { get; set; }
 
@@ -16,10 +16,10 @@ public class Review : Entity
 
     public Review() { }
 
-    public Review(string fullName, double score, string description, Guid jobId) : base()
+    public Review(string fullName, double rating, string description, Guid jobId) : base()
     {
         FullName = fullName;
-        Score = score;
+        Rating = rating;
         Description = description;
         JobId = jobId;
     }

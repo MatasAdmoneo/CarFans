@@ -149,7 +149,7 @@ namespace Cf.Infrastructure.Migrations
                     b.Property<Guid>("JobId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("Score")
+                    b.Property<double>("Rating")
                         .HasColumnType("double precision");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -169,15 +169,29 @@ namespace Cf.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPhone")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<List<byte[]>>("Data")
-                        .IsRequired()
                         .HasColumnType("bytea[]");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<string>("ServiceId")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServiceName")
                         .HasColumnType("text");
 
                     b.Property<int>("Status")
@@ -188,7 +202,47 @@ namespace Cf.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ServiceId")
+                        .IsUnique();
+
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.WorkingDay", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EndTime")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LunchBreakEndTime")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LunchBreakStartTime")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("StartTime")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("WorkingDays");
                 });
 
             modelBuilder.Entity("Cf.Domain.Aggregates.Jobs.Job", b =>
@@ -213,6 +267,17 @@ namespace Cf.Infrastructure.Migrations
                     b.Navigation("Job");
                 });
 
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.WorkingDay", b =>
+                {
+                    b.HasOne("Cf.Domain.Aggregates.Services.Service", "Service")
+                        .WithMany("WeeklyWorkingHours")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Adverts.Advert", b =>
                 {
                     b.Navigation("Jobs");
@@ -222,6 +287,11 @@ namespace Cf.Infrastructure.Migrations
                 {
                     b.Navigation("Review")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
+                {
+                    b.Navigation("WeeklyWorkingHours");
                 });
 #pragma warning restore 612, 618
         }
