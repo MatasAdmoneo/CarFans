@@ -1,8 +1,16 @@
 "use client";
-import { Breadcrumbs, Button, Input, Textarea, Typography, Dialog, Rating } from "@/lib/materialTailwindExports";
+import {
+  Breadcrumbs,
+  Button,
+  Input,
+  Textarea,
+  Typography,
+  Dialog,
+  Rating,
+} from "@/lib/materialTailwindExports";
 import { getToken } from "@/utils/getToken";
 import { BASE_API_URL, USER_REVIEWS_ROUTE } from "@/utils/urls";
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -10,24 +18,26 @@ import toast from "react-hot-toast";
 const ReviewForm = () => {
   const [reviewData, setReviewData] = useState({
     fullName: "",
-    serviceName: "",
     score: 0,
     description: "",
   });
 
   const params = useParams();
+  console.log(params.jobId);
   const router = useRouter();
   const [showDialog, setShowDialog] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-  
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
     setReviewData((formData) => ({
       ...formData,
       [name]: value,
     }));
   };
-  
+
   const validateData = async (): Promise<boolean> => {
     try {
       for (const key in reviewData) {
@@ -63,32 +73,36 @@ const ReviewForm = () => {
     const token = await getToken();
     const body = {
       ...reviewData,
-
     };
-  
+
     try {
-      const response = await fetch(`${BASE_API_URL}${USER_REVIEWS_ROUTE}/${params?.serviceId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(body),
-      });
-  
+      const response = await fetch(
+        `${BASE_API_URL}${USER_REVIEWS_ROUTE}/${params?.jobId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(body),
+        }
+      );
+
       if (!response.ok) {
         const text = await response.text();
-  
+
         if (!text.trim()) {
           toast.error(response.statusText || "Unknown error occurred.");
         } else {
           const json = JSON.parse(text);
-          toast.error(json.message || response.statusText || "Unknown error occurred.");
+          toast.error(
+            json.message || response.statusText || "Unknown error occurred."
+          );
         }
-  
+
         return;
       }
-  
+
       toast.success("Review successfully submitted");
     } catch (error) {
       console.error("Error during fetch:", error);
@@ -96,15 +110,14 @@ const ReviewForm = () => {
     } finally {
       setReviewData({
         fullName: "",
-        serviceName: "",
         score: 0,
         description: "",
       });
-  
+
       setShowDialog(false);
     }
   };
-  
+
   return (
     <div className="flex flex-col gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
       <Breadcrumbs>
@@ -125,25 +138,49 @@ const ReviewForm = () => {
       <Typography variant="h3">Leave a review</Typography>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <Input crossOrigin="" type="text" value={reviewData.fullName} name="fullName" onChange={handleChange} color="blue-gray" label="Full Name" />
-        <Input crossOrigin="" type="text" value={reviewData.serviceName} name="serviceName" onChange={handleChange} color="blue-gray" label="Service Name" />
+        <Input
+          crossOrigin=""
+          type="text"
+          value={reviewData.fullName}
+          name="fullName"
+          onChange={handleChange}
+          color="blue-gray"
+          label="Full Name"
+        />
         <Rating
           value={reviewData.score}
-          onChange={(value) => setReviewData((data) => ({ ...data, score: value }))}
+          onChange={(value) =>
+            setReviewData((data) => ({ ...data, score: value }))
+          }
         />
 
-        <Textarea value={reviewData.description} name="description" onChange={handleChange} resize rows={4} color="blue-gray" label="Review Description" />
+        <Textarea
+          value={reviewData.description}
+          name="description"
+          onChange={handleChange}
+          resize
+          rows={4}
+          color="blue-gray"
+          label="Review Description"
+        />
 
-        <Button type="submit" variant="gradient">Submit Review</Button>
+        <Button type="submit" variant="gradient">
+          Submit Review
+        </Button>
 
-        <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
+        <Dialog open={showDialog} handler={() => setShowDialog(false)}>
           <div className="text-left p-6 bg-white rounded-lg shadow-lg">
             <div className="text-lg font-medium mb-4">Leave a Review</div>
             <div className="text-sm text-gray-500 mb-6">
               Are you sure you want to submit this review?
             </div>
             <div className="flex justify-end">
-              <Button onClick={() => setShowDialog(false)} className="mr-2">
+              <Button
+                onClick={() => setShowDialog(false)}
+                className="mr-2"
+                variant="text"
+                color="red"
+              >
                 Cancel
               </Button>
               <Button onClick={handleConfirm} variant="gradient">
