@@ -1,16 +1,15 @@
 import React from "react";
+import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="py-6 text-center bg-gray-900 text-white">
-      <div className="flex justify-center">
-        <button className="text-white text-md focus:outline-none bg-transparent">
-          Privacy Policy
-        </button>
-      </div>
-      <p> </p>
-      <p>&copy; 2023 CarFans</p>
-    </footer>
+    <footer className="py-6 bg-gray-900 text-white flex-col text-center">
+      <Link href="/privacypolicy" className="hover:underline">
+        Privacy Policy
+      </Link>
+    
+    <p>&copy; 2023 CarFans</p>
+  </footer>
   );
 }
 

@@ -1,4 +1,3 @@
-"use client"
 import Link from 'next/link'
 import { Card, CardBody, CardHeader, Chip, Typography } from "@/lib/materialTailwindExports"
 import { AdvertType } from "@/types/AdvertType"

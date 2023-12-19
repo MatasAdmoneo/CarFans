@@ -3,7 +3,6 @@ using Cf.Domain.Aggregates.Jobs;
 using Cf.Domain.Aggregates.Reviews;
 using Cf.Domain.Aggregates.Services;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Cf.Infrastructure;
 
@@ -25,6 +24,8 @@ public class Context : DbContext
     public DbSet<Service> Services { get; set; }
 
     public DbSet<Review> Reviews { get; set; }
+    
+    public DbSet<WorkingDay> WorkingDays { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,5 +40,14 @@ public class Context : DbContext
             .WithMany(a => a.Jobs)
             .HasForeignKey(j => j.AdvertId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<WorkingDay>()
+            .HasOne(w => w.Service)
+            .WithMany(s => s.WeeklyWorkingHours)
+            .HasForeignKey(w => w.ServiceId);
+
+        modelBuilder.Entity<Service>()
+            .HasIndex(s => s.ServiceId)
+            .IsUnique();
     }
 }

@@ -1,9 +1,10 @@
-﻿namespace Cf.Application.Services.Interfaces;
+﻿using Cf.Contracts.Responses;
+
+namespace Cf.Application.Services.Interfaces;
 
 public interface IServiceAdvertService
 {
-    Task<Contracts.Responses.Response.ServiceAdvertByIdResponse> GetByIdAsync(Guid id);
+    Task<Response.ServiceAdvertByIdResponse> GetByIdAsync(Guid id);
 
-    Task<List<Contracts.Responses.Response.ServiceAdvertResponse>> GetListAsync();
+    Task<List<Response.ServiceAdvertResponse>> GetListAsync();
 }
-
