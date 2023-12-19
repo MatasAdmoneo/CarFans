@@ -30,53 +30,54 @@ const Navbar = () => {
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      {user && (userRoles.includes(SERIVCE) ? (
-        <>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <Link href="/jobs" className="flex items-center">
-              Jobs
-            </Link>
-          </Typography>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <Link href="/statuses" className="flex items-center">
-              Statuses
-            </Link>
-          </Typography>
-        </>
-      ) : (
-        <>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <Link href="/advert" className="flex items-center">
-              Create advert
-            </Link>
-          </Typography>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <Link href="/offers" className="flex items-center">
-              My Adverts
-            </Link>
-          </Typography>
-        </>
-      ))}
+      {user &&
+        (userRoles.includes(SERIVCE) ? (
+          <>
+            <Typography
+              as="li"
+              variant="small"
+              color="blue-gray"
+              className="p-1 font-normal"
+            >
+              <Link href="/jobs" className="flex items-center">
+                Jobs
+              </Link>
+            </Typography>
+            <Typography
+              as="li"
+              variant="small"
+              color="blue-gray"
+              className="p-1 font-normal"
+            >
+              <Link href="/statuses" className="flex items-center">
+                Statuses
+              </Link>
+            </Typography>
+          </>
+        ) : (
+          <>
+            <Typography
+              as="li"
+              variant="small"
+              color="blue-gray"
+              className="p-1 font-normal"
+            >
+              <Link href="/advert" className="flex items-center">
+                Create advert
+              </Link>
+            </Typography>
+            <Typography
+              as="li"
+              variant="small"
+              color="blue-gray"
+              className="p-1 font-normal"
+            >
+              <Link href="/offers" className="flex items-center">
+                My Adverts
+              </Link>
+            </Typography>
+          </>
+        ))}
     </ul>
   );
 
