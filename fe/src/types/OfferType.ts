@@ -18,3 +18,16 @@ export type JobType = {
   phone: string;
   serviceDescription: string;
 };
+
+export type JobTypeStatusAsString = {
+  id: number;
+  price: number;
+  startDate: Date;
+  description: string;
+  status: string;
+  serviceName: string;
+  address: string;
+  city: string;
+  phone: string;
+  serviceDescription: string;
+};

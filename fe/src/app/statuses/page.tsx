@@ -5,6 +5,7 @@ import {
   AccordionBody,
   AccordionHeader,
   Button,
+  Card,
   Chip,
   Typography,
 } from "@/lib/materialTailwindExports";
@@ -137,69 +138,77 @@ const JobStatusesPage = () => {
   return (
     <div className="max-w-3xl mx-auto my-5 py-10 px-5">
       <Typography variant="h3" className="pb-4">
-        Job statuses:
+        Active job statuses:
       </Typography>
-      {jobs.map((job) => (
-        <Accordion
-          key={job.id}
-          className="mb-2 rounded-lg border border-blue-gray-100 px-4"
-          open={openJobId === job.id}
-          icon={<Icon jobId={job.id} openJobId={openJobId} />}
-        >
-          <AccordionHeader onClick={() => handleOpen(job.id)}>
-            <div className="w-full flex justify-between">
-              <Typography>{job.title}</Typography>
-              <Chip
-                variant="ghost"
-                color={handleChipColor(job.status)}
-                size="sm"
-                value={job.status}
-                icon={<ChipDot status={job.status} />}
-              />
-            </div>
-          </AccordionHeader>
-          <AccordionBody>
-            <Typography>
-              <span className="font-bold">Brand:</span> {job.brand}
-            </Typography>
-            <Typography>
-              <span className="font-bold">Model:</span> {job.model}
-            </Typography>
-            <Typography>
-              <span className="font-bold">Manufacture year:</span>{" "}
-              {job.manufactureYear}
-            </Typography>
-            <Typography>
-              <span className="font-bold">Problem:</span> {job.problemType}
-            </Typography>
-            <Typography>
-              <span className="font-bold">Price:</span> {job.price}
-            </Typography>
-            <div className="w-full flex justify-end my-2 gap-3">
-              {job.status === JobStatusAsString.IN_PROGRESS && (
-                <Button
-                  variant="outlined"
-                  onClick={() => handleJobStatusUpdate(job.id)}
-                >
-                  Cancel a job
-                </Button>
-              )}
-              {job.status !== JobStatusAsString.DONE &&
-                job.status !== JobStatusAsString.CANCELLED && (
+      {jobs.length !== 0 ? (
+        jobs.map((job) => (
+          <Accordion
+            key={job.id}
+            className="mb-2 rounded-lg border border-blue-gray-100 px-4"
+            open={openJobId === job.id}
+            icon={<Icon jobId={job.id} openJobId={openJobId} />}
+          >
+            <AccordionHeader onClick={() => handleOpen(job.id)}>
+              <div className="w-full flex justify-between">
+                <Typography>{job.title}</Typography>
+                <Chip
+                  variant="ghost"
+                  color={handleChipColor(job.status)}
+                  size="sm"
+                  value={job.status}
+                  icon={<ChipDot status={job.status} />}
+                />
+              </div>
+            </AccordionHeader>
+            <AccordionBody>
+              <Typography>
+                <span className="font-bold">Brand:</span> {job.brand}
+              </Typography>
+              <Typography>
+                <span className="font-bold">Model:</span> {job.model}
+              </Typography>
+              <Typography>
+                <span className="font-bold">Manufacture year:</span>{" "}
+                {job.manufactureYear}
+              </Typography>
+              <Typography>
+                <span className="font-bold">Problem:</span> {job.problemType}
+              </Typography>
+              <Typography>
+                <span className="font-bold">Price:</span> {job.price}
+              </Typography>
+              <div className="w-full flex justify-end my-2 gap-3">
+                {job.status === JobStatusAsString.IN_PROGRESS && (
                   <Button
-                    variant="gradient"
-                    onClick={() => handleJobStatusUpdate(job.id, job.status)}
+                    variant="outlined"
+                    onClick={() => handleJobStatusUpdate(job.id)}
                   >
-                    {job.status === JobStatusAsString.ACCEPTED
-                      ? "Start"
-                      : "Finish"}{" "}
-                    a job
+                    Cancel a job
                   </Button>
                 )}
-            </div>
-          </AccordionBody>
-        </Accordion>
-      ))}
+                {job.status !== JobStatusAsString.DONE &&
+                  job.status !== JobStatusAsString.CANCELLED && (
+                    <Button
+                      variant="gradient"
+                      onClick={() => handleJobStatusUpdate(job.id, job.status)}
+                    >
+                      {job.status === JobStatusAsString.ACCEPTED
+                        ? "Start"
+                        : "Finish"}{" "}
+                      a job
+                    </Button>
+                  )}
+              </div>
+            </AccordionBody>
+          </Accordion>
+        ))
+      ) : (
+        <Card className="h-40 mt-5 flex justify-center">
+          <h2 className="text-3xl font-bold text-center">
+            You have no active jobs
+          </h2>
+        </Card>
+      )}
     </div>
   );
 };

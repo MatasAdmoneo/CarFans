@@ -6,21 +6,22 @@ import MyOffersList from "./components/MyOffersList";
 
 const getAdvertJobs = async (advertId: string) => {
   const { accessToken } = await getAccessToken();
-  const res = await fetch(
-    `${BASE_API_URL}${USER_JOBS_ROUTE}/${advertId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+  const res = await fetch(`${BASE_API_URL}${USER_JOBS_ROUTE}/${advertId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   if (!res.ok) {
     return null;
   }
   return res.json();
 };
 
-export default async function AdvertJobs({ params: { advertId } }: { params: { advertId: string }}) {
+export default async function AdvertJobs({
+  params: { advertId },
+}: {
+  params: { advertId: string };
+}) {
   const advertsJobs = await getAdvertJobs(advertId);
 
   return (
@@ -38,5 +39,5 @@ export default async function AdvertJobs({ params: { advertId } }: { params: { a
       </Breadcrumbs>
       <MyOffersList jobs={advertsJobs} />
     </div>
-  )
+  );
 }
