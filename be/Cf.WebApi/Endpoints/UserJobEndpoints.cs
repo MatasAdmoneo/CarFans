@@ -3,7 +3,6 @@ using Cf.Contracts.Responses;
 using Cf.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Cf.WebApi.Routing;
 
 namespace Cf.WebApi.Endpoints;
 
@@ -20,7 +19,7 @@ public static class UserJobEndpoints
         .HasApiVersion(1);
 
         group.MapPut("{jobId}", UpdateAsync);
-        group.MapGet("{advertId}", GetListAsync);
+        group.MapGet("{advertId}", GetListAsync).Produces<List<Response.UserJobInfo>>();
     }
 
     [Authorize(Roles = "User")]

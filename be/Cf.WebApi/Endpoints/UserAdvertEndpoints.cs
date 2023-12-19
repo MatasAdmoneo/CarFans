@@ -3,7 +3,6 @@ using Cf.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Cf.Contracts.Responses;
 using Cf.WebApi.Routing;
-using Cf.Domain.Aggregates.Adverts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cf.WebApi.Endpoints;
@@ -21,7 +20,7 @@ public static class UserAdvertEndpoints
         .HasApiVersion(1);
 
         group.MapPost(AddAsync).Produces<Response.AdvertIdResponse>();
-        group.MapGet(GetListAsync).Produces<List<Advert>>();
+        group.MapGet(GetListAsync).Produces<List<Response.UserAdvertResponse>>();
         group.MapGet("Id", GetByIdAsync);
         group.MapPut(UpdateAsync);
         group.MapDelete(DeleteAsync);
