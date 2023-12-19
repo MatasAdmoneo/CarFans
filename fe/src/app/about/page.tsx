@@ -1,18 +1,14 @@
-import React from 'react';
-import Image from 'next/image';
-
 const AboutUsPage = () => {
   return (
     <div className="bg-gray-800 text-white">
       <main className="py-15 text-center">
         <div className="relative overflow-hidden w-full h-96 rounded-lg shadow-lg mb-8">
-            <Image
-              src="/public/images/about-us.jpg"
-              alt="About Us Image"
-              layout="fill"
-              className="rounded-lg transition-transform transform hover:scale-105 duration-300"
-              style={{ filter: 'brightness(80%)' }}
-            />
+          <img
+            src="https://res.cloudinary.com/value-penguin/image/upload/c_lfill/dpr_1.0/f_auto/h_800/q_auto/w_800/v1/mother-daughter-car_qbsrc9"
+            alt="About Us Image"
+            className="transition-transform transform hover:scale-105 duration-300"
+            style={{ filter: 'brightness(80%)', objectFit: 'cover', width: '100%', height: '100%' }}
+          />
           <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
           <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-white z-10">
             About Us
