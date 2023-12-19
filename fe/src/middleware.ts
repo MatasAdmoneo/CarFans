@@ -39,5 +39,5 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 });
 
 export const config = {
-  matcher: ["/dashboard", "/service/:path*", "/jobs/:path*", "/advert", "/offers/:path*"],
+  matcher: ["/dashboard", "/service/:path*", "/jobs/:path*", "/advert", "/offers/:path*", "/statuses"],
 };

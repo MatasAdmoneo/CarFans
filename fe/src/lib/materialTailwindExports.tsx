@@ -1,6 +1,9 @@
 "use client";
 
 import {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
   Navbar,
   MobileNav,
   Typography,
@@ -37,6 +40,9 @@ import {
 } from "@material-tailwind/react";
 
 export {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
   Navbar,
   MobileNav,
   Typography,

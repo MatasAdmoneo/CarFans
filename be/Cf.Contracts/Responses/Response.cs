@@ -50,6 +50,9 @@ public static partial class Response
 
     public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
 
+
+    public record ServiceJob(Guid Id, string Title, string Brand, string Model, int ManufactureYear, ProblemType ProblemType, JobStatus Status, decimal? Price);
+
     public record ServiceAdditionalFields(
         string? ServiceName,
         string? Address,
