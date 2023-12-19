@@ -2,8 +2,6 @@ using Cf.Infrastructure;
 using Cf.WebApi.Endpoints;
 using Cf.WebApi.Utilities.ServicesConfiguration;
 using Cf.WebApi.Utilities.Versioning;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,12 +52,10 @@ api.MapAdminDocumentRoutes();
 
 api.MapServiceAdvertRoutes();
 api.MapServiceJobRoutes();
-api.MapServiceDocumentRoutes();
+api.MapServiceInfoRoutes();
 
 api.MapUserAdvertRoutes();
 api.MapUserJobRoutes();
-
-
 
 await using var scope = app.Services.CreateAsyncScope();
 await using var db = scope.ServiceProvider.GetService<Context>();

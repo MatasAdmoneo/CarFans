@@ -2,13 +2,11 @@
 using Cf.Contracts.Mappers;
 using Cf.Contracts.Responses;
 using Cf.Domain.Enums;
-using Cf.Domain.Exceptions;
-using Cf.Domain.Exceptions.Messages;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
 
-namespace Cf.Application.Services.DocumentServices;
+namespace Cf.Application.Services.ServiceInfoServices.DocumentServices;
 
 public class AdminDocumentService : IAdminDocumentService
 {
@@ -42,7 +40,7 @@ public class AdminDocumentService : IAdminDocumentService
     {
         var service = await _context.Services.FirstOrDefaultAsync(x => x.ServiceId == serviceId);
 
-        if (service != null && service.Data.Any())
+        if (service != null && service.Data != null && service.Data.Any())
         {
             // For simplicity, this example zips all PDFs associated with the service
             using (var memoryStream = new MemoryStream())

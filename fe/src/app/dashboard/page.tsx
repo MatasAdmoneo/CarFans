@@ -1,5 +1,5 @@
 import React from "react";
-import { SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
+import { BASE_API_URL, SERVICE_ADVERTRS_ROUTE } from "@/utils/urls";
 import { getAccessToken, getSession } from "@auth0/nextjs-auth0";
 import { UNKNOW_ERROR_MESSAGE } from "@/utils/genericMessages";
 
@@ -9,7 +9,7 @@ const getServiceAdvertsData = async () => {
     throw new Error(`Requires authorization`);
   }
   const res = await fetch(
-    `${process.env.API_SERVER_URL}${SERVICE_ADVERTRS_ROUTE}`,
+    `${BASE_API_URL}${SERVICE_ADVERTRS_ROUTE}`,
     {
       method: "GET",
       headers: {

@@ -2,36 +2,64 @@
 using Cf.Application.Services.Interfaces;
 using Cf.Contracts.Mappers;
 using Cf.Contracts.Responses;
-using Cf.Domain.Aggregates.Adverts;
+using Cf.Domain.Enums;
 using Cf.Domain.Exceptions;
 using Cf.Domain.Exceptions.Messages;
 using Cf.Domain.Models;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using static Cf.Domain.Exceptions.Messages.DomainErrors;
 
 namespace Cf.Application.Services.AdvertServices;
 
 public class UserAdvertService : IUserAdvertService
 {
     private readonly Context _context;
-    private readonly IUserJobService _jobService;
+    private readonly IImageUploadService _imageUploadService;
 
-    public UserAdvertService(Context context, IUserJobService jobService)
+    public UserAdvertService(Context context, IImageUploadService imageUploadService)
     {
         _context = context;
-        _jobService = jobService;
+        _imageUploadService = imageUploadService;
     }
 
     public async Task<Response.AdvertIdResponse> CreateAsync(AdvertModel model, string? userId)
     {
-        if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) ||string.IsNullOrWhiteSpace(userId))
-            throw new ApplicationException();
+        if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) || string.IsNullOrWhiteSpace(userId) ||
+            string.IsNullOrWhiteSpace(model.Brand) || string.IsNullOrWhiteSpace(model.Model) || !Enum.TryParse(model.ProblemType, out ProblemType problemType))
+            throw new BadRequestException(DomainErrors.Advert.OneOrMoreRequiredFlieldsUnspecified);
 
-        if(model.Photos == null || !model.Photos.Any())
-            throw new ApplicationException();
+        if (model.EndDate < DateTime.UtcNow)
+            throw new BadRequestException(DomainErrors.Advert.InvalidAdvertEndDate);
 
-        var advert = new Domain.Aggregates.Adverts.Advert(userId, model.Title, model.Description, model.Photos);
+        if (model.Photos?.Count > 5)
+            throw new BadRequestException(DomainErrors.Advert.TooMuchImages);
+
+        List<string> imagesUrls = new();
+        if (model.Photos != null)
+        {
+            foreach (var photo in model.Photos)
+            {
+                var imageUrl = await _imageUploadService.Upload(photo);
+                imagesUrls.Add(imageUrl);
+            }
+        }
+
+        var advert = new Domain.Aggregates.Adverts.Advert(
+            userId,
+            model.Title,
+            problemType,
+            model.Description,
+            model.Brand,
+            model.Model,
+            model.ManufactureYear,
+            imagesUrls,
+            model.IsQuestionsFormType,
+            model.IsSoundBad,
+            model.IsScentBad,
+            model.IsPanelInvalid,
+            model.IsLeakedLiquids,
+            model.IsUnstableCar,
+            model.EndDate);
 
         await _context.AddAsync(advert);
         await _context.SaveChangesAsync();
@@ -39,12 +67,15 @@ public class UserAdvertService : IUserAdvertService
         return advert.ToAdvertIdModel();
     }
 
-    public async Task<List<Domain.Aggregates.Adverts.Advert>> GetListAsync(string? id)
+    public async Task<List<Response.UserAdvertResponse>> GetListAsync(string? id)
     {
-        if(string.IsNullOrWhiteSpace(id))
+        if (string.IsNullOrWhiteSpace(id))
             throw new ApplicationException();
 
-        var adverts = await _context.Adverts.Where(x => x.UserId == id).ToListAsync();
+        var adverts = await _context.Adverts
+            .Where(x => x.UserId == id)
+            .Select(x => x.ToUserAdvertModel(x.Jobs.Any(x => x.Status != JobStatus.Pending)))
+            .ToListAsync();
 
         return adverts;
     }

@@ -90,6 +90,7 @@ const ContactPage = () => {
           />
           <Input
             size="lg"
+            type="email"
             color="blue-gray"
             label="Your email"
             name="email"
