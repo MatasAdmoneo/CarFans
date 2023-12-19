@@ -1,4 +1,6 @@
-﻿#pragma warning disable CS8618
+﻿#pragma warning disable CS8618﻿
+using Cf.Domain.Aggregates.Adverts;
+using Cf.Domain.Aggregates.Reviews;
 using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Enums;
 
@@ -18,7 +20,9 @@ public class Job : Entity
 
     public Guid AdvertId { get; set; }
 
-    public Advert Advert { get; set; }
+    public virtual Advert Advert { get; set; }
+
+    public virtual Review Review { get; set; }
 
     public Job(string serviceId, DateTime? startDate, decimal? price, string? description) : base()
     {

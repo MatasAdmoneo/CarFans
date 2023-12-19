@@ -1,4 +1,5 @@
 ﻿using Cf.Domain.Enums;
+using System.Diagnostics.CodeAnalysis;
 using Cf.Domain.Models;
 
 namespace Cf.Contracts.Responses;
@@ -50,6 +51,9 @@ public static partial class Response
 
     public record ServiceInfo(string Id, ServiceStatus Status, DateTime CreatedDate);
 
+    public record ReviewInfo(string FullName, double Rating, string Description);
+
+    public record FullReviewInfo(IEnumerable<ReviewInfo> Reviews, double AverageRating);
 
     public record ServiceJob(Guid Id, string Title, string Brand, string Model, int ManufactureYear, ProblemType ProblemType, JobStatus Status, decimal? Price);
 
@@ -63,6 +67,6 @@ public static partial class Response
 
     public record ServiceStatusInfo(ServiceStatus Status);
 
-    public record UserJobInfo(Guid Id, decimal? Price, DateTime? StartDate, string? Description, JobStatus Status, string ServiceName, string Address, string City, string Phone, string? ServiceDescription);
+    public record UserJobInfo(Guid Id, decimal? Price, DateTime? StartDate, string? Description, JobStatus Status, string ServiceName, string Address, string City, string Phone, string? ServiceDescription, string? serviceId);
 }
 

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Cf.Domain.Models;
 using Cf.WebApi.Routing;
 using Cf.Contracts.Responses;
-using Cf.Domain.Enums;
 
 namespace Cf.WebApi.Endpoints;
 

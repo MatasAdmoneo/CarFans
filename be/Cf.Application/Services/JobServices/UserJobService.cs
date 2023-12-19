@@ -4,8 +4,8 @@ using Cf.Domain.Models;
 using Cf.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Cf.Domain.Enums;
-using Cf.Contracts.Mappers;
 using Cf.Application.Services.Interfaces;
+using Cf.Contracts.Mappers;
 using Cf.Contracts.Responses;
 
 namespace Cf.Application.Services.JobServices;

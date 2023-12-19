@@ -1,6 +1,7 @@
 ﻿using Cf.Contracts.Responses;
 using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Aggregates.Jobs;
+using Cf.Domain.Aggregates.Reviews;
 using Cf.Domain.Aggregates.Services;
 using Cf.Domain.Models;
 
@@ -38,6 +39,9 @@ public static class MapExtensions
     public static Response.ServiceAdvertByIdResponse ToServiceAdvertByIdModel(this Advert model) =>
         new(model.Title, model.Description, model.Brand, model.Model, model.ManufactureYear, model.ProblemType, model.Photos, model.IsQuestionsFormType, model.IsSoundBad, model.IsScentBad, model.IsPanelInvalid, model.IsLeakedLiquids, model.IsUnstableCar, model.EndDate);
 
+    public static Response.ReviewInfo ToReviewModel(this Review review) =>
+        new(review.FullName, review.Rating, review.Description);
+
     public static Response.ServiceJob ToServiceJob(this Job model) =>
         new(model.Id, model.Advert.Title, model.Advert.Brand, model.Advert.Model, model.Advert.ManufactureYear, model.Advert.ProblemType, model.Status, model.Price);
     
@@ -64,6 +68,6 @@ public static class MapExtensions
     }
 
     public static Response.UserJobInfo ToUserJobInfo(this Job job, Service service) =>
-        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, service.ServiceName!, service.Address!, service.City!, service.ContactPhone!, service.Description);
+        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, service.ServiceName!, service.Address!, service.City!, service.ContactPhone!, service.Description, service.ServiceId);
 }
 

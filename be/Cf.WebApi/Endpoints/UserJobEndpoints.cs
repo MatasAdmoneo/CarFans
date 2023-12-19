@@ -1,9 +1,9 @@
 ﻿using Cf.Application.Services.Interfaces;
+using Cf.Contracts.Responses;
 using Cf.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Cf.WebApi.Routing;
-using Cf.Contracts.Responses;
 
 namespace Cf.WebApi.Endpoints;
 
