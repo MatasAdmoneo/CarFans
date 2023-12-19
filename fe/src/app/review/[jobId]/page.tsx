@@ -23,7 +23,6 @@ const ReviewForm = () => {
   });
 
   const params = useParams();
-  console.log(params.jobId);
   const router = useRouter();
   const [showDialog, setShowDialog] = useState(false);
 

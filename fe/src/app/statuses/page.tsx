@@ -40,7 +40,6 @@ function Icon({ jobId, openJobId }: { jobId: string; openJobId: string }) {
 
 function ChipDot({ status }: { status: string }) {
   const color = handleChipIconColor(status);
-  console.log(color);
   return (
     <svg
       className="w-full h-2 mt-1"

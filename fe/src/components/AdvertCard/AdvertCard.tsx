@@ -35,7 +35,6 @@ const AdvertCard = async ({ advert }: { advert: UserAdvertType }) => {
   const advertJobs = await getAdvertJobs(advert.id);
 
   const getJobId = (advertJobs: JobTypeStatusAsString[]) => {
-    console.log(advertJobs);
     const job: JobTypeStatusAsString | undefined = advertJobs.find(
       (job: JobTypeStatusAsString) => job.status === "Done"
     );
