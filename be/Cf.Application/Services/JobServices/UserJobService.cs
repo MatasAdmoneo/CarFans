@@ -53,7 +53,7 @@ public class UserJobService : IUserJobService
             )
             .ToListAsync();
 
-        return jobs.Select(x => x.ToUserModel()).ToList();
+        return jobs;
     }
 }
 

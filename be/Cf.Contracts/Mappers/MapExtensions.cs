@@ -42,8 +42,6 @@ public static class MapExtensions
     public static Response.ReviewInfo ToReviewModel(this Review review) =>
         new(review.FullName, review.Rating, review.Description);
 
-    public static Response.UserJobInfo ToUserModel(this Job job) =>
-        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, job.ServiceId, job.AdvertId);
     public static Response.ServiceJob ToServiceJob(this Job model) =>
         new(model.Id, model.Advert.Title, model.Advert.Brand, model.Advert.Model, model.Advert.ManufactureYear, model.Advert.ProblemType, model.Status, model.Price);
     
@@ -70,6 +68,6 @@ public static class MapExtensions
     }
 
     public static Response.UserJobInfo ToUserJobInfo(this Job job, Service service) =>
-        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, service.ServiceName!, service.Address!, service.City!, service.ContactPhone!, service.Description);
+        new(job.Id, job.Price, job.StartDate, job.Description, job.Status, service.ServiceName!, service.Address!, service.City!, service.ContactPhone!, service.Description, service.ServiceId);
 }
 

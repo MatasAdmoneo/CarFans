@@ -67,6 +67,6 @@ public static partial class Response
 
     public record ServiceStatusInfo(ServiceStatus Status);
 
-    public record UserJobInfo(Guid Id, decimal? Price, DateTime? StartDate, string? Description, JobStatus Status, string ServiceName, string Address, string City, string Phone, string? ServiceDescription);
+    public record UserJobInfo(Guid Id, decimal? Price, DateTime? StartDate, string? Description, JobStatus Status, string ServiceName, string Address, string City, string Phone, string? ServiceDescription, string? serviceId);
 }
 

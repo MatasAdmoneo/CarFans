@@ -265,7 +265,8 @@ namespace Cf.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Job");
-                    
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Services.WorkingDay", b =>
                 {
                     b.HasOne("Cf.Domain.Aggregates.Services.Service", "Service")
@@ -286,7 +287,8 @@ namespace Cf.Infrastructure.Migrations
                 {
                     b.Navigation("Review")
                         .IsRequired();
-                }
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
                 {
                     b.Navigation("WeeklyWorkingHours");

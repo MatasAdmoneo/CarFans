@@ -4,7 +4,6 @@ using Cf.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Cf.WebApi.Routing;
-using Cf.Contracts.Responses;
 
 namespace Cf.WebApi.Endpoints;
 
