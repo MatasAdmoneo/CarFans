@@ -129,7 +129,7 @@ namespace Cf.Infrastructure.Migrations
                     b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
+            modelBuilder.Entity("Cf.Domain.Aggregates.Reviews.Review", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,12 +138,60 @@ namespace Cf.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<List<byte[]>>("Data")
+                    b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId")
+                        .IsUnique();
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPhone")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<List<byte[]>>("Data")
                         .HasColumnType("bytea[]");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<string>("ServiceId")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServiceName")
                         .HasColumnType("text");
 
                     b.Property<int>("Status")
@@ -154,7 +202,47 @@ namespace Cf.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ServiceId")
+                        .IsUnique();
+
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.WorkingDay", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EndTime")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LunchBreakEndTime")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LunchBreakStartTime")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("StartTime")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("WorkingDays");
                 });
 
             modelBuilder.Entity("Cf.Domain.Aggregates.Jobs.Job", b =>
@@ -168,9 +256,42 @@ namespace Cf.Infrastructure.Migrations
                     b.Navigation("Advert");
                 });
 
+            modelBuilder.Entity("Cf.Domain.Aggregates.Reviews.Review", b =>
+                {
+                    b.HasOne("Cf.Domain.Aggregates.Jobs.Job", "Job")
+                        .WithOne("Review")
+                        .HasForeignKey("Cf.Domain.Aggregates.Reviews.Review", "JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.WorkingDay", b =>
+                {
+                    b.HasOne("Cf.Domain.Aggregates.Services.Service", "Service")
+                        .WithMany("WeeklyWorkingHours")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("Cf.Domain.Aggregates.Adverts.Advert", b =>
                 {
                     b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Jobs.Job", b =>
+                {
+                    b.Navigation("Review")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cf.Domain.Aggregates.Services.Service", b =>
+                {
+                    b.Navigation("WeeklyWorkingHours");
                 });
 #pragma warning restore 612, 618
         }

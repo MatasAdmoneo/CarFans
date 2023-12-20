@@ -67,12 +67,15 @@ public class UserAdvertService : IUserAdvertService
         return advert.ToAdvertIdModel();
     }
 
-    public async Task<List<Domain.Aggregates.Adverts.Advert>> GetListAsync(string? id)
+    public async Task<List<Response.UserAdvertResponse>> GetListAsync(string? id)
     {
-        if(string.IsNullOrWhiteSpace(id))
+        if (string.IsNullOrWhiteSpace(id))
             throw new ApplicationException();
 
-        var adverts = await _context.Adverts.Where(x => x.UserId == id).ToListAsync();
+        var adverts = await _context.Adverts
+            .Where(x => x.UserId == id)
+            .Select(x => x.ToUserAdvertModel(x.Jobs.Any(x => x.Status != JobStatus.Pending)))
+            .ToListAsync();
 
         return adverts;
     }

@@ -8,7 +8,10 @@ using Cf.WebApi.Utilities.Filters;
 using Cf.Application.Services.Interfaces;
 using Cf.Application.Services.JobServices;
 using Cf.Application.Services.DocumentServices;
+using Cf.Application.Services.ServiceInfoServices.DocumentServices;
+using Cf.Application.Services.ServiceInformation;
 using Cf.Application.Services.ImageUploadServices;
+using Cf.Application.Services.ReviewServices;
 
 namespace Cf.WebApi.Utilities.ServicesConfiguration;
 
@@ -32,9 +35,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IServiceJobService, ServiceJobService>();
         services.AddScoped<IServiceDocumentService, ServiceDocumentService>();
         services.AddScoped<IAdminDocumentService, AdminDocumentService>();
+        services.AddScoped<IUserReviewService, UserReviewService>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IImageUploadService, ImageUploadService>();
-
+        services.AddScoped<IImageUploadService, ImageUploadService>();
+        services.AddScoped<IServiceWorkingDaysService, ServiceWorkingDaysService>();
+        services.AddScoped<IServicelnfoService, ServiceInfoService>();
 
         services.AddAuthentication(options =>
         {
@@ -91,7 +96,7 @@ public static class ServiceCollectionExtensions
                               builder =>
                               {
                                   builder.WithOrigins("https://localhost:3000")
-                                  .WithMethods("GET", "POST","PUT","DELETE")
+                                  .WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")
                                   .AllowAnyHeader();
                               });
         });

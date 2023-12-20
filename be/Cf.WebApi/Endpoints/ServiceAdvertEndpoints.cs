@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Cf.WebApi.Routing;
-using Cf.Domain.Aggregates.Adverts;
 using Cf.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +17,12 @@ public static class ServiceAdvertEndpoints
         .WithTags(Tag)
         .HasApiVersion(1);
 
-        group.MapGet("Id", GetByIdAsync).Produces<Contracts.Responses.Response.AdvertResponse>();
-        group.MapGet(GetListAsync);
+        group.MapGet("{Id}", GetByIdAsync).Produces<Contracts.Responses.Response.ServiceAdvertByIdResponse>();
+        group.MapGet(GetListAsync).Produces<Contracts.Responses.Response.ServiceAdvertResponse>();
     }
 
     [Authorize(Roles = "Service")]
-    private static async Task<Contracts.Responses.Response.AdvertResponse> GetByIdAsync([FromServices] IServiceAdvertService service, Guid id)
+    private static async Task<Contracts.Responses.Response.ServiceAdvertByIdResponse> GetByIdAsync([FromServices] IServiceAdvertService service, [FromRoute] Guid id)
     {
         var advert = await service.GetByIdAsync(id);
 
@@ -31,7 +30,7 @@ public static class ServiceAdvertEndpoints
     }
 
     [Authorize(Roles = "Service")]
-    private static async Task<List<Advert>> GetListAsync([FromServices] IServiceAdvertService service)
+    private static async Task<List<Contracts.Responses.Response.ServiceAdvertResponse>> GetListAsync([FromServices] IServiceAdvertService service)
     {
         var adverts = await service.GetListAsync();
 

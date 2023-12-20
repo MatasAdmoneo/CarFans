@@ -3,9 +3,7 @@ using Cf.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Cf.Contracts.Responses;
 using Cf.WebApi.Routing;
-using Cf.Domain.Aggregates.Adverts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Cf.WebApi.Endpoints;
 
@@ -22,7 +20,7 @@ public static class UserAdvertEndpoints
         .HasApiVersion(1);
 
         group.MapPost(AddAsync).Produces<Response.AdvertIdResponse>();
-        group.MapGet(GetListAsync).Produces<List<Advert>>();
+        group.MapGet(GetListAsync).Produces<List<Response.UserAdvertResponse>>();
         group.MapGet("Id", GetByIdAsync);
         group.MapPut(UpdateAsync);
         group.MapDelete(DeleteAsync);
@@ -37,7 +35,7 @@ public static class UserAdvertEndpoints
     }
 
     [Authorize(Roles = "User")]
-    private static async Task<List<Advert>> GetListAsync(IUserAdvertService service, IHttpContextAccessor httpContextAccessor)
+    private static async Task<List<Response.UserAdvertResponse>> GetListAsync(IUserAdvertService service, IHttpContextAccessor httpContextAccessor)
     {
         var adverts = await service.GetListAsync(GetUserId(httpContextAccessor));
 

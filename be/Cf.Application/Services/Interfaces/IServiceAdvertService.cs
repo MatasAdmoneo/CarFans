@@ -1,12 +1,10 @@
-﻿
-using Cf.Domain.Aggregates.Adverts;
+﻿using Cf.Contracts.Responses;
 
 namespace Cf.Application.Services.Interfaces;
 
 public interface IServiceAdvertService
 {
-    Task<Contracts.Responses.Response.AdvertResponse> GetByIdAsync(Guid id);
+    Task<Response.ServiceAdvertByIdResponse> GetByIdAsync(Guid id);
 
-    Task<List<Advert>> GetListAsync();
+    Task<List<Response.ServiceAdvertResponse>> GetListAsync();
 }
-
