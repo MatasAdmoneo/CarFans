@@ -35,11 +35,11 @@ export default async function MyOffersPage() {
           <span>Home</span>
         </Link>
         <Link href="#">
-          <span>My Offers</span>
+          <span>My Adverts</span>
         </Link>
       </Breadcrumbs>
       <Typography variant="h3" className="mt-4">
-        My Offers
+        My Adverts
       </Typography>
       {userAdverts.length !== 0 ? (
         userAdverts.map((advert: UserAdvertType) => (
