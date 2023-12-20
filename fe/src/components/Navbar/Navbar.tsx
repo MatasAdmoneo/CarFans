@@ -108,6 +108,16 @@ const Navbar = () => {
                     color="blue-gray"
                     className="p-1 font-normal"
                   >
+                    <Link href="/contact" className="flex items-center mr-4">
+                      Contact
+                    </Link>
+                  </Typography>
+                  <Typography
+                    as="li"
+                    variant="small"
+                    color="blue-gray"
+                    className="p-1 font-normal"
+                  >
                     <Link href="/about" className="flex items-center mr-4">
                       About Us
                     </Link>
