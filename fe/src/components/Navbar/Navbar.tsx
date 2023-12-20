@@ -73,7 +73,7 @@ const Navbar = () => {
               className="p-1 font-normal"
             >
               <Link href="/offers" className="flex items-center">
-                My Adverts
+                My Offers
               </Link>
             </Typography>
           </>

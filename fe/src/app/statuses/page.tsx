@@ -4,6 +4,7 @@ import {
   Accordion,
   AccordionBody,
   AccordionHeader,
+  Breadcrumbs,
   Button,
   Card,
   Chip,
@@ -16,6 +17,7 @@ import { SOMETHING_WENT_WRONG_MESSAGE } from "@/utils/genericMessages";
 import { getToken } from "@/utils/getToken";
 import { JobStatus, JobStatusAsString } from "@/utils/constants";
 import { handleChipColor, handleChipIconColor } from "@/utils/handleChipStyles";
+import Link from "next/link";
 
 function Icon({ jobId, openJobId }: { jobId: string; openJobId: string }) {
   return (
@@ -136,14 +138,22 @@ const JobStatusesPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto my-5 py-10 px-5">
-      <Typography variant="h3" className="pb-4">
-        Active job statuses:
+      <Breadcrumbs>
+        <Link href="/home" className="opacity-60">
+          <span>Home</span>
+        </Link>
+        <Link href="#">
+          <span>Statuses</span>
+        </Link>
+      </Breadcrumbs>
+      <Typography variant="h3" className="pb-4 mt-4">
+        Active jobs statuses
       </Typography>
       {jobs.length !== 0 ? (
         jobs.map((job) => (
           <Accordion
             key={job.id}
-            className="mb-2 rounded-lg border border-blue-gray-100 px-4"
+            className="mb-2 rounded-lg border-blue-gray-100 px-4 shadow-lg"
             open={openJobId === job.id}
             icon={<Icon jobId={job.id} openJobId={openJobId} />}
           >

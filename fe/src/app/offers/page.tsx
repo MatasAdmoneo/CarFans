@@ -35,10 +35,12 @@ export default async function MyOffersPage() {
           <span>Home</span>
         </Link>
         <Link href="#">
-          <span>My Adverts</span>
+          <span>My Offers</span>
         </Link>
       </Breadcrumbs>
-      <Typography variant="h3">My Adverts</Typography>
+      <Typography variant="h3" className="mt-4">
+        My Offers
+      </Typography>
       {userAdverts.length !== 0 ? (
         userAdverts.map((advert: UserAdvertType) => (
           <AdvertCard advert={advert} key={advert.id} />

@@ -118,19 +118,16 @@ const ReviewForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
+    <div className="flex flex-col shadow-lg rounded-md gap-3 max-w-3xl mx-auto my-5 py-10 px-5">
       <Breadcrumbs>
         <Link href="/home" className="opacity-60">
           <span>Home</span>
         </Link>
-        <Link href="/services" className="opacity-60">
-          <span>Services</span>
-        </Link>
-        <Link href={`/services/${params?.serviceId}`} className="opacity-60">
-          <span>Service Details</span>
+        <Link href="/offers" className="opacity-60">
+          <span>My Offers</span>
         </Link>
         <Link href="#">
-          <span>Leave a Review</span>
+          <span>Review</span>
         </Link>
       </Breadcrumbs>
 
