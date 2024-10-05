@@ -2,11 +2,13 @@ import PdfDropzone from "@/components/PdfDropzone/PdfDropzone";
 import { Dispatch, SetStateAction } from "react";
 
 type PdfFormProps = {
+  token: string;
   setActiveStep: Dispatch<SetStateAction<number>>;
   setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
 };
 
 const PdfForm = ({
+  token,
   setActiveStep,
   setIsForwardButtonDisabled,
 }: PdfFormProps) => {
@@ -19,6 +21,7 @@ const PdfForm = ({
         Only files in &ldquo;.pdf&ldquo; format are accepted*
       </p>
       <PdfDropzone
+        token={token}
         setActiveStep={setActiveStep}
         setIsForwardButtonDisabled={setIsForwardButtonDisabled}
       />

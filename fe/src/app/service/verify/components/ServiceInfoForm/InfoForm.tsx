@@ -3,35 +3,36 @@
 import { ServiceInfoForm } from "@/types/ServiceInfoForm";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { emptyInfoFormValues, serviceInfoFormSchema } from "./utils";
-import { getToken } from "@/utils/getToken";
-import { BASE_API_URL, SERVICE_ADDITIONAL_INFO_ROUTE } from "@/utils/urls";
 import toast from "react-hot-toast";
 import { Button, Input, Textarea } from "@/lib/materialTailwindExports";
 import DayPicker from "./DayPicker";
 import { ValidationError } from "yup";
+import { submitInfoForm } from "./submitInfoForm";
 
 type InfoFormProps = {
+  service: ServiceInfoForm;
+  setActiveStep: Dispatch<SetStateAction<number>>;
   isForwardButtonDisabled: boolean;
   setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
 };
 
 const InfoForm = ({
+  service,
+  setActiveStep,
   isForwardButtonDisabled,
   setIsForwardButtonDisabled,
 }: InfoFormProps) => {
   const [formData, setFormData] =
-    useState<ServiceInfoForm>(emptyInfoFormValues);
+    useState<ServiceInfoForm>(service || emptyInfoFormValues);
 
   useEffect(() => {
-    getServiceInfo();
     setIsForwardButtonDisabled(false);
-  }, []);
+  }, [setIsForwardButtonDisabled]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-
     setFormData((formData) => ({
       ...formData,
       [name]: value,
@@ -55,56 +56,18 @@ const InfoForm = ({
     }
   };
 
-  const getServiceInfo = async () => {
-    const token = await getToken();
-    const response = await fetch(
-      `${BASE_API_URL}${SERVICE_ADDITIONAL_INFO_ROUTE}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const serviceInfo = await response.json();
-    if (serviceInfo && Object.keys(serviceInfo).length !== 0) {
-      setFormData(serviceInfo);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isValid = await validateFormData();
 
     if (isValid) {
-      const body = {
-        ...formData,
-      };
-      const token = await getToken();
-      const response = await fetch(
-        `${BASE_API_URL}${SERVICE_ADDITIONAL_INFO_ROUTE}`,
-        {
-          method: `${isForwardButtonDisabled ? "POST" : "PATCH"}`,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(body),
-        }
-      );
-
-      if (!response.ok) {
-        const json = await response.json();
-        toast.error(
-          json.message || response.statusText || "Unknown error occoured."
-        );
-        return;
-      }
-      toast.success("Your info has been successfully submitted");
-      setIsForwardButtonDisabled(false);
-    } else {
-      return;
+      await submitInfoForm(isForwardButtonDisabled, formData)
+        .then(() => {
+          setActiveStep(1);
+          setIsForwardButtonDisabled(false);
+          toast.success("Your info has been successfully submitted")
+        })
+        .catch((err) => console.log(err));
     }
   };
 

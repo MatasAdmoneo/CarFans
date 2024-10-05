@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { Stepper as St, Step, Button } from "@/lib/materialTailwindExports";
 import {
   FaCheck,
@@ -9,11 +9,16 @@ import {
 } from "@/lib/reactIconsExports";
 import InfoForm from "./ServiceInfoForm/InfoForm";
 import PdfForm from "./PdfForm";
-import { BASE_API_URL, SERVICE_STATUS_ROUTE } from "@/utils/urls";
-import { getToken } from "@/utils/getToken";
 import { ServiceStatus } from "@/utils/constants";
+import { ServiceInfoForm } from "@/types/ServiceInfoForm";
 
-const Stepper = ({ children }: { children: ReactNode }) => {
+type StepperType = {
+  service: ServiceInfoForm;
+  status: string;
+  token: string;
+}
+
+const Stepper = ({ children, service, status, token }: PropsWithChildren<StepperType>) => {
   const [activeStep, setActiveStep] = useState(-1);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
@@ -23,34 +28,21 @@ const Stepper = ({ children }: { children: ReactNode }) => {
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   useEffect(() => {
-    getServiceStatus();
-  }, []);
-
-  const getServiceStatus = async () => {
-    const token = await getToken();
-    const response = await fetch(`${BASE_API_URL}${SERVICE_STATUS_ROUTE}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const serviceStatusObject = await response.json();
-    const serviceStatus = serviceStatusObject.status;
     if (
-      serviceStatus === ServiceStatus[ServiceStatus.Exists] ||
-      serviceStatus === ServiceStatus[ServiceStatus.Denied]
+      status === ServiceStatus[ServiceStatus.Exists] ||
+      status === ServiceStatus[ServiceStatus.Denied]
     ) {
       setIsForwardButtonDisabled(true);
       setActiveStep(0);
     } else if (
-      serviceStatus === ServiceStatus[ServiceStatus.CreatedInDataBase]
+      status === ServiceStatus[ServiceStatus.CreatedInDataBase]
     ) {
       setActiveStep(1);
-    } else if (serviceStatus === ServiceStatus[ServiceStatus.Pending]) {
+    } else if (status === ServiceStatus[ServiceStatus.Pending]) {
       setActiveStep(2);
     }
-  };
+  }, [status]);
+
   return (
     <>
       <St
@@ -77,12 +69,16 @@ const Stepper = ({ children }: { children: ReactNode }) => {
         )}
         {activeStep === 0 && (
           <InfoForm
+            service={service}
+            token={token}
+            setActiveStep={setActiveStep}
             isForwardButtonDisabled={isForwardButtonDisabled}
             setIsForwardButtonDisabled={setIsForwardButtonDisabled}
           />
         )}
         {activeStep === 1 && (
           <PdfForm
+            token={token}
             setActiveStep={setActiveStep}
             setIsForwardButtonDisabled={setIsForwardButtonDisabled}
           />

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/lib/materialTailwindExports";
+import { BASE_API_URL, SERVICE_DOCUMENT_UPLOAD_ROUTE } from "@/utils/urls";
 import {
   Dispatch,
   FormEvent,
@@ -9,17 +10,17 @@ import {
   useState,
 } from "react";
 import { useDropzone, FileWithPath } from "react-dropzone";
-import { uploadPdfToApi } from "./uploadPdfToApi";
 import toast from "react-hot-toast/headless";
-import { useRouter } from "next/navigation";
 
 type PdfDropZoneProps = {
   setActiveStep: Dispatch<SetStateAction<number>>;
+  token: string;
   setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
 };
 
 function PdfDropzone({
   setActiveStep,
+  token,
   setIsForwardButtonDisabled,
 }: PdfDropZoneProps) {
   const maxFileSize = 10485760;
@@ -27,7 +28,7 @@ function PdfDropzone({
 
   useEffect(() => {
     setIsForwardButtonDisabled(true);
-  }, []);
+  }, [setIsForwardButtonDisabled]);
 
   const {
     acceptedFiles,
@@ -50,7 +51,7 @@ function PdfDropzone({
     </li>
   ));
 
-  const fileRejectionItems = fileRejections.map(({ file, errors }) =>
+  const fileRejectionItems = fileRejections.map(({ errors }) =>
     errors.map((e) => (
       <p className="text-red-400" key={e.code}>
         {e.message}
@@ -64,13 +65,48 @@ function PdfDropzone({
       toast.error("Please select the file to upload.");
       return;
     }
+
     setIsUploading(true);
-    await uploadPdfToApi(
-      acceptedFiles[0],
-      setIsUploading,
-      setIsForwardButtonDisabled,
-      setActiveStep
-    );
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64Content = reader.result?.toString().split(",")[1];
+      if (!base64Content) {
+        throw new Error("Error reading Pdf file");
+      }
+
+      try {
+        const res = await fetch(
+          `${BASE_API_URL}${SERVICE_DOCUMENT_UPLOAD_ROUTE}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(base64Content),
+          }
+        );
+
+        if (!res.ok) {
+          const json = await res.json();
+          throw new Error(
+            json.message || res.statusText || "Unknown error occurred."
+          );
+        }
+
+        toast.success("Document uploaded successfully.");
+        setActiveStep(2);
+      } catch (error) {
+        throw new Error("Failed to upload file.");
+      }
+    };
+
+    reader.onerror = () => {
+      throw new Error("Error reading file. Try uploading again");
+    };
+
+    reader.readAsDataURL(acceptedFiles[0]);
+    setIsUploading(false);
   };
 
   return (

@@ -29,7 +29,17 @@ const Navbar = () => {
   };
 
   const navList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mt-2 mb-4 flex gap-2 lg:mb-0 lg:mt-0 flex-row items-center lg:gap-6">
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal inline-block"
+      >
+        <Link href="/about" className="flex items-center">
+          About
+        </Link>
+      </Typography>
       {user &&
         (userRoles.includes(SERIVCE) ? (
           <>
