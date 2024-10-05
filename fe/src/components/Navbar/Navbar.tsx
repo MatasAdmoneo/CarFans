@@ -88,14 +88,14 @@ const Navbar = () => {
           <Link href="/home">Car Fans</Link>
         </Typography>
         <div className="flex items-center gap-4">
-          <div className="mr-4 hidden lg:block">{navList}</div>
+          <div className="mr-4 block">{navList}</div>
           <div className="flex items-center gap-x-1">
             {!isLoading &&
               (userRoles.length ? (
                 <Button
                   variant="gradient"
                   size="sm"
-                  className="hidden lg:inline-block"
+                  className="inline-block"
                   onClick={() => navigateToLogout()}
                 >
                   Log out
@@ -105,7 +105,7 @@ const Navbar = () => {
                   <Button
                     variant="gradient"
                     size="sm"
-                    className="hidden lg:inline-block"
+                    className="inline-block"
                     onClick={() => navigateToLogin()}
                   >
                     Log In
@@ -113,7 +113,7 @@ const Navbar = () => {
                   <Button
                     variant="text"
                     size="sm"
-                    className="hidden lg:inline-block"
+                    className="inline-block"
                     onClick={() => navigateToLogin()}
                   >
                     Sign In
