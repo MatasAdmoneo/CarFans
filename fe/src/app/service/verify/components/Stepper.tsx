@@ -32,7 +32,6 @@ const Stepper = ({ children, service, status, token }: PropsWithChildren<Stepper
       status === ServiceStatus[ServiceStatus.Exists] ||
       status === ServiceStatus[ServiceStatus.Denied]
     ) {
-      setIsForwardButtonDisabled(true);
       setActiveStep(0);
     } else if (
       status === ServiceStatus[ServiceStatus.CreatedInDataBase]

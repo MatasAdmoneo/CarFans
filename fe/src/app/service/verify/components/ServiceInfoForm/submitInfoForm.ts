@@ -1,19 +1,15 @@
-"use server";
-
 import { type ServiceInfoForm } from "@/types/ServiceInfoForm";
 import { BASE_API_URL, SERVICE_ADDITIONAL_INFO_ROUTE } from "@/utils/urls";
-import { getAccessToken } from "@auth0/nextjs-auth0";
 
-export const submitInfoForm = async (isForwardButtonDisabled: boolean, data: ServiceInfoForm) => {
+export const submitInfoForm = async (isForwardButtonDisabled: boolean, data: ServiceInfoForm, token: string) => {
   try {
-    const { accessToken } = await getAccessToken();
     const response = await fetch(
       `${BASE_API_URL}${SERVICE_ADDITIONAL_INFO_ROUTE}`,
       {
-        method: `${isForwardButtonDisabled ? "POST" : "PATCH"}`,
+        method: `${isForwardButtonDisabled ? "PATCH" : "POST"}`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       }

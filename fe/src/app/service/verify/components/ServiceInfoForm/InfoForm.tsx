@@ -11,6 +11,7 @@ import { submitInfoForm } from "./submitInfoForm";
 
 type InfoFormProps = {
   service: ServiceInfoForm;
+  token: string;
   setActiveStep: Dispatch<SetStateAction<number>>;
   isForwardButtonDisabled: boolean;
   setIsForwardButtonDisabled: Dispatch<SetStateAction<boolean>>;
@@ -18,6 +19,7 @@ type InfoFormProps = {
 
 const InfoForm = ({
   service,
+  token,
   setActiveStep,
   isForwardButtonDisabled,
   setIsForwardButtonDisabled,
@@ -61,7 +63,7 @@ const InfoForm = ({
     const isValid = await validateFormData();
 
     if (isValid) {
-      await submitInfoForm(isForwardButtonDisabled, formData)
+      await submitInfoForm(isForwardButtonDisabled, formData, token)
         .then(() => {
           setActiveStep(1);
           setIsForwardButtonDisabled(false);
