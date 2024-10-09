@@ -40,7 +40,7 @@ const ReviewForm = () => {
   const validateData = async (): Promise<boolean> => {
     try {
       for (const key in reviewData) {
-        if (!reviewData[key]) {
+        if (!reviewData[key as keyof typeof reviewData]) {
           toast.error(`Please provide a value for ${key}`);
           return false;
         }
