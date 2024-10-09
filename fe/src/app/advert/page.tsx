@@ -234,6 +234,7 @@ const AdvertPage = () => {
                 label="Manufacture year"
               />
               <Datepicker
+                inputId="advert-date"
                 placeholder={"Select advert's end date"}
                 minDate={new Date()}
                 startFrom={new Date()}
@@ -277,7 +278,7 @@ const AdvertPage = () => {
                 uploadedPhotos={simpleFormData.photos}
                 onUpload={handleImagesUpload}
               />
-              <Button type="submit" size="lg" className="rounded-md">
+              <Button id="create-advert" type="submit" size="lg" className="rounded-md">
                 Create
               </Button>
             </form>

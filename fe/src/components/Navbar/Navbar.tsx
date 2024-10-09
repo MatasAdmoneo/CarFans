@@ -116,6 +116,7 @@ const Navbar = () => {
                     variant="gradient"
                     size="sm"
                     className="inline-block"
+                    data-testid="login-button"
                     onClick={() => navigateToLogin()}
                   >
                     Log In

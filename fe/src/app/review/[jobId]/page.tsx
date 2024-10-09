@@ -10,7 +10,7 @@ import {
 } from "@/lib/materialTailwindExports";
 import { getToken } from "@/utils/getToken";
 import { BASE_API_URL, USER_REVIEWS_ROUTE } from "@/utils/urls";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -23,7 +23,6 @@ const ReviewForm = () => {
   });
 
   const params = useParams();
-  const router = useRouter();
   const [showDialog, setShowDialog] = useState(false);
 
   const handleChange = (
@@ -40,14 +39,14 @@ const ReviewForm = () => {
   const validateData = async (): Promise<boolean> => {
     try {
       for (const key in reviewData) {
-        if (!reviewData[key]) {
-          toast.error(`Please provide a value for ${key}`);
+        if (!reviewData[key as keyof typeof reviewData]) {
+          toast.error(`Please provide a value for ${key}`, { duration: 30000 });
           return false;
         }
       }
 
       if (!reviewData.score || reviewData.score === 0) {
-        toast.error("Please provide a star rating");
+        toast.error("Please provide a star rating", { duration: 30000 });
         return false;
       }
 
@@ -102,7 +101,7 @@ const ReviewForm = () => {
         return;
       }
 
-      toast.success("Review successfully submitted");
+      toast.success("Review successfully submitted", { duration: 30000 });
     } catch (error) {
       console.error("Error during fetch:", error);
       toast.error("Failed to submit review. Please try again.");
