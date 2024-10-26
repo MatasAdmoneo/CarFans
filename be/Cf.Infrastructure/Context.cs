@@ -17,7 +17,7 @@ public class Context : DbContext
 
     public Context(DbContextOptions<Context> options) : base(options) { }
 
-    public DbSet<Advert> Adverts { get; set; }
+    public virtual DbSet<Advert> Adverts { get; set; }
 
     public DbSet<Job> Jobs { get; set; }
 
