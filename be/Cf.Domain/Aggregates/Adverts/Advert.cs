@@ -1,5 +1,6 @@
 ﻿using Cf.Domain.Aggregates.Jobs;
 using Cf.Domain.Enums;
+using Cf.Domain.Models;
 
 namespace Cf.Domain.Aggregates.Adverts;
 
@@ -39,36 +40,24 @@ public class Advert : Entity
 
     public Advert(
         string userId,
-        string title,
         ProblemType problemType,
-        string description,
-        string brand,
-        string model,
-        int manufactureYear,
-        List<string> photos,
-        bool isQuestionsFormType,
-        bool isSoundBad,
-        bool isScentBad,
-        bool isPanelInvalid,
-        bool isLeakedLiquids,
-        bool isUnstableCar,
-        DateTime endDate) : base()
+        AdvertModel model) : base()
     {
         UserId = userId;
-        Title = title;
+        Title = model.Title;
         ProblemType = problemType;
-        Description = description;
-        Brand = brand;
-        Model = model;
-        ManufactureYear = manufactureYear;
-        Photos = photos;
-        IsQuestionsFormType = isQuestionsFormType;
-        IsSoundBad = isSoundBad;
-        IsScentBad = isScentBad;
-        IsPanelInvalid = isPanelInvalid;
-        IsLeakedLiquids = isLeakedLiquids;
-        IsUnstableCar = isUnstableCar;
-        EndDate = endDate;
+        Description = model.Description ?? string.Empty;
+        Brand = model.Brand;
+        Model = model.Model;
+        ManufactureYear = model.ManufactureYear;
+        Photos = model.Photos ?? new List<string>();
+        IsQuestionsFormType = model.IsQuestionsFormType;
+        IsSoundBad = model.IsSoundBad;
+        IsScentBad = model.IsScentBad;
+        IsPanelInvalid = model.IsPanelInvalid;
+        IsLeakedLiquids = model.IsLeakedLiquids;
+        IsUnstableCar = model.IsUnstableCar;
+        EndDate = model.EndDate;
     }
 }
 

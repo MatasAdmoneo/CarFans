@@ -36,4 +36,9 @@ public static class DomainErrors
 
         public static MessageInfo RatingOutOfBounds => new MessageInfo("Rating must be from 0 to 5");
     }
+
+    public static class Global
+    {
+        public static MessageInfo UserNotFound => new($"User not found.");
+    }
 }

@@ -23,9 +23,12 @@ public class UserReviewService : IUserReviewService
 
     public async Task CreateAsync(string? userId, Guid jobId, ReviewModel model)
     {
-        var job = await _context.Jobs.Include(x => x.Advert).FirstOrDefaultAsync(x => x.Id == jobId);
+        var job = await _context.Jobs.Include(x => x.Advert).FirstOrDefaultAsync(x => x.Id == jobId) ?? throw new BadRequestException(DomainErrors.Job.NotFound);
+        
+        if (userId == null || userId != job.Advert.UserId)
+            throw new BadRequestException(DomainErrors.Review.NotValidUser);
 
-        ValidateReview(userId, job, model);
+        ValidateReview(job, model);
 
         var review = new Review(model.FullName, model.Rating, model.Description, job.Id);
 
@@ -43,17 +46,8 @@ public class UserReviewService : IUserReviewService
         return new(reviewModels, averageRating);
     }
 
-    private void ValidateReview(string? userId, Job? job, ReviewModel model)
+    private static void ValidateReview(Job job, ReviewModel model)
     {
-        if (job == null)
-            throw new BadRequestException(DomainErrors.Job.NotFound);
-
-        if (userId == null)
-            throw new ApplicationException();
-
-        if (userId != job.Advert.UserId)
-            throw new BadRequestException(DomainErrors.Review.NotValidUser);
-
         if (job.Status != JobStatus.Done)
             throw new BadRequestException(DomainErrors.Review.NotFinished);
 

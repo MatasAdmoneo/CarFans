@@ -2,6 +2,7 @@
 using Cf.Application.Services.Interfaces;
 using Cf.Contracts.Mappers;
 using Cf.Contracts.Responses;
+using Cf.Domain.Aggregates.Adverts;
 using Cf.Domain.Enums;
 using Cf.Domain.Exceptions;
 using Cf.Domain.Exceptions.Messages;
@@ -24,9 +25,11 @@ public class UserAdvertService : IUserAdvertService
 
     public async Task<Response.AdvertIdResponse> CreateAsync(AdvertModel model, string? userId)
     {
-        if (string.IsNullOrWhiteSpace(model.Title) || string.IsNullOrWhiteSpace(model.Description) || string.IsNullOrWhiteSpace(userId) ||
-            string.IsNullOrWhiteSpace(model.Brand) || string.IsNullOrWhiteSpace(model.Model) || !Enum.TryParse(model.ProblemType, out ProblemType problemType))
-            throw new BadRequestException(DomainErrors.Advert.OneOrMoreRequiredFlieldsUnspecified);
+        bool isProblemTypeCorrect = Enum.TryParse(model.ProblemType, out ProblemType problemType);
+        ValidateAdvertFields(model, isProblemTypeCorrect);
+
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new BadRequestException(DomainErrors.Global.UserNotFound);
 
         if (model.EndDate < DateTime.UtcNow)
             throw new BadRequestException(DomainErrors.Advert.InvalidAdvertEndDate);
@@ -44,22 +47,7 @@ public class UserAdvertService : IUserAdvertService
             }
         }
 
-        var advert = new Domain.Aggregates.Adverts.Advert(
-            userId,
-            model.Title,
-            problemType,
-            model.Description,
-            model.Brand,
-            model.Model,
-            model.ManufactureYear,
-            imagesUrls,
-            model.IsQuestionsFormType,
-            model.IsSoundBad,
-            model.IsScentBad,
-            model.IsPanelInvalid,
-            model.IsLeakedLiquids,
-            model.IsUnstableCar,
-            model.EndDate);
+        var advert = new Advert(userId, problemType, model);
 
         await _context.AddAsync(advert);
         await _context.SaveChangesAsync();
@@ -67,13 +55,13 @@ public class UserAdvertService : IUserAdvertService
         return advert.ToAdvertIdModel();
     }
 
-    public async Task<List<Response.UserAdvertResponse>> GetListAsync(string? id)
+    public async Task<List<Response.UserAdvertResponse>> GetListAsync(string? userId)
     {
-        if (string.IsNullOrWhiteSpace(id))
-            throw new ApplicationException();
+        if (string.IsNullOrWhiteSpace(userId))
+            throw new BadRequestException(DomainErrors.Global.UserNotFound);
 
         var adverts = await _context.Adverts
-            .Where(x => x.UserId == id)
+            .Where(x => x.UserId == userId)
             .Select(x => x.ToUserAdvertModel(x.Jobs.Any(x => x.Status != JobStatus.Pending)))
             .ToListAsync();
 
@@ -82,13 +70,10 @@ public class UserAdvertService : IUserAdvertService
 
     public async Task UpdateAsync(Guid id, string? userId, AdvertUpdateModel model)
     {
-        var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id);
-
-        if (advert == null)
-            throw new NotFoundException(DomainErrors.Advert.NotFound);
-
+        var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id) ?? throw new NotFoundException(DomainErrors.Advert.NotFound);
+        
         if (advert.UserId != userId)
-            throw new ApplicationException();
+            throw new BadRequestException(DomainErrors.Global.UserNotFound);
 
         advert.ToUpdatedAdvert(model);
 
@@ -97,37 +82,41 @@ public class UserAdvertService : IUserAdvertService
 
     public async Task<Response.AdvertResponse> GetByIdAsync(Guid id, string? userId)
     {
-        var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id);
-
-        if (advert == null)
-            throw new NotFoundException(DomainErrors.Advert.NotFound);
-
+        var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id) ?? throw new NotFoundException(DomainErrors.Advert.NotFound);
+        
         if (advert.UserId != userId)
-            throw new ApplicationException();
+            throw new BadRequestException(DomainErrors.Global.UserNotFound);
 
         return advert.ToAdvertModel();
     }
 
     public async Task DeleteAsync(Guid id, string? userId)
     {
-        var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id);
+        var advert = await _context.Adverts.FirstOrDefaultAsync(x => x.Id == id) ?? throw new NotFoundException(DomainErrors.Advert.NotFound);
 
-        if (advert == null)
-            throw new NotFoundException(DomainErrors.Advert.NotFound);
-
-        if(advert.UserId != userId)
-            throw new ApplicationException();
+        if (advert.UserId != userId)
+            throw new BadRequestException(DomainErrors.Global.UserNotFound);
 
         var jobs = await _context.Jobs.Where(x => x.AdvertId == id).ToListAsync();
 
         foreach (var job in jobs)
         {
-            if (job.Status != Domain.Enums.JobStatus.Declined)
+            if (job.Status != JobStatus.Declined)
                 throw new BadRequestException(DomainErrors.Advert.ActiveJobs);
         }
 
         _context.Remove(advert);
         await _context.SaveChangesAsync();
+    }
+
+    private static void ValidateAdvertFields(AdvertModel model, bool isProblemTypeCorrect)
+    {
+        if (string.IsNullOrWhiteSpace(model.Title) ||
+            string.IsNullOrWhiteSpace(model.Description) ||
+            string.IsNullOrWhiteSpace(model.Brand) ||
+            string.IsNullOrWhiteSpace(model.Model) ||
+            !isProblemTypeCorrect)
+            throw new BadRequestException(DomainErrors.Advert.OneOrMoreRequiredFlieldsUnspecified);
     }
 }
 

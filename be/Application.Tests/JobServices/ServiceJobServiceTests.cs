@@ -79,23 +79,23 @@ namespace Application.Tests.JobServices
 
         private static Advert CreateTestAdvert()
         {
-            return new Advert(
-                userId: "user123",
-                title: "Test Title",
-                problemType: ProblemType.Engine,
-                description: "Problem with engine",
-                brand: "Toyota",
-                model: "Corolla",
-                manufactureYear: 2015,
-                photos: new List<string> { "photo1.jpg", "photo2.jpg" },
-                isQuestionsFormType: true,
-                isSoundBad: true,
-                isScentBad: false,
-                isPanelInvalid: false,
-                isLeakedLiquids: true,
-                isUnstableCar: false,
-                endDate: DateTime.Now.AddDays(7)
-            );
+            var advertModel = new AdvertModel()
+            {
+                Title = "Test Title",
+                Description = "Problem with engine",
+                Brand = "Toyota",
+                Model = "Corolla",
+                ManufactureYear = 2015,
+                Photos = new List<string> { "photo1.jpg", "photo2.jpg" },
+                IsQuestionsFormType = true,
+                IsSoundBad = true,
+                IsScentBad = false,
+                IsPanelInvalid = false,
+                IsLeakedLiquids = true,
+                IsUnstableCar = false,
+                EndDate = DateTime.Now.AddDays(7)
+            };
+            return new Advert("user123", ProblemType.Engine, advertModel);
         }
     }
 }
