@@ -53,7 +53,7 @@ namespace Application.Tests.AdvertServices
 
             // Act & Assert
             var ex = Assert.ThrowsAsync<BadRequestException>(() => _sut.CreateAsync(model, null));
-            Assert.That(ex.Message, Is.EqualTo(DomainErrors.Advert.OneOrMoreRequiredFlieldsUnspecified.Message));
+            Assert.That(ex.Message, Is.EqualTo(DomainErrors.Global.UserNotFound.Message));
         }
 
         [Test]
