@@ -38,6 +38,15 @@ public class Advert : Entity
 
     public bool IsUnstableCar { get; set; } = false;
 
+    public Advert() : base()
+    {
+        UserId = string.Empty;
+        Title = string.Empty;
+        Description = string.Empty;
+        Model = string.Empty;
+        Brand = string.Empty;
+    }
+
     public Advert(
         string userId,
         ProblemType problemType,
