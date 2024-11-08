@@ -14,7 +14,7 @@
     "@next/bundle-analyzer": "^14.2.15",
     "@types/react-dropzone": "^5.1.0",
     "axios": "^1.6.0",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.13",
     "next": "^14.2.14",
     "next-auth": "^4.24.4",
     "react": "^18.3.1",
